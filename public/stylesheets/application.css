@@ -1,0 +1,72 @@
+body	{
+	background-color: white;
+	font-family: sans-serif;
+	color: #333;
+	max-width: 800px;
+	min-width: 500px;
+	margin: auto;
+	margin-top: 2em;
+}
+
+div	{
+	margin: 10px;
+}
+
+/**
+ * The navigation menu at the top of every page
+ */
+#Menu	{
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+
+#Menu li	{
+	display: inline;
+	padding: 1em;
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+#Menu li:hover	{
+	color: red;
+	border-bottom: 2px solid #cee;
+}
+
+/**
+ * The title at the top of every page.
+ */
+#Title	{
+	margin: none;
+	padding: none;
+	text-align: center;
+}
+
+#Title h1	{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+	font-size: 36pt;
+	color: #c00;
+}
+
+#Title h2	{
+	text-align: center;
+	color: #666;
+	font-style: oblique;
+	margin: 0px;
+	font-size: 10pt;
+}
+
+/**
+ * The footer at the bottom of every page.
+ */
+#Footer	{
+	margin-top: 3em;
+	clear: both;
+	
+	color: #777;
+	font-size: 10pt;
+	text-align: center;
+}

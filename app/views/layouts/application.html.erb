@@ -1,0 +1,14 @@
+<%= render :partial => 'layouts/doctype' %>
+<html>
+	<head>
+		<title>Madison Brass Band - <%= controller_name.titleize -%></title>
+		<%= css_auto_include_tag %>
+	</head>
+	
+	<body>
+		<%= render :partial => 'layouts/application/menu' %>
+		<%= render :partial => 'layouts/application/title' %>
+		<%= yield %>
+		<%= render :partial => 'layouts/application/footer' %>
+	</body>
+</html>
