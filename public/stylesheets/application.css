@@ -63,7 +63,7 @@ div	{
  * The footer at the bottom of every page.
  */
 #Footer	{
-	margin-top: 3em;
+	padding-top: 2em;
 	clear: both;
 	
 	color: #777;
