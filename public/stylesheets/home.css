@@ -4,6 +4,11 @@ div.placeholder	{
 	padding: none;
 }
 
+div.spacer	{
+	clear: both;
+	height: 2em;
+}
+
 /**
  * The sweet picture of us doing something awesome.
  */
