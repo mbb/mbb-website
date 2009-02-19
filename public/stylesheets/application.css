@@ -10,6 +10,11 @@ a	{
 	text-decoration: none;
 }
 
+div.container	{
+	width: 700px;
+	margin: auto;
+}
+
 div.spacer	{
 	clear: both;
 	display: hidden;

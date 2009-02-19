@@ -1,0 +1,3 @@
+class ConcertsController < ApplicationController
+	
+end

@@ -1,13 +1,15 @@
 <div id="FlashyMenu">
 	<ul>
-		<li>
-			<div class="box">
-				<h1>Our Next Concert</h1>
-				<%= image_tag 'band_at_us_open.png', :class => 'thumbnail',
-				    :alt => 'An E-flat bass and a tenor horn playing by the percussion.' %>
-				<h2>February 26, 2009<br />in Fond du Lac</h2>
-			</div>
-		</li>
+		<a href="<%= next_concerts_path -%>">
+			<li>
+				<div class="box">
+					<h1>Our Next Concert</h1>
+					<%= image_tag 'band_at_us_open.png', :class => 'thumbnail',
+					    :alt => 'An E-flat bass and a tenor horn playing by the percussion.' %>
+					<h2>February 26, 2009<br />in Fond du Lac</h2>
+				</div>
+			</li>
+		</a>
 
 		<li>
 			<div class="box">
