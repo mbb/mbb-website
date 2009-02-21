@@ -3,16 +3,17 @@
 	<head>
 		<title>Madison Brass Band - <%= controller_name.titleize -%></title>
 		<%= stylesheet_link_tag 'application' %>
+		<%= stylesheet_link_tag 'home' %>
 		<%= stylesheet_link_tag 'concerts/next' %>
 	</head>
 	
 	<body>
 		<%= render :partial => 'layouts/application/menu' %>
 		<%= render :partial => 'layouts/application/header' %>
-		<div class="container">
-			<hr class="banner" />
-			<%= yield %>
-		</div>
+		<%= render :partial => 'layouts/home/summary' %>
+		<hr class="banner" />
+		<%= yield %>
+		<hr class="banner" />
 		<%= render :partial => 'layouts/application/footer' %>
 	</body>
 </html>

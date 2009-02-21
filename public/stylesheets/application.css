@@ -1,18 +1,21 @@
+@charset "utf-8";
+
 body	{
 	background-color: #feffff;
 	font-family: verdana;
 	color: #333;
-	margin: 30px 0px 30px 0px;
+	margin: 0px 0px 30px 0px;
 }
 
 a	{
-	color: inherit;
+	color: #333;
 	text-decoration: none;
 }
 
 div.container	{
 	width: 700px;
 	margin: auto;
+	padding: 10px;
 }
 
 div.spacer	{
@@ -21,34 +24,14 @@ div.spacer	{
 }
 
 hr.banner	{
+	width: 120%;
+	position: relative;
+	left: -10%;
 	margin: 0;
 	border-style: none;
+	border-collapse: collapse;
 	height: 10px;
 	background-color: #a30000;
-	margin: auto;
-}
-
-/**
- * The navigation menu at the top of every page
- */
-#Menu	{	
-	list-style: none;
-	padding-left: 0px;
-	
-	text-align: center;
-}
-
-#Menu > li	{
-	display: inline;
-	padding: 1em;
-	font-size: 10pt;
-	font-weight: bold;
-	text-align: center;
-}
-
-#Menu > li:hover	{
-	color: red;
-	border-bottom: 2px solid #dee;
 }
 
 /**
@@ -57,34 +40,34 @@ hr.banner	{
 #Header	{
 	padding: 0px;
 	text-align: center;
-	width: 800px;
+	width: 730px;
 	margin: auto;
 	margin-top: 0px;
-	margin-bottom: 20px;
+	margin-bottom: 1em;
+	padding-left: 10px;
 }
 
-#Header > img#EyeCatcher	{
+#Header img#EyeCatcher	{
 	float: left;
-	width: 200px;
-	padding-top: 3em;
+	width: 150px;
+	padding-top: 1.5em;
 }
 
 
-#Header > #Title	{
+#Header #Title	{
 	float: left;
 	width: 580px;
-	margin-left: 20px;
 }
 
-#Header > #Title > h1	{
+#Header #Title h1	{
 	text-align: center;
-	font-size: 30pt;
+	font-size: 32pt;
 	color: #a30000;
-	margin-top: 20px;
+	margin-top: 45px;
 	margin-bottom: 0px;
 }
 
-#Header > #Title > h2	{
+#Header #Title h2	{
 	text-align: center;
 	color: #666;
 	font-style: oblique;
@@ -92,20 +75,50 @@ hr.banner	{
 	font-size: 10pt;
 }
 
-#Header > #Title > #Summary	{
-	margin-top: 20px;
-	margin-bottom: 20px;
-	padding-left: 10px;
-	padding-right: 10px;
+#Summary	{
+	width: 550px;
+	margin: auto;
+	margin-top: 2em;
+	margin-bottom: 2em;
+
 	text-align: center;
 	font-size: 12pt;
+}
+
+#Summary strong	{
+	font-size: 14pt;
+}
+
+/**
+ * The navigation menu lining the bottom of the header
+ */
+#Menu	{
+	list-style: none;
+	padding: 10px;
+	margin: 0;
+	background-color: #a30000;
+	color: white;
+	text-align: center;
+}
+
+#Menu li	{
+	display: inline;
+	padding: 0.5em 20px 0.5em 20px;
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+#Menu > li:hover	{
+	border-top: 2px solid #ffffff;
+	border-bottom: 2px solid #ffffff;
 }
 
 /**
  * The footer at the bottom of every page.
  */
 #Footer	{
-	margin-top: 7em;
+	margin-top: 3em;
 	clear: both;
 	
 	color: #777;

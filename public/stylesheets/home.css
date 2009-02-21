@@ -1,40 +1,53 @@
+hr.banner	{
+	width: 100%;
+	position: relative;
+	left: 0;
+	margin: 0;
+	border-style: none;
+	border-collapse: collapse;
+	height: 10px;
+	background-color: #a30000;
+}
+
 #FlashyMenu	{
 	margin: auto;
 	text-align: center;
 	width: 735px;
 }
 
-#FlashyMenu > ul	{
+#FlashyMenu ul	{
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	text-align: center;
 }
 
-#FlashyMenu > ul li	{
+#FlashyMenu ul li	{
 	float: left;
-	padding: 10px;
 }
 
-#FlashyMenu > ul li:hover	{
-	background-color: #FFFFEE;
+#FlashyMenu ul li:hover	{
+	background-color: #ffffe3;
 }
 
-#FlashyMenu > ul li > div.box	{
+#FlashyMenu ul li div.box	{
 	margin: 0;
+	padding: 10px;
+	padding-bottom: 20px;
 	width: 225px;
 	height: 260px;
 }
 
-#FlashyMenu > ul li div.box img.thumbnail	{
+#FlashyMenu ul li div.box img.thumbnail	{
 	width: 160px;
 	height: 160px;
+	border: none;
 }
 
-#FlashyMenu > ul li div.box h1	{
+#FlashyMenu ul li div.box h1	{
 	font-size: 16pt;
 }
 
-#FlashyMenu > ul li div.box h2	{
+#FlashyMenu ul li div.box h2	{
 	font-size: 10pt;
 }
