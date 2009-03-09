@@ -1,25 +1,28 @@
-hr.banner	{
-	width: 100%;
-	position: relative;
-	left: 0;
-	margin: 0;
-	border-style: none;
-	border-collapse: collapse;
-	height: 10px;
-	background-color: #a30000;
+#Summary	{
+	margin: 50px auto 40px auto;
+	max-width: 500px;
+	text-align: center;
+	font-size: 10pt;
+}
+
+#Summary h1	{
+	text-align: center;
+	margin: 10px;
 }
 
 #FlashyMenu	{
-	margin: auto;
+	margin: 40px 0 30px 0;
 	text-align: center;
-	width: 735px;
+	width: 100%;
+	background-color: white;
 }
 
 #FlashyMenu ul	{
 	list-style: none;
 	padding: 0;
-	margin: 0;
+	margin: 0 auto 0 auto;
 	text-align: center;
+	width: 735px;
 }
 
 #FlashyMenu ul li	{
@@ -27,7 +30,7 @@ hr.banner	{
 }
 
 #FlashyMenu ul li:hover	{
-	background-color: #ffffe3;
+	background-color: #eeeeee;
 }
 
 #FlashyMenu ul li div.box	{

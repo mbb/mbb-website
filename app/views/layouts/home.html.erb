@@ -8,12 +8,10 @@
 	</head>
 	
 	<body>
-		<%= render :partial => 'layouts/application/menu' %>
 		<%= render :partial => 'layouts/application/header' %>
-		<%= render :partial => 'layouts/home/summary' %>
-		<hr class="banner" />
-		<%= yield %>
-		<hr class="banner" />
+		<div class="container">
+			<%= yield %>
+		</div>
 		<%= render :partial => 'layouts/application/footer' %>
 	</body>
 </html>
