@@ -1,5 +1,5 @@
 <div id="FlashyMenu">
-	<ul>
+	<ul class="menu">
 		<hr />
 		<li>
 			<a href="<%= next_concerts_path -%>">
@@ -13,21 +13,25 @@
 		</li>
 
 		<li>
-			<div class="box">
-				<h1>Join the Band</h1>
-				<%= image_tag 'tuba_and_percussion.jpg', :class => 'thumbnail',
-				    :alt => 'An E-flat bass and a tenor horn playing by the percussion.' %>
-				<h2>We always need<br />good musicians!</h2>
-			</div>
+			<a href="<%= join_path -%>">
+				<div class="box">
+					<h1>Join the Band</h1>
+					<%= image_tag 'tuba_and_percussion.jpg', :class => 'thumbnail',
+					    :alt => 'An E-flat bass and a tenor horn playing by the percussion.' %>
+					<h2>We always need<br />good musicians!</h2>
+				</div>
+			</a>
 		</li>
 
 		<li>
-			<div class="box">
-				<h1>Book Our Group</h1>
-				<%= image_tag 'santa_hats.jpg', :class => 'thumbnail',
-				    :alt => 'Band Members in Santa Hats, looking up at the camera.' %>
-				<h2>We want to play<br />at your event!</h2>
-			</div>
+			<a href="<%= book_path -%>">
+				<div class="box">
+					<h1>Book Our Group</h1>
+					<%= image_tag 'santa_hats.jpg', :class => 'thumbnail',
+					    :alt => 'Band Members in Santa Hats, looking up at the camera.' %>
+					<h2>We want to play<br />at your event!</h2>
+				</div>
+			</a>
 		</li>
 		<div class="spacer"></div>
 		<hr />

@@ -1,8 +1,8 @@
 <ul id="Menu">
-	<li>News</li>
-	<li>Players</li>
-	<li>Concerts</li>
-	<li>Joining</li>
-	<li>Booking</li>
-	<li>Contact</li>
+	<%= link_to '<li>News</li>', news_path %>
+	<%= link_to '<li>Players</li>', players_path %>
+	<%= link_to '<li>Concerts</li>', concerts_path %>
+	<%= link_to '<li>Joining</li>', join_path %>
+	<%= link_to '<li>Booking</li>', book_path %>
+	<%= mail_to 'webmaster@madisonbrass.com', '<li>Contact</li>' %>
 </ul>
