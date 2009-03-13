@@ -1,57 +1,94 @@
-body	{
-	background-color: white;
-	font-family: sans-serif;
-	color: #333;
-	max-width: 800px;
-	min-width: 500px;
-	margin: auto;
-	margin-top: 2em;
-}
+@charset "utf-8";
 
-div	{
-	margin: 10px;
-}
-
-/**
- * The navigation menu at the top of every page
- */
-#Menu	{
-	padding: 0;
-	list-style: none;
-	text-align: center;
-}
-
-#Menu li	{
-	display: inline;
-	padding: 1em;
+html	{
+	background-color: #a30000;
+	height: 100%;
 	font-size: 10pt;
-	font-weight: bold;
+}
+
+body	{
+	background-color: #feffff;
+	font-family: verdana;
+	color: #333;
+	margin: 15px auto auto auto;
+	padding: 0 20px 0 20px;
+	min-height: 90%;
+	min-width: 600px;
+	max-width: 900px;
+}
+
+a	{
+	color: #533;
+	text-decoration: none;
+}
+
+div.container	{
+	width: 90%;
+	margin: auto;
+	padding: 0;
+}
+
+div.container > p	{
+	margin: 40px;
+}
+
+div.spacer	{
+	clear: both;
+	display: hidden;
+}
+
+hr	{
+	margin: 0 -20px 0 -20px;
+	border-style: none;
+	border-collapse: collapse;
+	height: 2px;
+	background-color: #a30000;
+}
+
+h1, h2, h3	{
 	text-align: center;
 }
 
-#Menu li:hover	{
-	color: red;
-	border-bottom: 2px solid #cee;
+h1	{
+	font-size: 24pt;
+}
+
+h2	{
+	font-size: 14pt;
+}
+
+h3	{
+	font-size: 10pt;
 }
 
 /**
  * The title at the top of every page.
  */
-#Title	{
-	margin: none;
-	padding: none;
+#Header	{
+	padding: 0px;
 	text-align: center;
-}
-
-#Title h1	{
+	width: 100%;
+	margin: auto;
 	margin-top: 0px;
-	margin-bottom: 0px;
-	text-align: center;
-	font-size: 36pt;
-	color: #c00;
+	padding-bottom: 0;
+	margin-bottom: 0;
 }
 
-#Title h2	{
+#Header a	{
+	color: #a30000;
+}
+
+#Header h1	{
+	text-align: center;
+	font-size: 32pt;
+	color: #a30000;
+	background-color: white;
+	margin: 0 20px 0 20px;
+	padding-top: 10px;
+	padding-bottom: 0;
+}
+
+#Header #Title h2	{
 	text-align: center;
 	color: #666;
 	font-style: oblique;
@@ -60,10 +97,43 @@ div	{
 }
 
 /**
+ * The navigation menu lining the bottom of the header
+ */
+#Menu	{
+	list-style: none;
+	width: 500px;
+	padding: 5px;
+	margin: 0 auto 0 auto;
+	background-color: white;
+	color: #a30000;
+	text-align: center;
+	border-top: 1px solid #a30000;
+	border-bottom: 1px solid #a30000;
+}
+
+#Menu a	{
+	color: #a30000;
+}
+
+#Menu li	{
+	display: inline;
+	padding: 5px 10px 5px 10px;
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+#Menu li:hover	{
+	background-color: #eeeeee;
+}
+
+/**
  * The footer at the bottom of every page.
  */
 #Footer	{
-	padding-top: 2em;
+	margin-top: 3em;
+	margin-bottom: 0;
+	padding-bottom: 1em;
 	clear: both;
 	
 	color: #777;

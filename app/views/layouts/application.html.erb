@@ -2,13 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
 		<title>Madison Brass Band - <%= controller_name.titleize -%></title>
-		<%= css_auto_include_tag %>
+		<%= css_auto_include_tags %>
 	</head>
 	
 	<body>
-		<%= render :partial => 'layouts/application/menu' %>
-		<%= render :partial => 'layouts/application/title' %>
-		<%= yield %>
+		<%= render :partial => 'layouts/application/header' %>
+		<div class="container">
+			<%= yield %>
+		</div>
 		<%= render :partial => 'layouts/application/footer' %>
 	</body>
 </html>
