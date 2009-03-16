@@ -18,8 +18,12 @@ body	{
 }
 
 a	{
-	color: #533;
+	color: #933;
 	text-decoration: none;
+}
+
+a:hover	{
+	color: #e33;
 }
 
 div.container	{
@@ -28,8 +32,14 @@ div.container	{
 	padding: 0;
 }
 
-div.container > p	{
+div.container p	{
 	margin: 40px;
+}
+
+div.container p.summary	{
+	width: 50%;
+	margin: auto;
+	text-align: center;
 }
 
 div.spacer	{
@@ -45,7 +55,7 @@ hr	{
 	background-color: #a30000;
 }
 
-h1, h2, h3	{
+h1, h2, h3, h4	{
 	text-align: center;
 }
 
@@ -59,6 +69,10 @@ h2	{
 
 h3	{
 	font-size: 10pt;
+}
+
+ul	{
+	list-style: none;
 }
 
 /**
@@ -131,6 +145,9 @@ h3	{
  * The footer at the bottom of every page.
  */
 #Footer	{
+	width: 50%;
+	margin: auto;
+	
 	margin-top: 3em;
 	margin-bottom: 0;
 	padding-bottom: 1em;
