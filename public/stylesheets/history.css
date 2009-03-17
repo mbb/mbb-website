@@ -1,0 +1,10 @@
+#OriginalBand	{
+	text-align: center;
+}
+
+#OriginalBand p.caption	{
+	margin: auto;
+	width: 500px;
+	text-align: center;
+	font-style: oblique;
+}
