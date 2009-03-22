@@ -1,0 +1,35 @@
+# Note: This file doubles as the full list of sections in the band. Look at rake tasks
+# in the namespace 'sections' for how to apply them to a database.
+
+soprano_cornet:
+  instrument: Soprano Cornet
+
+cornet:
+  instrument: Cornet
+
+flugelhorn:
+  instrument: Flugelhorn
+
+alto_horn:
+  instrument: Alto Horn
+
+trombone:
+  instrument: Trombone
+
+bass_trombone:
+  instrument: Bass Trombone
+
+euphonium:
+  instrument: Euphonium
+
+baritone:
+  instrument: Baritone
+
+eb_bass:
+  instrument: E-flat Bass
+
+bb_bass:
+  instrument: B-flat Bass
+
+percussion:
+  instrument: Percussion

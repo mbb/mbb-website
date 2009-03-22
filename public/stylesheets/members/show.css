@@ -1,0 +1,26 @@
+div.container	{
+	width: 80%;
+	margin: 0 auto 100px auto;
+}
+
+#Headshot	{
+	height: 287px;
+	width: 212px;
+	background-color: black;
+	float: left;
+	margin: auto 40px auto 40px;
+	padding: 4px;
+}
+
+#Name	{
+	margin-bottom: 0;
+}
+
+#Section	{
+	margin-top: 0;
+	font-size: 12pt;
+}
+
+#Biography	{
+	margin-right: 0;
+}
