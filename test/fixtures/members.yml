@@ -1,7 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-john:
-  first_name: John
-  last_name: Zwolanek
-  biography: John is a Czech musician who plays Flugelhorn for the band. He is also a founding member.
-  section: flugelhorn

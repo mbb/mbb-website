@@ -10,10 +10,10 @@ class MembersController < ApplicationController
     end
   end
 
-  # GET /members/1
-  # GET /members/1.xml
+  # GET /members/john_smith
+  # GET /members/john_smith.xml
   def show
-    @member = Member.find(params[:id])
+    @member = Member.find_by_path_component(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -32,9 +32,9 @@ class MembersController < ApplicationController
     end
   end
 
-  # GET /members/1/edit
+  # GET /members/john_smith/edit
   def edit
-    @member = Member.find(params[:id])
+    @member = Member.find_by_path_component(params[:id])
   end
 
   # POST /members
@@ -54,10 +54,10 @@ class MembersController < ApplicationController
     end
   end
 
-  # PUT /members/1
-  # PUT /members/1.xml
+  # PUT /members/john_smith
+  # PUT /members/john_smith.xml
   def update
-    @member = Member.find(params[:id])
+    @member = Member.find_by_path_component(params[:id])
 
     respond_to do |format|
       if @member.update_attributes(params[:member])
@@ -71,10 +71,10 @@ class MembersController < ApplicationController
     end
   end
 
-  # DELETE /members/1
-  # DELETE /members/1.xml
+  # DELETE /members/john_smith
+  # DELETE /members/john_smith.xml
   def destroy
-    @member = Member.find(params[:id])
+    @member = Member.find_by_path_component(params[:id])
     @member.destroy
 
     respond_to do |format|
