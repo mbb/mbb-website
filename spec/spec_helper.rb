@@ -28,11 +28,11 @@ module Spec
 					@model.valid?
 				end
 
-				def failure_message
+				def failure_message_for_should
 					"#{@model.class} expected to be valid but had errors:\n	#{@model.errors.full_messages.join("\n	")}"
 				end
 
-				def negative_failure_message
+				def failure_message_for_should_not
 					"#{@model.class} expected to have errors, but it did not"
 				end
 

@@ -10,7 +10,7 @@ module GenerateAStablePathComponentMatcher
 			@path_does_not_require_parsing and @path_is_recognizable
 		end
 		
-		def failure_message
+		def failure_message_for_should
 			message = "The Member #{@target} failed to generate a clean path component.\n"
 			
 			unless @path_does_not_require_parsing
@@ -23,7 +23,7 @@ module GenerateAStablePathComponentMatcher
 			end
 		end
 		
-		def negative_failure_message
+		def failure_message_for_should_not
 			"Expected that '#{@target.to_pc}' should be an invalid URI path component, but it did not require further parsing."
 		end
 		
