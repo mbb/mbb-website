@@ -1,35 +1,50 @@
 # Note: This file doubles as the full list of sections in the band. Look at rake tasks
 # in the namespace 'sections' for how to apply them to a database.
 
+director:
+  instrument: Director
+  position: 1
+
 soprano_cornet:
   instrument: Soprano Cornet
+  position: 2
 
 cornet:
   instrument: Cornet
+  position: 3
 
 flugelhorn:
   instrument: Flugelhorn
+  position: 4
 
 alto_horn:
   instrument: Alto Horn
+  position: 5
 
 trombone:
   instrument: Trombone
+  position: 6
 
 bass_trombone:
   instrument: Bass Trombone
+  position: 7
 
 euphonium:
   instrument: Euphonium
+  position: 8
 
 baritone:
   instrument: Baritone
+  position: 9
 
 eb_bass:
   instrument: E-flat Bass
+  position: 10
 
 bb_bass:
   instrument: B-flat Bass
+  position: 11
 
 percussion:
   instrument: Percussion
+  position: 12
