@@ -9,7 +9,6 @@ class Member < ActiveRecord::Base
 	has_and_belongs_to_many :roles
 	before_validation_on_create do |record|
 		if record.crypted_password.blank? and record.password.blank?
-			default_password = 'madisonbrass'
 			record.password_is_temporary = true
 			record.password = default_password
 			record.password_confirmation = default_password
@@ -47,7 +46,6 @@ class Member < ActiveRecord::Base
 		name
 	end
 
-	# HACK HACK HACK -- how to do attr_accessible from here?
 	# prevents a user from submitting a crafted form that bypasses activation
 	# anything else you want your user to change should be added here.
 	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id, :roles, :updated_at, :created_at
@@ -77,4 +75,8 @@ class Member < ActiveRecord::Base
     return true if @_list.include?("admin")
     (@_list.include?(role_in_question.to_s) )
   end
+
+	def self.default_password
+		'brass4life'
+	end
 end
