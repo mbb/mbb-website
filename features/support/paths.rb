@@ -24,7 +24,13 @@ module NavigationHelpers
 		when QuotedPathExpr
 			$1
 		when SomeonesHomePageExpr
-			private_member_path(Member.find_by_name($1))
+			someone = $1
+			unless (someone =~ /nonexistant/)
+				private_member_path(Member.find_by_name(someone))
+			else
+				Member.find_by_name('Nobody Special').destroy if Member.exists?(:name => 'Nobody Special')
+				'private/members/nobody_special'
+			end
 		else
 			page_name
 		end

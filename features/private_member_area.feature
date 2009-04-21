@@ -16,3 +16,7 @@ Story: Band Members have a Private Section
 		 When  she goes to Reggie Funkle's home page
 		 Then  she should be redirected to the login page
 		  And  she should see an error message 'You must be a member to access this page. Please log in.'
+		
+		 When  she goes to a nonexistant member's home page
+		 Then  she should be redirected to the login page
+		  And  she should see an error message 'You must be a member to access this page. Please log in.'

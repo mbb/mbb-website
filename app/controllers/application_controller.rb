@@ -6,6 +6,5 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	activate_css_auto_include
 	include AuthenticatedSystem
-  # You can move this into a different controller, if you wish.  This module gives you the require_role helpers, and others.
   include RoleRequirementSystem
 end

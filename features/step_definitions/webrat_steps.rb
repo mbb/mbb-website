@@ -11,7 +11,7 @@ When /^(.*) go to (.+)$/ do |_, page_name|
   visit path_to(page_name)
 end
 
-When /^(.*) press "([^\"]*)"$/ do |_, button|
+When /^(.*) press(es)? "([^\"]*)"$/ do |_, button|
   click_button(button)
 end
 
@@ -19,7 +19,7 @@ When /^(.*) follow "([^\"]*)"$/ do |_, link|
   click_link(link)
 end
 
-When /^(.*) fill in "([^\"]*)" with "([^\"]*)"$/ do |_, field, value|
+When /^(.*) fills? in "([^\"]*)" with "([^\"]*)"$/ do |_, field, value|
   fill_in(field, :with => value) 
 end
 
@@ -86,7 +86,7 @@ When /^(.*) choose "([^\"]*)"$/ do |_, field|
   choose(field)
 end
 
-When /^(.*) attach the file at "([^\"]*)" to "([^\"]*)"$/ do |_, path, field|
+When /^(.*) attach(es)? the file at "([^\"]*)" to "([^\"]*)"$/ do |_, path, field|
   attach_file(field, path)
 end
 

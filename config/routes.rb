@@ -14,8 +14,6 @@ ActionController::Routing::Routes.draw do |map|
 	# Authentication
 	map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
-  map.register '/register', :controller => 'private/members', :action => 'create'
-  map.signup '/signup', :controller => 'private/members', :action => 'new'
   map.resource :session
 	
 	# Private for Board Members

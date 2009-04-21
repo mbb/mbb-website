@@ -2,17 +2,17 @@
 # What you should see when you get there
 #
 
-Then "$actor should be at $path" do |_, path|
-  response.should render_template(template_called(path))
-end
-
-Then "$actor should be redirected to $path" do |_, path|
+Then /^(.*) should be (at|taken to|redirected to) (.*)$/ do |_, _, path|
   response.should render_template(template_called(path))
 end
 
 #
 # Tags
 #
+
+Then /^(.*) should see a link labeled (.*)$/ do |_, link_text|
+	response.should have_tag('a').with_text(link_text)
+end
 
 Then "the page should contain '$text'" do |_, text|
   response.should have_text(/#{text}/)

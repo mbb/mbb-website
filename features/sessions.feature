@@ -4,16 +4,17 @@ identity verification to be as secure and convenient as possible.
 
 Story: Logging in
   As an anonymous member with an account, I want to log in to my account so that I can access private data.
+  
+  #
+  # Good logins are successful!
+  #
 
-  Scenario: Anonymous member can get a login form.
+	Scenario: Anonymous member can get a login form.
     Given  an anonymous member
      When  she goes to /login
      Then  she should be at the new sessions page
       And  she should see a <form> containing a textfield: Name, password: Password, and submit: 'Log in'
-  
-  #
-  # Log in successfully, remember me
-  #
+
   Scenario: Anonymous member can log in and be remembered
     Given  an anonymous member
       And  an activated member named 'Reggie Funkle'
@@ -27,7 +28,7 @@ Story: Logging in
 		  And  she should not see a notice message 'Logged in successfully'
    
   #
-  # Log in unsuccessfully
+  # Bad logins are rejected!
   #
   
   Scenario: Logged-in member who fails logs in should be logged out
@@ -67,8 +68,9 @@ Story: Logging in
 
 
   #
-  # Log out successfully (should always succeed)
+  # Logging out always works!
   #
+
   Scenario: Anonymous (logged out) member can log out.
     Given an anonymous member
     When  she goes to /logout

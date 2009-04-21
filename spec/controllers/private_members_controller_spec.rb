@@ -82,11 +82,11 @@ describe Private::MembersController do
 		end
 		
 		it "should route members's 'new' action correctly" do
-			route_for(:controller => 'private/members', :action => 'new').should == "/signup"
+			route_for(:controller => 'private/members', :action => 'new').should == "/private/members/new"
 		end
 		
 		it "should route {:controller => 'private/members', :action => 'create'} correctly" do
-			route_for(:controller => 'private/members', :action => 'create').should == "/register"
+			route_for(:controller => 'private/members', :action => 'create').should == {:path => '/private/members', :method => :post}
 		end
 		
 		it "should route members's 'show' action correctly" do
@@ -176,5 +176,4 @@ describe Private::MembersController do
 			edit_private_member_path(:id => '1').should == "/private/members/1/edit"
 		end
 	end
-	
 end

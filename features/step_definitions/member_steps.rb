@@ -35,6 +35,12 @@ Given "there is no $role member named '$name'" do |_, name|
 	@member.should be_nil
 end
 
+Given "we memorize $name's $attributes" do |name, attrs|
+	member = Member.find_by_name(name)
+	member.should_not be_nil
+	memorize_member_attributes(member, attrs)
+end
+
 #
 # Actions
 #
@@ -72,6 +78,30 @@ end
 Then "$actor should be logged in" do |name|
 	controller.logged_in?.should be_true
 	controller.current_member.name.should == name
+end
+
+Then '$actor should have the default password' do |member_name|
+	Member.authenticate(member_name, Member.default_password).should_not be_nil
+end
+
+Then '$name\'s $attribute should change' do |name, attribute|
+	member = Member.find_by_name(name)
+	member.should_not be_nil
+	member.should respond_to(attribute)
+	
+	new_value = member.send(attribute)
+	old_value = recall_member_attribute(member, attribute)
+	old_value.should equal(new_value)
+end
+
+Then '$name\'s $attribute should not change' do |name, attribute|
+	member = Member.find_by_name(name)
+	member.should_not be_nil
+	member.should respond_to(attribute)
+	
+	new_value = member.send(attribute)
+	old_value = recall_member_attribute(member, attribute)
+	old_value.should_not equal(new_value)
 end
 
 def named_member name
@@ -159,4 +189,18 @@ end
 def log_in_member! member_params
 	member_params.merge('password' => 'madisonbrass', 'password_confirmation' => 'madisonbrass') if member_params['password'].nil?
 	log_in_member member_params
+end
+
+def memorize_member_attributes(member, attrs)
+	varname = "@#{member.to_pc}"
+	if instance_variable_get(varname).nil?
+		instance_variable_set(varname, Hash.new)
+	end
+	
+	attrs.to_array_from_story.each do |attr|
+		member.should respond_to(attr)
+		var = instance_variable_get(varname)
+		var['#{attr}'] = member.send(attr)
+		instance_variable_set(varname, var)
+	end
 end
