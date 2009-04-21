@@ -99,6 +99,7 @@ ul	{
 }
 
 #Header h1	{
+	background-color: transparent;
 	text-align: center;
 	font-size: 32pt;
 	color: #a30000;
@@ -106,6 +107,7 @@ ul	{
 	margin: 0 20px 0 20px;
 	padding-top: 10px;
 	padding-bottom: 0;
+	clear: right;
 }
 
 #Header #Title h2	{
@@ -114,6 +116,13 @@ ul	{
 	font-style: oblique;
 	margin: 0px;
 	font-size: 10pt;
+}
+
+#LoginLink, #LogoutLink	{
+	font-size: 8pt;
+	float: right;
+	margin-top: 10px;
+	margin-bottom: -20px;
 }
 
 /**

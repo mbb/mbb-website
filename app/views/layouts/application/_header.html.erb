@@ -1,4 +1,9 @@
 <div id="Header">
+	<% unless logged_in? %>
+		<%= link_to 'Member Login',  login_path,  {:title => 'Member Login', :id => 'LoginLink'} %>
+	<% else %>
+		<%= link_to 'Log Out', logout_path, {:title => 'Log Out', :id => 'LogoutLink'} %>
+	<% end %>
 	<h1><%= link_to 'Madison Brass Band', home_path %></h1>
 	<%= render :partial => 'layouts/application/menu' %>
 </div>

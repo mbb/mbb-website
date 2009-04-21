@@ -9,13 +9,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090409193035) do
+ActiveRecord::Schema.define(:version => 20090411174744) do
 
   create_table "members", :force => true do |t|
     t.text     "biography"
     t.integer  "section_id"
     t.datetime "created_at"
     t.string   "name"
+    t.string   "email",                     :limit => 100, :default => "",    :null => false
+    t.string   "crypted_password",          :limit => 100
+    t.string   "salt",                      :limit => 40
+    t.string   "remember_token",            :limit => 40
+    t.datetime "remember_token_expires_at"
+    t.boolean  "password_is_temporary",                    :default => false
+  end
+
+  add_index "members", ["email"], :name => "index_members_on_email", :unique => true
+
+  create_table "members_roles", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "member_id"
+  end
+
+  add_index "members_roles", ["member_id"], :name => "index_members_roles_on_member_id"
+  add_index "members_roles", ["role_id"], :name => "index_members_roles_on_role_id"
+
+  create_table "roles", :force => true do |t|
+    t.string "name"
   end
 
   create_table "sections", :force => true do |t|
