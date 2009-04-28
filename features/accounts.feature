@@ -12,7 +12,7 @@ Story: Creating Accounts for Band Members
 		  And the member should have name: 'Oona Funkle', and email: 'unactivated@example.com'
 		  And Reggie Funkle should be logged in
 
-	Scenario: You can not create an account replacing an activated account
+	Scenario: Board member can not create an account replacing an activated account
 		Given a board member logged in as 'Oona Funkle'
 		  And an activated member named 'Reggie Funkle'
 		  And we try hard to remember the member's created_at
@@ -24,7 +24,7 @@ Story: Creating Accounts for Band Members
 		  And the member should have email: 'registered@example.com'
 		  And the member's created_at should stay the same under to_s
 
-	Scenario: You can not create an account with incomplete or incorrect input
+	Scenario: Board member can not create an account with incomplete or incorrect input
 		Given a board member logged in as 'Reggie Funkle'
 		  And no member with name: 'Oona Funkle' exists
 		 When the board member registers an account with name: '', email: 'unactivated@example.com', and section: 'Trombone'
@@ -32,7 +32,7 @@ Story: Creating Accounts for Band Members
 		  And the board member should see an errorExplanation message 'Name can't be blank'
 		  And no member with name: '' should exist
 
-	Scenario: You can not create an account with bad email
+	Scenario: Board member can not create an account with bad email
 		Given a board member logged in as 'Reggie Funkle'
 		  And no member with name: 'Oona Funkle' exists
 		 When he registers an account with name: 'Oona Funkle', email: '', and section: 'Cornet'
@@ -40,7 +40,7 @@ Story: Creating Accounts for Band Members
 		  And he should see an errorExplanation message 'Email can't be blank'
 		  And no member with name: 'Oona Funkle' should exist
 		
-	Scenario: You can create an account with all the necessary attributes.
+	Scenario: Board member can create an account with all the necessary attributes.
 		Given a board member logged in as 'Reggie Funkle'
 		 When Reggie registers an account with name: 'Oona Funkle', section: 'Soprano Cornet', and email: 'unactivated@example.com'
 		 Then she should be redirected to the private member list page
@@ -51,3 +51,4 @@ Story: Creating Accounts for Band Members
 		  And Oona Funkle should have the default password
 		 When Reggie goes to the private member list page
 		 Then I should see Oona Funkle in the Soprano Cornet section
+
