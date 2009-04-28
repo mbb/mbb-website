@@ -6,4 +6,4 @@
 	url = git@github.com:ajtack/restful-authentication.git
 [submodule "vendor/plugins/role_requirement"]
 	path = vendor/plugins/role_requirement
-	url = git://github.com/timcharper/role_requirement.git
+	url = git@github.com:ajtack/role_requirement.git
