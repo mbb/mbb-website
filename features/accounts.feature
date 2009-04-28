@@ -52,3 +52,9 @@ Story: Creating Accounts for Band Members
 		 When Reggie goes to the private member list page
 		 Then I should see Oona Funkle in the Soprano Cornet section
 
+	Scenario: A Regular member cannot create an account.
+		Given a regular member logged in as 'Reggie Funkle'
+		 When he goes to the create-new-member page
+		 Then he should be redirected to the private member list page
+		  And he should see an error message 'You do not have permission'
+		  And Reggie Funkle should be logged in

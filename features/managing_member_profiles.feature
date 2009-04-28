@@ -65,4 +65,18 @@ Story: Managing Band-member Information
 		  And Reggie Funkle's biography should change
 		  And Reggie Funkle's email should not change
 		  And Reggie Funkle's picture_created_at should not change
+	
+	Scenario: As a regular member, I cannot log in and go to someone else's private member page.
+		Given a regular member logged in as 'Reggie Funkle'
+		  And a registered member named 'Oona Funkle'
+		 When Reggie goes to Oona Funkle's home page
+		 Then she should be redirected to Oona Funkle's public page
+		  And she should not see an error message 'You do not have permission'
+		
+	Scenario: As a regular member, I cannot log in and edit someone else's information.
+		Given a regular member logged in as 'Reggie Funkle'
+		  And a registered member named 'Oona Funkle'
+		 When Reggie goes to edit member Oona Funkle
+		 Then she should be redirected to the private member list page
+		  And she should see an error message 'You do not have permission'
 		

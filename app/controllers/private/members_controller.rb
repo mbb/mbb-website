@@ -1,6 +1,7 @@
 class Private::MembersController < ApplicationController
 	before_filter :login_required
-	require_role 'board', :only => [:new, :create, :edit, :update]
+	before_filter :must_be_this_member_or_board, :only => [:edit, :update]
+	require_role 'board', :only => [:new, :create, :edit, :update, :destroy]
 	
 	# GET /private/members
 	# GET /private/members.xml
@@ -19,7 +20,14 @@ class Private::MembersController < ApplicationController
 		@member = Member.find_by_path_component(params[:id])
 	
 		respond_to do |format|
-			format.html # show.html.erb
+			format.html do
+				unless params[:id] != current_member.to_pc
+					render
+				else
+					render '/members/show'
+				end
+			end
+			
 			format.xml	{ render :xml => @member }
 		end
 	end
@@ -84,4 +92,15 @@ class Private::MembersController < ApplicationController
 			end
 		end
 	end
+	
+	private
+		def must_be_this_member_or_board
+			unless current_member.roles.include?('board') or params[:id] == current_member.to_pc
+				flash[:error] = "You do not have permission to #{action_name} another member."
+				redirect_to private_members_path
+				false
+			else
+				true
+			end
+		end
 end

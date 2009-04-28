@@ -145,8 +145,12 @@ def create_member(member_params={})
 end
 
 def create_member!(role_name, member_params)
-	role = create_role(role_name)
-	create_member member_params.merge(:roles => [role])
+	unless role_name == 'regular'
+		role = create_role(role_name)
+		create_member member_params.merge(:roles => [role])
+	else
+		create_member member_params
+	end
 end
 
 def clean_member_params!(member_params)

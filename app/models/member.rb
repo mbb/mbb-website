@@ -31,7 +31,7 @@ class Member < ActiveRecord::Base
 	validates_presence_of    :section
 
 	def to_pc
-		name.gsub(' ', '_').downcase
+		self.class.to_pc(name)
 	end
 
 	def self.find_by_path_component(component)
@@ -78,5 +78,11 @@ class Member < ActiveRecord::Base
 
 	def self.default_password
 		'brass4life'
+	end
+	
+	# Turns Andres J. Tack into andres_j._tack
+	# (pc => "path component")
+	def self.to_pc(name)
+		name.gsub(' ', '_').downcase
 	end
 end
