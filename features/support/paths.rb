@@ -4,7 +4,7 @@ module NavigationHelpers
 		when ResourceExpr
 			template_for($1, $2)
 		when ActionOnResourceExpr
-			action_template_for($1, $2, $3)
+			action_path_for($1, $2, Member.to_pc($3))
 		when TheSomethingPageExpr
 			case $1
 			when /home/
@@ -76,6 +76,19 @@ module NavigationHelpers
 		SomeonesPublicPageExpr = /(.*)'s public page/
 		QuotedPathExpr = /^'([^']*)'$/i
 
+		def action_path_for(action, resource, id)
+			case resource.pluralize
+			when 'members'
+				unless action =~ /edit|create|destroy|update/
+					"members/#{id}/#{action}"
+				else
+					"private/members/#{id}/#{action}"
+				end
+			else
+				"#{resource.pluralize.gsub(" ", "_")}/#{id}/#{action}"
+			end
+		end	
+
 		# turns 'new', 'road bikes' into 'road_bikes/new'
 		# note that it's "action resource"
 		def template_for(action, resource)
@@ -86,17 +99,14 @@ module NavigationHelpers
 			case resource.pluralize
 			when 'members'
 				unless action =~ /edit|create|destroy|update/
-					"members/#{Member.to_pc(id)}/#{action}"
+					"members/#{action}"
 				else
-					"private/members/#{Member.to_pc(id)}/#{action}"
+					"private/members/#{action}"
 				end
 			else
-				"#{resource.pluralize.gsub(" ", "_")}/#{id}/#{action}"
+				"#{resource.pluralize.gsub(" ", "_")}/#{action}"
 			end
 		end
 end
 
-World do |world|
-	world.extend NavigationHelpers
-	world
-end
+World(NavigationHelpers)

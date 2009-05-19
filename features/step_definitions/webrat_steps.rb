@@ -1,5 +1,3 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
-
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
@@ -11,15 +9,16 @@ When /^(.*) go to (.+)$/ do |_, page_name|
   visit path_to(page_name)
 end
 
-When /^(.*) press(es)? "([^\"]*)"$/ do |_, button|
+When /^(.*) press(es)? "([^\"]*)"$/ do |_, _, button|
   click_button(button)
 end
 
-When /^(.*) follow "([^\"]*)"$/ do |_, link|
+When /^(.*) (follows?|clicks?) "([^\"]*)"$/ do |_, _, link|
   click_link(link)
 end
 
 When /^(.*) fills? in "([^\"]*)" with "([^\"]*)"$/ do |_, field, value|
+	debugger
   fill_in(field, :with => value) 
 end
 
@@ -86,7 +85,7 @@ When /^(.*) choose "([^\"]*)"$/ do |_, field|
   choose(field)
 end
 
-When /^(.*) attach(es)? the file at "([^\"]*)" to "([^\"]*)"$/ do |_, path, field|
+When /^(.*) attach(es)? the file at "([^\"]*)" to "([^\"]*)"$/ do |_, _, path, field|
   attach_file(field, path)
 end
 

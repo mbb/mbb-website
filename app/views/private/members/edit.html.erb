@@ -1,27 +1,36 @@
 <h1>Editing member</h1>
 
-<% form_for(@member) do |f| %>
-  <%= f.error_messages %>
+<% form_for [:private, @member], :html => { :multipart => true, :method => :put } do |f| %>
+	<%= f.error_messages %>
 
-  <p>
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </p>
-  <p>
-    <%= f.label :middle_names %><br />
-    <%= f.text_field :middle_names %>
-  </p>
-  <p>
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </p>
-  <p>
-    <%= f.label :biography %><br />
-    <%= f.text_area :biography %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+	<p>
+		<%= f.label :name %><br/>
+		<%= f.text_field :name %>
+	</p>
+
+	<p>
+		<%= f.label :email, 'E-Mail' %><br/>
+		<%= f.text_field :email %>
+	</p>
+
+	<p>
+		<%= f.label :section_id, 'Section' %><br/>
+		<%= f.select :section_id, Section.all.collect {|s| [s.instrument, s.id] } %>
+	</p>
+	
+	<p>
+		<%= f.label :biography %><br />
+		<%= f.text_area :biography %>
+	</p>
+	
+	<p>
+		<%= f.label :photo %><br />
+		<%= f.file_field :photo %>
+	</p>
+
+	<p>
+		<%= f.submit "Save" %>
+	</p>
 <% end %>
 
 <%= link_to 'Show', @member %> |

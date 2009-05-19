@@ -7,6 +7,9 @@
 	
 	<body>
 		<%= render :partial => 'layouts/application/header' %>
+		<% if logged_in? -%>
+			<%= render :partial => 'layouts/application/member_bar' %>
+		<% end -%>
 		<%= render :partial => 'layouts/application/notices' %>
 		<div class="container">
 			<%= yield %>

@@ -9,7 +9,13 @@
 		<h2><%= section.instrument -%></h2>
 		<ul class="section_members" id="<%= section.instrument.tableize %>">
 		<% section.members.each do |member| -%>
-			<li><%= link_to member, member_path(member) -%></li>
+			<li>
+			<% unless member.biography.nil? -%>
+				<%= link_to member, member_path(member) %>
+			<% else -%>
+				<%= member.name %>
+			<% end -%>
+			</li>
 		<% end -%>
 		</ul>
 	</li>

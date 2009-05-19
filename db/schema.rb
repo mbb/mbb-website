@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(:version => 20090411174744) do
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
     t.boolean  "password_is_temporary",                    :default => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true

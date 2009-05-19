@@ -18,8 +18,8 @@ Story: Creating Accounts for Band Members
 		  And we try hard to remember the member's created_at
 		 When Reggie registers an account with name: 'Reggie Funkle', email: 'reggie@example.com', and section: 'Euphonium'
 		 Then Reggie should be redirected to the create-new-member page
-		  And Reggie should see an errorExplanation message 'Reggie Funkle is already in the band!'
-		  And Reggie should not see an errorExplanation message 'Someone already owns the e-mail address reggie@example.com.'
+		  And Reggie should see an errorExplanation entry 'Reggie Funkle is already in the band!'
+		  And Reggie should not see an errorExplanation entry 'Someone already owns the e-mail address reggie@example.com.'
 		  And a member with name: 'Reggie Funkle' should exist
 		  And the member should have email: 'registered@example.com'
 		  And the member's created_at should stay the same under to_s
@@ -29,7 +29,7 @@ Story: Creating Accounts for Band Members
 		  And no member with name: 'Oona Funkle' exists
 		 When the board member registers an account with name: '', email: 'unactivated@example.com', and section: 'Trombone'
 		 Then the board member should be at the create-new-member page
-		  And the board member should see an errorExplanation message 'Name can't be blank'
+		  And the board member should see an errorExplanation entry 'Name can't be blank'
 		  And no member with name: '' should exist
 
 	Scenario: Board member can not create an account with bad email
@@ -37,7 +37,7 @@ Story: Creating Accounts for Band Members
 		  And no member with name: 'Oona Funkle' exists
 		 When he registers an account with name: 'Oona Funkle', email: '', and section: 'Cornet'
 		 Then he should be at the create-new-member page
-		  And he should see an errorExplanation message 'Email can't be blank'
+		  And he should see an errorExplanation entry 'Email can't be blank'
 		  And no member with name: 'Oona Funkle' should exist
 		
 	Scenario: Board member can create an account with all the necessary attributes.

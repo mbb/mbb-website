@@ -1,7 +1,7 @@
 class Private::MembersController < ApplicationController
 	before_filter :login_required
 	before_filter :must_be_this_member_or_board, :only => [:edit, :update]
-	require_role 'board', :only => [:new, :create, :edit, :update, :destroy]
+	require_role 'board', :only => [:new, :create, :destroy]
 	
 	# GET /private/members
 	# GET /private/members.xml
@@ -20,14 +20,7 @@ class Private::MembersController < ApplicationController
 		@member = Member.find_by_path_component(params[:id])
 	
 		respond_to do |format|
-			format.html do
-				unless params[:id] != current_member.to_pc
-					render
-				else
-					render '/members/show'
-				end
-			end
-			
+			format.html # show.html.erb
 			format.xml	{ render :xml => @member }
 		end
 	end
@@ -84,7 +77,7 @@ class Private::MembersController < ApplicationController
 		respond_to do |format|
 			if @member.update_attributes(params[:member])
 				flash[:notice] = 'Member was successfully updated.'
-				format.html { redirect_to(@member) }
+				format.html { redirect_to private_member_path(@member) }
 				format.xml	{ head :ok }
 			else
 				format.html { render :action => "edit" }

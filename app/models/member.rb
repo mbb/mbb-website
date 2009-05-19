@@ -7,6 +7,10 @@ class Member < ActiveRecord::Base
 
 	belongs_to :section
 	has_and_belongs_to_many :roles
+	has_attached_file :photo, :styles =>	{
+		:headshot => '212x287#',
+		:thumbnail => '80x80#'
+	}
 	before_validation_on_create do |record|
 		if record.crypted_password.blank? and record.password.blank?
 			record.password_is_temporary = true
@@ -48,7 +52,8 @@ class Member < ActiveRecord::Base
 
 	# prevents a user from submitting a crafted form that bypasses activation
 	# anything else you want your user to change should be added here.
-	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id, :roles, :updated_at, :created_at
+	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id,
+		:roles, :updated_at, :created_at, :photo, :biography
 
 	# Authenticates a user by their login name and unencrypted password.	Returns the user or nil.
 	#

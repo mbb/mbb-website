@@ -1,6 +1,3 @@
-RE_member			= %r{(?:(?:the )? *(\w+) *)}
-MemberType = %r{(?: *(\w+)? *)}
-
 #
 # Setting
 #
@@ -94,7 +91,7 @@ Then '$name\'s $attribute should change' do |name, attribute|
 	
 	new_value = member.send(attribute)
 	old_value = recall_member_attribute(member, attribute)
-	old_value.should equal(new_value)
+	old_value.should_not eql(new_value)
 end
 
 Then '$name\'s $attribute should not change' do |name, attribute|
@@ -102,9 +99,9 @@ Then '$name\'s $attribute should not change' do |name, attribute|
 	member.should_not be_nil
 	member.should respond_to(attribute)
 	
-	new_value = member.send(attribute)
+	new_value = (member.send(attribute).nil?) ? '' : member.send(attribute)
 	old_value = recall_member_attribute(member, attribute)
-	old_value.should_not equal(new_value)
+	old_value.should eql(new_value)
 end
 
 def named_member name
@@ -207,7 +204,14 @@ def memorize_member_attributes(member, attrs)
 	attrs.to_array_from_story.each do |attr|
 		member.should respond_to(attr)
 		var = instance_variable_get(varname)
-		var['#{attr}'] = member.send(attr)
+		var["#{attr}"] = (member.send(attr).nil?) ? '' : member.send(attr)
 		instance_variable_set(varname, var)
 	end
+end
+
+def recall_member_attribute(member, attr)
+	varname = "@#{member.to_pc}"
+	model = instance_variable_get(varname)
+	member.should respond_to(attr)
+	model["#{attr}"]
 end

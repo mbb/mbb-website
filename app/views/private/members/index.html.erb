@@ -1,6 +1,6 @@
 <h1>Our Members</h1>
 <p>
-	We are fortunate to have an exceptional roster of players, many of them professional musicians and music educators, from throughout Southern Wisconsin. Our roster allows us to play challenging pieces and solo events, and our players have seen some of the best brass band repertoire through their tenure with the group. Our players are not paid, but rather they play for the music and for the exciting musical experience which is the Madison Brass Band.
+	This is the current roster of the band, reflected on the <%= link_to 'public member list', private_members_path -%> we publish. <%= link_to_current_member :content_text => 'Your profile' -%> is editable.
 </p>
 
 <ul id="Sections">
@@ -9,7 +9,7 @@
 		<h2><%= section.instrument -%></h2>
 		<ul class="section_members" id="<%= section.instrument.tableize %>">
 		<% section.members.each do |member| -%>
-			<li><%= link_to member, member_path(member) -%></li>
+			<li><%= link_to member, private_member_path(member) -%></li>
 		<% end -%>
 		</ul>
 	</li>
