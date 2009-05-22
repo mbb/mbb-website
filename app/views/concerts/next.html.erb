@@ -1,4 +1,5 @@
+<%= render :partial => 'menu' %>
 <h1>Our Next Concert</h1>
 
-<%= render :partial => 'map', :locals => {:concert => @concert} unless @concert.google_map_embed_url.nil? %>
 <%= render @concert %>
+<%= render :partial => 'map', :locals => {:concert => @concert} unless @concert.google_map_embed_url.nil? %>

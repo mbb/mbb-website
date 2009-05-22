@@ -12,9 +12,17 @@ ul#Concerts li	{
 	border-bottom: solid #a30000 1px;
 }
 
+.concert	{
+	width: 80%;
+	margin: auto;
+}
+
+ul#Concerts li .concert	{
+	width: 100%;
+}
+
 #ConcertMap	{
-	float: left;
-	margin: 20px;
+	margin: 0 25% 0 25%;
 }
 
 #Program	{
