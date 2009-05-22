@@ -1,4 +1,4 @@
-<h1>Editing member</h1>
+<h1>Edit Your Profile</h1>
 
 <% form_for [:private, @member], :html => { :multipart => true, :method => :put } do |f| %>
 	<%= f.error_messages %>
@@ -24,8 +24,8 @@
 	</p>
 	
 	<p>
-		<%= f.label :photo %><br />
-		<%= f.file_field :photo %>
+		<%= f.label :photo_file_name, 'Photo' %><br />
+		<%= f.file_field :photo_file_name %>
 	</p>
 
 	<p>
@@ -33,5 +33,5 @@
 	</p>
 <% end %>
 
-<%= link_to 'Show', @member %> |
+<%= link_to 'Back to Profile', @member %> |
 <%= link_to 'Back', members_path %>
