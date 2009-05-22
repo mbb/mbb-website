@@ -1,15 +1,15 @@
 <h1 id="Name"><%=h @member.name -%></h1>
 <h2 id="Section"><%=h @member.section -%></h2>
 
-<% unless current_member.id != @member.id -%>
-<div id="Actions">
-	<%= link_to 'Edit', edit_private_member_path(@member) %>
-</div>
-<% end -%>
-
 <%= image_tag @member.photo.url(:headshot), :id => 'Headshot' %>
 <p id="Email"><%=h @member.email -%></p>
 <p id="Biography">
   <%=h @member.biography %>
 </p>
 <div class="spacer"></div>
+
+<% unless current_member.id != @member.id -%>
+<div id="Actions">
+	<%= link_to 'Edit My Profile', edit_private_member_path(@member) %>
+</div>
+<% end -%>

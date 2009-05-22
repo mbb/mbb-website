@@ -10,8 +10,8 @@ Given "an? $role member with $attributes" do |role, attributes|
 	create_member! role, attributes.to_hash_from_story
 end
 
-Given "an? $role member named '$login'" do |role, login|
-	create_member! role, named_member(login)
+Given "an? $role member named '$name'" do |role, name|
+	create_member! role, named_member(name)
 end
 
 Given "an? $role member logged in as '$name'" do |role, name|
@@ -106,9 +106,21 @@ end
 
 def named_member name
 	member_params = {
-		'Admin Funkle'	 => {'name' => 'Admin Funkle',	'password' => '1234admin',  'email' => 'admin@example.com',			 'section' => 'Euphonium'},
-		'Oona Funkle'		 => {'name' => 'Oona Funkle',	  'password' => '1234oona',   'email' => 'unactivated@example.com', 'section' => 'Euphonium'},
-		'Reggie Funkle'	 => {'name' => 'Reggie Funkle', 'password' => '1234reggie', 'email' => 'registered@example.com' , 'section' => 'Euphonium'},
+		'Admin Funkle' => {'name' => 'Admin Funkle',
+		                   'password' => '1234admin',
+		                   'email' => 'admin@example.com',
+		                   'section' => 'Euphonium'},
+		'Oona Funkle' => {'name' => 'Oona Funkle',
+		                  'password' => '1234oona',
+		                  'email' => 'unactivated@example.com',
+		                  'section' => 'Euphonium',
+		                  'photo_file_name' => "features/support/new_picture.jpg",
+		                  'photo_file_size' => 20173,
+		                  'photo_content_type' => 'image/jpeg'},
+		'Reggie Funkle' => {'name' => 'Reggie Funkle',
+		                    'password' => '1234reggie',
+		                    'email' => 'registered@example.com' ,
+		                    'section' => 'Euphonium'},
 		}
 	member_params[name]
 end

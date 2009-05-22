@@ -13,7 +13,7 @@ Story: Managing Band-member Information
 		
 		 When the anonymous member logs in with name: 'Reggie Funkle', and password: '1234reggie'
 		 Then he should be redirected to Reggie Funkle's home page
-		  And he should see a link labeled Edit
+		  And he should see a link labeled Edit My Profile
 		
 		 When he clicks "Edit"
 		 Then he should be taken to the edit member Reggie Funkle page
@@ -26,6 +26,25 @@ Story: Managing Band-member Information
 		  And Reggie Funkle's biography should not change
 		  And Reggie Funkle's email should not change
 		
+		
+	Scenario: As a regular member with a picture, I don't lose my picture by not re-adding one (even though file forms don't re-fill).
+		Given an anonymous member
+		  And a registered member named 'Oona Funkle'
+		  And we memorize Oona Funkle's photo_file_name
+
+		 When the anonymous member logs in with name: 'Oona Funkle', and password: '1234oona'
+		 Then he should be redirected to Oona Funkle's home page
+		  And he should see a link labeled Edit My Profile
+
+		 When he clicks "Edit"
+		 Then he should be taken to the edit member Oona Funkle page
+		  And he should see a <form> containing a file: Photo
+		
+		 When he presses "Save"
+		 Then he should be redirected to Oona Funkle's home page
+		  And Oona Funkle's photo_file_name should not change
+		
+		
 	Scenario: As a regular member, I log in and change my e-mail address.
 		Given an anonymous member
 		  And a registered member named 'Reggie Funkle'
@@ -33,7 +52,7 @@ Story: Managing Band-member Information
 		
 		 When the anonymous member logs in with name: 'Reggie Funkle', and password: '1234reggie'
 		 Then he should be redirected to Reggie Funkle's home page
-		  And he should see a link labeled Edit
+		  And he should see a link labeled Edit My Profile
 		
 		 When he clicks "Edit"
 		 Then he should be taken to the edit member Reggie Funkle page
@@ -46,14 +65,15 @@ Story: Managing Band-member Information
 		  And Reggie Funkle's photo_file_name should not change
 		  And Reggie Funkle's biography should not change
 		
-	Scenario: As a regular member, I log in and change my e-mail address.
+		
+	Scenario: As a regular member, I can log in and change my e-mail address.
 		Given an anonymous member
 		  And a registered member named 'Reggie Funkle'
 		  And we memorize Reggie Funkle's biography, email, and photo_file_name
 
 		 When the anonymous member logs in with name: 'Reggie Funkle', and password: '1234reggie'
 		 Then he should be redirected to Reggie Funkle's home page
-		  And he should see a link labeled Edit
+		  And he should see a link labeled Edit My Profile
 
 		 When he clicks "Edit"
 		 Then he should be taken to the edit member Reggie Funkle page
@@ -65,6 +85,7 @@ Story: Managing Band-member Information
 		  And Reggie Funkle's biography should change
 		  And Reggie Funkle's email should not change
 		  And Reggie Funkle's photo_file_name should not change
+	
 	
 	Scenario: As a regular member, I can log in and go to someone else's private member page.
 		Given a regular member logged in as 'Reggie Funkle'

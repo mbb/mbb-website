@@ -18,7 +18,6 @@ When /^(.*) (follows?|clicks?) "([^\"]*)"$/ do |_, _, link|
 end
 
 When /^(.*) fills? in "([^\"]*)" with "([^\"]*)"$/ do |_, field, value|
-	debugger
   fill_in(field, :with => value) 
 end
 
