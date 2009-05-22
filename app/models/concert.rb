@@ -24,7 +24,11 @@ class Concert < ActiveRecord::Base
 	end
 	
 	def time
-		attributes['time'].strftime('%I:%M%p')
+		unless attributes['time'].nil?
+			attributes['time'].strftime('%I:%M%p')
+		else
+			nil
+		end
 	end
 	
 	def to_s
