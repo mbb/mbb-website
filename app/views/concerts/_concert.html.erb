@@ -1,0 +1,9 @@
+<h2>
+	<%= concert.date_and_time %><br />
+	<%= concert.title %>
+</h2>
+<h4>
+	<%= concert.location %>
+</h4>
+
+<%= RedCloth.new(concert.description).to_html %>

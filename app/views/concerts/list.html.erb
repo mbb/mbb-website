@@ -1,0 +1,14 @@
+<h1>Our <%= action_name.capitalize %> Concerts</h1>
+
+<ul id="Concerts">
+<% unless @concerts.empty? %>
+	<% @concerts.each do |concert| -%>
+	<li>
+		<%= render concert %>
+	</li>
+	<% end -%>
+</ul>
+
+<% else -%>
+	<p>Our schedule is constantly changing. We'll update you soon!</p>
+<% end -%>

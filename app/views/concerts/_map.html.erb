@@ -1,7 +1,7 @@
 <div id="ConcertMap">
-	<iframe width="350" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;geocode=&amp;q=41.811230,+-91.853129&amp;sll=43.106999,-91.625977&amp;sspn=3.124087,3.812256&amp;ie=UTF8&amp;ll=41.818344,-91.848965&amp;spn=0.024918,0.029783&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+	<iframe width="350" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%= concert.google_map_embed_url -%>&amp;output=embed"></iframe>
 	<br />
 	<small>
-		<a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;geocode=&amp;q=41.811230,+-91.853129&amp;sll=43.106999,-91.625977&amp;sspn=3.124087,3.812256&amp;ie=UTF8&amp;ll=41.818344,-91.848965&amp;spn=0.024918,0.029783&amp;z=14&amp;iwloc=A" style="color:#0000FF;text-align:left">View Larger Map</a>
+		<a href="<%= concert.google_map_link_url -%>">View Larger Map</a>
 	</small>
 </div>

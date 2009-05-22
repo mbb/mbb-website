@@ -113,23 +113,26 @@ ul	{
 /**
  * The navigation menu lining the bottom of the header
  */
-#Menu	{
+.menu_bar	{
 	list-style: none;
-	width: 650px;
 	padding: 5px;
 	margin: 0 auto 0 auto;
 	background-color: white;
 	color: #a30000;
 	text-align: center;
+}
+
+#Header .menu_bar	{
+	width: 650px;
 	border-top: 1px solid #a30000;
 	border-bottom: 1px solid #a30000;
 }
 
-#Menu a	{
+.menu_bar a	{
 	color: #a30000;
 }
 
-#Menu li	{
+.menu_bar li	{
 	display: inline;
 	padding: 5px 10px 5px 10px;
 	font-size: 10pt;
@@ -137,7 +140,7 @@ ul	{
 	text-align: center;
 }
 
-#Menu li:hover	{
+.menu_bar li:hover	{
 	background-color: #eeeeee;
 }
 
