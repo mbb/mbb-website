@@ -1,15 +1,19 @@
 <h1 id="Name"><%=h @member.name -%></h1>
 <h2 id="Section"><%=h @member.section -%></h2>
 
-<%= image_tag @member.photo.url(:headshot), :id => 'Headshot' %>
-<p id="Email"><%=h @member.email -%></p>
-<p id="Biography">
-  <%=h @member.biography %>
-</p>
+<%= image_tag @member.photo.url(:headshot), :id => 'Headshot', :alt => "Picture of #{@member}" %>
+<div class="member_datum">
+	<p class="label">E-Mail Address</p>
+	<p><%=h @member.email -%></p>
+</div>
+<div class="member_datum">
+	<p class="label">Biography</p><br />
+  <p><%=h @member.biography %></p>
+</div>
 <div class="spacer"></div>
 
-<% unless current_member.id != @member.id -%>
+<% if has_member_edit_permission(current_member) -%>
 <div id="Actions">
-	<%= link_to 'Edit My Profile', edit_private_member_path(@member) %>
+	<%= link_to 'Edit Profile', edit_private_member_path(@member) %>
 </div>
 <% end -%>

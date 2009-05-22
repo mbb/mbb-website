@@ -1,37 +1,29 @@
-<h1>Edit Your Profile</h1>
+<h1>Edit: <%= @member -%></h1>
+<h2 id="Section"><%= link_to 'Back to Profile', [:private, @member] %></h2>
 
 <% form_for [:private, @member], :html => { :multipart => true, :method => :put } do |f| %>
 	<%= f.error_messages %>
 
-	<p>
-		<%= f.label :name %><br/>
-		<%= f.text_field :name %>
-	</p>
-
-	<p>
-		<%= f.label :email, 'E-Mail' %><br/>
+	<div id="HeadshotContainer">
+		<%= image_tag @member.photo.url(:headshot), :id => 'Headshot', :alt => "Picture of #{@member}" %>
+		<p>
+			<%= f.label :photo_file_name, 'Change Photo' %><br />
+			<%= f.file_field :photo_file_name %>
+		</p>
+	</div>
+	
+	<div class="member_datum">
+		<%= f.label :email, 'E-Mail', :class => 'label' %>
 		<%= f.text_field :email %>
-	</p>
-
-	<p>
-		<%= f.label :section_id, 'Section' %><br/>
-		<%= f.select :section_id, Section.all.collect {|s| [s.instrument, s.id] } %>
-	</p>
+	</div>
 	
-	<p>
-		<%= f.label :biography %><br />
-		<%= f.text_area :biography %>
-	</p>
-	
-	<p>
-		<%= f.label :photo_file_name, 'Photo' %><br />
-		<%= f.file_field :photo_file_name %>
-	</p>
+	<div class="member_datum">
+		<%= f.label :biography, 'Biography', :class => 'label' %><br />
+		<%= f.text_area :biography, :rows => 13 %>
+	</div>
+	<div class="spacer"></div>
 
-	<p>
+	<div id="Actions">
 		<%= f.submit "Save" %>
-	</p>
+	</div>
 <% end %>
-
-<%= link_to 'Back to Profile', @member %> |
-<%= link_to 'Back', members_path %>

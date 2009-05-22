@@ -88,7 +88,7 @@ class Private::MembersController < ApplicationController
 	
 	private
 		def must_be_this_member_or_board
-			unless current_member.roles.include?('board') or params[:id] == current_member.to_pc
+			unless current_member.has_role?('board') or params[:id] == current_member.to_pc
 				flash[:error] = "You do not have permission to #{action_name} another member."
 				redirect_to private_members_path
 				false
