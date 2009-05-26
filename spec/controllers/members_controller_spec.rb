@@ -1,0 +1,3 @@
+describe MembersController do
+	
+end

@@ -1,0 +1,17 @@
+<h1>Our Members</h1>
+<p>
+	This is the current roster of the band, reflected on the <%= link_to 'public member list', private_members_path -%> we publish. <%= link_to_current_member :content_text => 'Your profile' -%> is editable.
+</p>
+
+<ul id="Sections">
+<% Section.all.each do |section| -%>
+	<li>
+		<h2><%= section.instrument -%></h2>
+		<ul class="section_members" id="<%= section.instrument.tableize %>">
+		<% section.members.each do |member| -%>
+			<li><%= link_to member, private_member_path(member) -%></li>
+		<% end -%>
+		</ul>
+	</li>
+<% end -%>
+</ul>
