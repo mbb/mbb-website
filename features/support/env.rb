@@ -46,3 +46,5 @@ module Webrat
 			end
 	end
 end
+
+Fixtures.create_fixtures("spec/fixtures", "concerts")
