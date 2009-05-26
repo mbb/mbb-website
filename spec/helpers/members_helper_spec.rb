@@ -24,7 +24,7 @@ describe MembersHelper do
       lambda { link_to_member(nil) }.should raise_error('Invalid member')
     end
     it "should link to the given member" do
-      should_receive(:member_path).at_least(:once).and_return('/members/1')
+      should_receive(:private_member_path).at_least(:once).and_return('/members/1')
       link_to_member(@member).should have_tag("a[href='/members/1']")
     end
     it "should use given link text if :content_text is specified" do
@@ -84,7 +84,7 @@ describe MembersHelper do
       stub!(:current_member).and_return(@member)
     end
     it "should link to the given member" do
-      should_receive(:member_path).at_least(:once).and_return('/members/1')
+      should_receive(:private_member_path).at_least(:once).and_return('/members/1')
       link_to_current_member().should have_tag("a[href='/members/1']")
     end
     it "should use given link text if :content_text is specified" do
