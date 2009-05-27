@@ -110,11 +110,12 @@ ul	{
 	clear: right;
 }
 
-#Header #Title h2	{
+#Header h2	{
 	text-align: center;
 	color: #666;
 	font-style: oblique;
 	margin: 0px;
+	margin-bottom: 5px;
 	font-size: 10pt;
 }
 
@@ -123,6 +124,7 @@ ul	{
 	margin: auto;
 	color: red;
 	font-weight: bold;
+	text-align: center;
 }
 
 #Notice	{
@@ -130,6 +132,7 @@ ul	{
 	margin: auto;
 	color: green;
 	font-weight: bold;
+	text-align: center;
 }
 
 #LoginLink, #LogoutLink	{
