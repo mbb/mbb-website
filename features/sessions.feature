@@ -13,12 +13,12 @@ Story: Logging in
     Given  an anonymous member
      When  she goes to /login
      Then  she should be at the new sessions page
-      And  she should see a <form> containing a textfield: Name, password: Password, and submit: 'Log in'
+      And  she should see a <form> containing a textfield: E-Mail, password: Password, and submit: 'Log in'
 
   Scenario: Anonymous member can log in and be remembered
     Given  an anonymous member
       And  an activated member named 'Reggie Funkle'
-     When  she logs in with name: 'Reggie Funkle', password: '1234reggie'
+     When  she logs in with email: 'registered@example.com', password: '1234reggie'
      Then  she should be redirected to Reggie Funkle's home page
       And  she should see a notice message 'Logged in successfully'
       And  Reggie Funkle should be logged in
@@ -33,35 +33,35 @@ Story: Logging in
   
   Scenario: Logged-in member who fails logs in should be logged out
     Given an activated member named 'Oona Funkle'
-    When  she logs in with name: 'Oona Funkle', password: '1234oona'
+    When  she logs in with email: 'unactivated@example.com', password: '1234oona'
     Then  she should be redirected to Oona Funkle's home page
     Then  she should see a notice message 'Logged in successfully'
      And  Oona Funkle should be logged in
-    When  she logs in with name: 'reggie', password: 'i_haxxor_joo'
+    When  she logs in with email: 'registered@example.com', password: 'i_haxxor_joo'
     Then  she should be at the new sessions page
-    Then  she should see an error message 'Couldn't log you in as 'reggie''
+    Then  she should see an error message 'Couldn't log you in as 'registered@example.com''
      And  Oona Funkle should not be logged in
   
   Scenario: Log-in with bogus info should fail until it doesn't
     Given an activated member named 'Reggie Funkle'
 		  And no member with name: 'leonard_shelby' exists
-    When  she logs in with name: 'Reggie Funkle', password: 'i_haxxor_joo'
+    When  she logs in with email: 'registered@example.com', password: 'i_haxxor_joo'
     Then  she should be at the new sessions page
-    Then  she should see an error message 'Couldn't log you in as 'Reggie Funkle''
+    Then  she should see an error message 'Couldn't log you in as 'registered@example.com''
      And  Reggie Funkle should not be logged in
-    When  she logs in with name: 'Reggie Funkle', password: ''
+    When  she logs in with email: 'registered@example.com', password: ''
     Then  she should be at the new sessions page
-    Then  she should see an error message 'Couldn't log you in as 'Reggie Funkle''
+    Then  she should see an error message 'Couldn't log you in as 'registered@example.com''
      And  Reggie Funkle should not be logged in
-    When  she logs in with name: '', password: 'monkey'
+    When  she logs in with email: '', password: 'monkey'
     Then  she should be at the new sessions page
     Then  she should see an error message 'Couldn't log you in as '''
      And  she should not be logged in
-    When  she logs in with name: 'leonard_shelby', password: 'monkey'
+    When  she logs in with email: 'leonard_shelby', password: 'monkey'
     Then  she should be at the new sessions page
     Then  she should see an error message 'Couldn't log you in as 'leonard_shelby''
      And  Leonard Shelby should not be logged in
-    When  she logs in with name: 'Reggie Funkle', password: '1234reggie'
+    When  she logs in with email: 'registered@example.com', password: '1234reggie'
     Then  she should be redirected to Reggie Funkle's home page
     Then  she should see a notice message 'Logged in successfully'
      And  Reggie Funkle should be logged in

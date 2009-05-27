@@ -5,7 +5,7 @@ module AuthenticatedTestHelper
 	end
 
 	def authorize_as(member)
-		@request.env["HTTP_AUTHORIZATION"] = member ? ActionController::HttpAuthentication::Basic.encode_credentials(members(member).name, 'monkey') : nil
+		@request.env["HTTP_AUTHORIZATION"] = member ? ActionController::HttpAuthentication::Basic.encode_credentials(members(member).email, 'monkey') : nil
 	end
 	
 	# rspec

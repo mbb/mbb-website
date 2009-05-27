@@ -114,40 +114,40 @@ describe Member do
 
 	it 'resets password' do
 		members(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-		Member.authenticate(members(:quentin).name, 'new password').should == members(:quentin)
+		Member.authenticate(members(:quentin).email, 'new password').should == members(:quentin)
 	end
 
 	it 'does not rehash password' do
 		members(:quentin).update_attributes(:name => 'Quentin Florin')
-		Member.authenticate(members(:quentin).name, 'monkey').should == members(:quentin)
+		Member.authenticate(members(:quentin).email, 'monkey').should == members(:quentin)
 	end
 
 	#
 	# Authentication
 	#
 	it 'authenticates member' do
-		Member.authenticate(members(:quentin).name, 'monkey').should == members(:quentin)
+		Member.authenticate(members(:quentin).email, 'monkey').should == members(:quentin)
 	end
 
 	it "doesn't authenticate member with bad password" do
-		Member.authenticate(members(:quentin).name, 'invalid_password').should be_nil
+		Member.authenticate(members(:quentin).email, 'invalid_password').should be_nil
 	end
 
  if REST_AUTH_SITE_KEY.blank?
 	 # old-school passwords
 	 it "authenticates a user against a hard-coded old-style password" do
-		 Member.authenticate(members(:old_password_holder).name, 'test').should == members(:old_password_holder)
+		 Member.authenticate(members(:old_password_holder).email, 'test').should == members(:old_password_holder)
 	 end
  else
 	 it "doesn't authenticate a user against a hard-coded old-style password" do
-		 Member.authenticate(members(:old_password_holder).name, 'test').should be_nil
+		 Member.authenticate(members(:old_password_holder).email, 'test').should be_nil
 	 end
 
 	 # New installs should bump this up and set REST_AUTH_DIGEST_STRETCHES to give a 10ms encrypt time or so
 	 desired_encryption_expensiveness_ms = 0.1
 	 it "takes longer than #{desired_encryption_expensiveness_ms}ms to encrypt a password" do
 		 test_reps = 100
-		 start_time = Time.now; test_reps.times{ Member.authenticate('quentin', 'monkey'+rand.to_s) }; end_time	 = Time.now
+		 start_time = Time.now; test_reps.times{ Member.authenticate('quentin@example.com', 'monkey'+rand.to_s) }; end_time	 = Time.now
 		 auth_time_ms = 1000 * (end_time - start_time)/test_reps
 		 auth_time_ms.should > desired_encryption_expensiveness_ms
 	 end

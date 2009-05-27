@@ -11,7 +11,7 @@ Story: Managing Band-member Information
 		  And a registered member named 'Reggie Funkle'
 		  And we memorize Reggie Funkle's biography, email, and photo_file_name
 		
-		 When the anonymous member logs in with name: 'Reggie Funkle', and password: '1234reggie'
+		 When the anonymous member logs in with email: 'registered@example.com', and password: '1234reggie'
 		 Then he should be redirected to Reggie Funkle's home page
 		  And he should see a link labeled Edit Profile
 		
@@ -32,7 +32,7 @@ Story: Managing Band-member Information
 		  And a registered member named 'Oona Funkle'
 		  And we memorize Oona Funkle's photo_file_name
 
-		 When the anonymous member logs in with name: 'Oona Funkle', and password: '1234oona'
+		 When the anonymous member logs in with email: 'unactivated@example.com', and password: '1234oona'
 		 Then he should be redirected to Oona Funkle's home page
 		  And he should see a link labeled Edit Profile
 
@@ -50,7 +50,7 @@ Story: Managing Band-member Information
 		  And a registered member named 'Reggie Funkle'
 		  And we memorize Reggie Funkle's biography, email, and photo_file_name
 		
-		 When the anonymous member logs in with name: 'Reggie Funkle', and password: '1234reggie'
+		 When the anonymous member logs in with email: 'registered@example.com', and password: '1234reggie'
 		 Then he should be redirected to Reggie Funkle's home page
 		  And he should see a link labeled Edit Profile
 		
@@ -71,7 +71,7 @@ Story: Managing Band-member Information
 		  And a registered member named 'Reggie Funkle'
 		  And we memorize Reggie Funkle's biography, email, and photo_file_name
 
-		 When the anonymous member logs in with name: 'Reggie Funkle', and password: '1234reggie'
+		 When the anonymous member logs in with email: 'registered@example.com', and password: '1234reggie'
 		 Then he should be redirected to Reggie Funkle's home page
 		  And he should see a link labeled Edit Profile
 

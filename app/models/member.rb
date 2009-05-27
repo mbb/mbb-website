@@ -61,9 +61,9 @@ class Member < ActiveRecord::Base
 	# We really need a Dispatch Chain here or something.
 	# This will also let us return a human error message.
 	#
-	def self.authenticate(name, password)
-		return nil if name.blank? || password.blank?
-		u = find_by_name(name) # need to get the salt
+	def self.authenticate(email, password)
+		return nil if email.blank? || password.blank?
+		u = find_by_email(email) # need to get the salt
 		u && u.authenticated?(password) ? u : nil
 	end
 

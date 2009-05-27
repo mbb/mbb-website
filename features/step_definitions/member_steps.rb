@@ -78,10 +78,11 @@ Then "$actor should be logged in" do |name|
 end
 
 Then '$actor should have the default password' do |member_name|
+	debugger
 	member = Member.find_by_name(member_name)
 	member.should_not be_nil
 	member.password_is_temporary.should be(true)
-	Member.authenticate(member_name, Member.default_password).should_not be_nil
+	Member.authenticate(member.email, Member.default_password).should_not be_nil
 end
 
 Then '$name\'s $attribute should change' do |name, attribute|
@@ -196,7 +197,7 @@ def log_in_member member_params=nil
 	@member_params ||= member_params
 	member_params	||= @member_params
 	visit login_path
-	fill_in 'name', :with => member_params['name']
+	fill_in 'email', :with => member_params['email']
 	fill_in 'password', :with => member_params['password']
 	click_button 'Log in'
 	@member = controller.current_member
