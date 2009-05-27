@@ -1,12 +1,18 @@
 <h1>MBB's Latest News</h1>
 
-<ul id="NewsItems">
-	<li class="story">
-		<h2>March 1, 2009<br /> Band to Participate in 2009 Grand Celebration of Brass Bands</h2>
-		<p>
-			The Madison Brass Band has accepted an invitation to the <a href="http://www.eibb.org/gcobb.php">2009 GCOBB</a>, hosted by <a href="http://www.eibb.org/">Eastern Iowa Brass Band</a> in Amana, Iowa. Run by EIBB since 1995, the Celebration brings together 2-4 brass bands each year performing concerts all day, together with a mass band performance at the event's conclusion. Notable brass bands to participate in the past include Illinois Brass Band, Chicago Brass Band, Central Ohio Brass Band and Madison Brass Band. In 2008, the event was flooded out, and has therefore changed venues; we are looking forward to making our return to this event and seeing its return to the culture of Midwest brass bands.
-		</p>
-	</li>
-</ul>
-
-<h4>Come back soon for more performance announcements and other news!</h4>
+<% unless @stories.empty? -%>
+	<ul id="NewsItems">
+	<% @stories.each do |story| -%>
+		<li class="story">
+			<h2><%= story.date -%><br /> <%= story.title -%></h2>
+			<p>
+				<%= story.body %>
+			</p>
+		</li>
+	<% end %>
+	</ul>
+<% else -%>
+	<h4>
+		Times are busy, but the Madison Brass Band has no news at this time. Be sure to check out our <%= link_to 'next concert', next_concerts_path %>!
+	</h4>
+<% end -%>
