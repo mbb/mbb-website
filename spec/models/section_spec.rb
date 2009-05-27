@@ -3,41 +3,50 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Section do
 	fixtures :sections
 	
-	context '(in general)' do
-		it { should have_many(:members) }
-		it { should have_db_column(:instrument) }
-		it { should have_db_column(:position) }
-		it { should validate_presence_of(:instrument) }
-		it { should validate_presence_of(:position) }
-		
-		it 'should appear in order' do
-			sections_in_order = Section.all.sort {|a, b| a.position <=> b.position}
-			section_dot_all = Section.all
-			section_dot_all.should eql sections_in_order
-		end
+	# Basic attributes and validation.
+	it { should have_many(:members) }
+	it { should have_db_column(:name) }
+	it { should have_db_column(:position) }
+	it { should have_db_column(:parent_id) }
+	it { should validate_presence_of(:name) }
+	it { should validate_presence_of(:position) }
+	it { should_not validate_presence_of(:parent_id) }
+	
+	# Sections should be hierarchical.
+	it { should respond_to(:children) }
+	it { should respond_to(:parent) }
+
+	# Ordering properties
+	it 'should respond to #all with only the top level of sections' do
+		sections_with_parent_ids = Section.all.delete_if { |s| s.parent_id.nil? }
+		sections_with_parent_ids.should be_empty
 	end
 	
-	context 'with no attributes' do
-		subject { Section.new }
-		
-		it { should have(:no).errors_on(:members) }
+	it 'should respond to #all with sections appearing in order' do
+		sections_in_order = Section.all.sort {|a, b| a.position <=> b.position}
+		section_dot_all = Section.all
+		section_dot_all.should eql sections_in_order
 	end
 	
-	context 'with valid attributes' do
-		subject { Section.new(@valid_attributes) }
+	it 'should respond to #find with sections appearing in order' do
+		sections_in_order = Section.all.sort {|a, b| a.position <=> b.position}
+		section_dot_find = Section.find(:all)
+		section_dot_find.should eql sections_in_order
+	end
+	
+	it 'should list children in order' do
+		natural_children = Section.find_by_name('Cornet').children
+		sorted_children = natural_children.sort { |a, b| a.position <=> b.position }
+		natural_children.should eql(sorted_children)
+	end
 		
-		it { should be_valid }
-		it { lambda { subject.save }.should_not raise_error }
+	# Output properties.
+	context 'with a valid name' do
+		subject { Section.new(:name => 'Something') }
 		
 		it 'should print to a string as its instrument' do
-			subject.to_s.should equal subject.instrument
+			subject.to_s.should equal subject.name
 		end
 	end
-		
-	before(:each) do
-		@valid_attributes = {
-			:instrument => 'Euphonium',
-			:position => 1
-		}
-	end
+	
 end

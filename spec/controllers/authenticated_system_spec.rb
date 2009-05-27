@@ -72,34 +72,37 @@ describe SessionsController do
 	#
 	# Cookie Login
 	#
-	describe "Logging in by cookie" do
-		def set_remember_token token, time
-			@member[:remember_token]						= token; 
-			@member[:remember_token_expires_at] = time
-			@member.save!
-		end		
-		before do 
-			@member = Member.find(:first); 
-			set_remember_token 'hello!', 5.minutes.from_now
-		end		
-		it 'logs in with cookie' do
+	context 'with a valid token expiry' do
+		before do
+			@member = stub_model(Member, {:save => true, :remember_token => 'hello!', :remember_token_expires_at => 5.minutes.from_now})
+			Member.stub!(:find_by_remember_token).with('hello!').and_return(@member)
+		end
+		
+		it 'authenticates successfully with a valid cookie' do
 			stub!(:cookies).and_return({ :auth_token => 'hello!' })
 			logged_in?.should be_true
 		end
-		
-		it 'fails cookie login with bad cookie' do
+
+		it 'fails to authenticate with a bad cookie' do
+			@member = stub_model(Member, {:save => true, :remember_token => 'hello!', :remember_token_expires_at => 5.minutes.from_now})
 			should_receive(:cookies).at_least(:once).and_return({ :auth_token => 'i_haxxor_joo' })
 			logged_in?.should_not be_true
 		end
-		
-		it 'fails cookie login with no cookie' do
-			set_remember_token nil, nil
+
+		it 'fails to authenticate with no cookie' do
+			@member = stub_model(Member, {:save => true, :remember_token => 'hello!', :remember_token_expires_at => 5.minutes.from_now})
 			should_receive(:cookies).at_least(:once).and_return({ })
 			logged_in?.should_not be_true
 		end
+	end
+	
+	context 'with a past cookie expiry' do
+		before do
+			@member = stub_model(Member, {:save => true, :remember_token => 'hello!', :remember_token_expires_at => 5.minutes.ago})
+			Member.stub!(:find_by_remember_token).with('hello!').and_return(@member)
+		end
 		
-		it 'fails expired cookie login' do
-			set_remember_token 'hello!', 5.minutes.ago
+		it 'fails a cookie login' do
 			stub!(:cookies).and_return({ :auth_token => 'hello!' })
 			logged_in?.should_not be_true
 		end

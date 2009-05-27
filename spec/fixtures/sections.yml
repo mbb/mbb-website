@@ -2,49 +2,65 @@
 # in the namespace 'sections' for how to apply them to a database.
 
 director:
-  instrument: Director
+  name: Director
   position: 1
 
-soprano_cornet:
-  instrument: Soprano Cornet
-  position: 2
-
 cornet:
-  instrument: Cornet
+  name: Cornet
   position: 3
 
+soprano_cornet:
+  name: Soprano
+  position: 1
+  parent: cornet
+
+first_cornet:
+  name: 1st
+  position: 2
+  parent: cornet
+
+second_cornet:
+  name: 2nd
+  position: 3
+  parent: cornet
+
+third_cornet:
+  name: 3rd
+  position: 4
+  parent: cornet
+
 flugelhorn:
-  instrument: Flugelhorn
+  name: Flugelhorn
   position: 4
 
 alto_horn:
-  instrument: Alto Horn
+  name: Alto Horn
   position: 5
 
 trombone:
-  instrument: Trombone
+  name: Trombone
   position: 6
 
 bass_trombone:
-  instrument: Bass Trombone
+  name: Bass Trombone
   position: 7
 
 euphonium:
-  instrument: Euphonium
+  name: Euphonium
   position: 8
 
 baritone:
-  instrument: Baritone
+  name: Baritone
   position: 9
 
 eb_bass:
-  instrument: E-flat Bass
+  name: E-flat Bass
   position: 10
 
 bb_bass:
-  instrument: B-flat Bass
+  name: B-flat Bass
   position: 11
 
 percussion:
-  instrument: Percussion
+  name: Percussion
   position: 12
