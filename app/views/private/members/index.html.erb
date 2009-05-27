@@ -9,7 +9,7 @@
 		<h2><%= section.instrument -%></h2>
 		<ul class="section_members" id="<%= section.instrument.tableize %>">
 		<% section.members.each do |member| -%>
-			<li><%= link_to member, private_member_path(member) -%></li>
+			<li><%= link_to member, private_member_path(member) -%>, <%= mail_to member.email %></li>
 		<% end -%>
 		</ul>
 	</li>

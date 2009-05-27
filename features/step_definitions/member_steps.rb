@@ -78,7 +78,6 @@ Then "$actor should be logged in" do |name|
 end
 
 Then '$actor should have the default password' do |member_name|
-	debugger
 	member = Member.find_by_name(member_name)
 	member.should_not be_nil
 	member.password_is_temporary.should be(true)

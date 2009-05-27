@@ -142,7 +142,7 @@ ul	{
 /**
  * When a member is logged in, he gets a member bar, to which these styles apply.
  */
-#MemberBar	{
+#MemberBar, #MemberBarGreeting	{
 	color: white;
 	background-color: #a30000;
 	width: 650px;
@@ -157,6 +157,14 @@ ul	{
 
 ul#MemberBar li.member-bar-action	{
 	display: inline;
+}
+
+ul#MemberBar li.member-bar-action:before	{
+	content: "(";
+}
+
+ul#MemberBar li.member-bar-action:after	{
+	content: ")";
 }
 
 /**

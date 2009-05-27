@@ -1,6 +1,9 @@
+<h3 id="MemberBarGreeting">Logged in as <%= current_member.name %>.</h3>
 <ul id="MemberBar">
-	<li class="member-bar-greeting">Logged in as <%= current_member.name %>.</li>
-	<li class="member-bar-action">(<%= link_to 'Member Home', private_members_path -%>)</li>
-	<li class="member-bar-action">(<%= link_to_current_member :content_text => 'My Profile' -%>)</li>
-	<li class="member-bar-action">(<%= link_to "Log out", logout_path, { :title => "Log out" } -%>)</li>
+	<% if current_member.has_role?(:board) -%>
+	<li class="member-bar-action"><%= link_to 'Add a New Member', new_private_member_path %></li>
+	<% end -%>
+	<li class="member-bar-action"><%= link_to 'Member Home', private_members_path -%></li>
+	<li class="member-bar-action"><%= link_to_current_member :content_text => 'My Profile' -%></li>
+	<li class="member-bar-action"><%= link_to "Log out", logout_path, { :title => "Log out" } -%></li>
 </ul>
