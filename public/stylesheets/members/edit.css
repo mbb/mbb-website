@@ -1,0 +1,55 @@
+div.container	{
+	width: 80%;
+	margin: 0 auto 100px auto;
+}
+
+#HeadshotContainer	{
+	float: left;
+	width: 218px;
+	margin: auto 40px;
+}
+
+#Headshot	{
+	height: 287px;
+	width: 212px;
+	background-color: #bbbbbb;
+	float: left;
+	padding: 4px;
+}
+
+#Name	{
+	margin-bottom: 0;
+}
+
+#Section	{
+	margin-top: 0;
+	font-size: 12pt;
+}
+
+#Biography	{
+	margin-right: 0;
+	height: 100px;
+}
+
+#Biography textarea	{
+	height: 100px;
+}
+
+/* Currently, this is here because css_auto_include does not recognize namespaces. */
+
+#Actions	{
+	text-align: center;
+}
+
+.member_datum	{
+	padding: 10px;
+}
+
+.member_datum p	{
+	text-align: left;
+	display: inline;
+}
+
+.member_datum .label	{
+	font-weight: bold;
+}

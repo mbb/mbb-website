@@ -73,6 +73,12 @@ h3	{
 
 ul	{
 	list-style: none;
+	padding-left: 0;
+}
+
+.spacer	{
+	display: hidden;
+	clear: both;
 }
 
 /**
@@ -93,6 +99,7 @@ ul	{
 }
 
 #Header h1	{
+	background-color: transparent;
 	text-align: center;
 	font-size: 32pt;
 	color: #a30000;
@@ -100,14 +107,67 @@ ul	{
 	margin: 0 20px 0 20px;
 	padding-top: 10px;
 	padding-bottom: 0;
+	clear: right;
 }
 
-#Header #Title h2	{
+#Header h2	{
 	text-align: center;
 	color: #666;
 	font-style: oblique;
 	margin: 0px;
+	margin-bottom: 5px;
 	font-size: 10pt;
+}
+
+#Error	{
+	width: 650px;
+	margin: auto;
+	color: red;
+	font-weight: bold;
+	text-align: center;
+}
+
+#Notice	{
+	width: 650px;
+	margin: auto;
+	color: green;
+	font-weight: bold;
+	text-align: center;
+}
+
+#LoginLink, #LogoutLink	{
+	font-size: 8pt;
+	float: right;
+	margin-top: 10px;
+	margin-bottom: -20px;
+}
+
+/**
+ * When a member is logged in, he gets a member bar, to which these styles apply.
+ */
+#MemberBar, #MemberBarGreeting	{
+	color: white;
+	background-color: #a30000;
+	width: 650px;
+	margin: auto;
+	padding: 5px;
+	text-align: center;
+}
+
+#MemberBar a	{
+	color: yellow;
+}
+
+ul#MemberBar li.member-bar-action	{
+	display: inline;
+}
+
+ul#MemberBar li.member-bar-action:before	{
+	content: "(";
+}
+
+ul#MemberBar li.member-bar-action:after	{
+	content: ")";
 }
 
 /**

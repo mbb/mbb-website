@@ -1,0 +1,29 @@
+<h1>Edit: <%= @member -%></h1>
+<h2 id="Section"><%= link_to 'Back to Profile', [:private, @member] %></h2>
+
+<% form_for [:private, @member], :html => { :multipart => true, :method => :put } do |f| %>
+	<%= f.error_messages %>
+
+	<div id="HeadshotContainer">
+		<%= image_tag @member.photo.url(:headshot), :id => 'Headshot', :alt => "Picture of #{@member}" %>
+		<p>
+			<%= f.label :photo_file_name, 'Change Photo' %><br />
+			<%= f.file_field :photo_file_name %>
+		</p>
+	</div>
+	
+	<div class="member_datum">
+		<%= f.label :email, 'E-Mail', :class => 'label' %>
+		<%= f.text_field :email %>
+	</div>
+	
+	<div class="member_datum">
+		<%= f.label :biography, 'Biography', :class => 'label' %><br />
+		<%= f.text_area :biography, :rows => 13 %>
+	</div>
+	<div class="spacer"></div>
+
+	<div id="Actions">
+		<%= f.submit "Save" %>
+	</div>
+<% end %>

@@ -5,4 +5,6 @@ class ApplicationController < ActionController::Base
 	helper :all # include all helpers, all the time
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	activate_css_auto_include
+	include AuthenticatedSystem
+  include RoleRequirementSystem
 end

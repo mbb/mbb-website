@@ -1,2 +1,10 @@
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        member:
+          attributes:
+            name:
+              taken: "{{value}} is already in the band!"
+            email:
+              taken: "Someone already owns the e-mail address {{value}}."
