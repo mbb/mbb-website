@@ -23,30 +23,6 @@ class Concert < ActiveRecord::Base
 		end
 	end
 	
-	def date
-		unless attributes['date'].nil?
-			this_date = attributes['date']
-			def this_date.to_s
-				strftime("%B %d, %Y").gsub(/\s0+/, ' ')
-			end
-			this_date
-		else
-			nil
-		end
-	end
-	
-	def time
-		unless attributes['time'].nil?
-			this_time = attributes['time']
-			def this_time.to_s
-				strftime('%I:%M%p')
-			end
-			this_time
-		else
-			nil
-		end
-	end
-	
 	def to_s
 		"#{date}: #{title}"
 	end

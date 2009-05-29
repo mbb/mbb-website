@@ -2,7 +2,7 @@
 # Setting
 #
 
-Given "an anonymous member" do
+Given "an anonymous $whoever" do |_|
 	log_out!
 end
 

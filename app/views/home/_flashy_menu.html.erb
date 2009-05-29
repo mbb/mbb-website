@@ -2,14 +2,26 @@
 	<ul class="menu">
 		<hr />
 		<li>
+		<% unless Concert.next.nil? -%>
 			<a href="<%= next_concerts_path -%>">
 				<div class="box">
 					<h1>Our Next Concert</h1>
-					<%= image_tag 'band_at_us_open.png', :class => 'thumbnail',
-					    :alt => 'The band performing in a standing arrangement, in tuxedos.' %>
-					<h2><%= Concert.next.date -%><br /><%= Concert.next.title -%></h2>
+					<%= next_concert_image %>
+					<h2>
+						<%= Concert.next.date -%><br />
+						<%= Concert.next.title -%>
+					</h2>
 				</div>
 			</a>
+		<% else -%>
+			<div class="box">
+				<%= next_concert_image %>
+				<h2>
+					No Upcoming Concerts<br />
+					<%= link_to 'Book Us for a Performance', book_path %>
+				</h2>
+			</div>
+		<% end -%>
 		</li>
 
 		<li>

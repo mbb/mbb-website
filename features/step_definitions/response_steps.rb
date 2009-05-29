@@ -11,11 +11,11 @@ end
 #
 
 Then /^(.*) should see a link labeled (.*)$/ do |_, link_text|
-	response.should have_tag('a', :text => link_text)
+	response.should have_tag('a', /#{link_text}/)
 end
 
 Then /^(.*) should not see a link labeled (.*)$/ do |_, link_text|
-	response.should_not have_tag('a', :text => link_text)
+	response.should_not have_tag('a', /#{link_text}/)
 end
 
 Then "the page should contain '$text'" do |_, text|

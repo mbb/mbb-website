@@ -1,4 +1,6 @@
 class MembersController < ApplicationController
+	helper :members
+	
 	# GET /members
 	# GET /members.xml
 	def index
