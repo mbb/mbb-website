@@ -12,22 +12,14 @@ class Concert < ActiveRecord::Base
 	end
 	
 	def date_and_time
-		if time.nil?
-			date
-		else
-			"#{date}, #{time}"
-		end
-	end
-	
-	def date
-		attributes['date'].strftime('%A %B %d, %Y')
-	end
-	
-	def time
-		unless attributes['time'].nil?
-			attributes['time'].strftime('%I:%M%p')
-		else
+		if date.nil?
 			nil
+		else
+			if time.nil?
+				date
+			else
+				date + time
+			end
 		end
 	end
 	

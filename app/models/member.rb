@@ -6,11 +6,19 @@ class Member < ActiveRecord::Base
 	include Authentication::ByCookieToken
 
 	belongs_to :section
+	acts_as_list :scope => :section_id
+	before_validation :add_to_list_bottom
+	default_scope :order => 'position ASC'
+	
 	has_and_belongs_to_many :roles
-	has_attached_file :photo, :styles =>	{
-		:headshot => '212x287#',
-		:thumbnail => '80x80#'
-	}
+	has_attached_file :photo,
+		:url => '/images/:class/:attachment/:id/:style/:basename.:extension',
+		:path => ':rails_root/public/images/:class/:attachment/:id/:style/:basename.:extension',
+		:default_url => '/images/:class/:attachment/missing_:style.jpg',
+		:styles =>	{
+			:headshot => '212x287#',
+			:thumbnail => '100x100#'
+		}
 	before_validation_on_create do |record|
 		if record.crypted_password.blank? and record.password.blank?
 			record.password_is_temporary = true
@@ -33,6 +41,7 @@ class Member < ActiveRecord::Base
 	validates_uniqueness_of	 :email
 	validates_format_of			 :email, :with => Authentication.email_regex, :message => Authentication.bad_email_message
 	validates_presence_of    :section
+	validates_presence_of    :position
 
 	def to_pc
 		self.class.to_pc(name)

@@ -12,7 +12,7 @@
 </div>
 <div class="spacer"></div>
 
-<% if has_member_edit_permission(current_member) -%>
+<% if has_member_edit_permission(@member) -%>
 <div id="Actions">
 	<%= link_to 'Edit Profile', edit_private_member_path(@member) %>
 </div>

@@ -3,6 +3,8 @@ require 'uri'
 module GenerateAStablePathComponentMatcher
 	class GenerateAStablePathComponent
 		def matches?(target)
+			Member.stub!(:find_by_name).with(target.name).and_return(target)
+			
 			@target = target
 			pc = target.to_pc
 			@path_does_not_require_parsing = (pc == URI.parse(pc).to_s)

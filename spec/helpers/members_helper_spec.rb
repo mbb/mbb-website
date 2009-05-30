@@ -1,9 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-include ApplicationHelper
-include MembersHelper
+include Private::MembersHelper
 include AuthenticatedTestHelper
 
-describe MembersHelper do
+describe Private::MembersHelper do
   before do
     @member = mock_member
   end

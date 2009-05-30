@@ -9,6 +9,10 @@ module NavigationHelpers
 			case $1
 			when /home/
 				root_path
+			when /booking/
+				book_path
+			when /next concert/
+				next_concerts_path
 			when /private member list/
 				private_members_path
 			when /create-new-member/
@@ -48,6 +52,10 @@ module NavigationHelpers
 			case $1
 			when /home/
 				"index"
+			when /booking/
+				'book/index'
+			when /next concert/
+				'concerts/next'
 			when /private member list/
 				"private/members/index"
 			when /create-new-member/

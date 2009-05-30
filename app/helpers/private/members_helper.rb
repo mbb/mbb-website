@@ -1,4 +1,5 @@
-module MembersHelper
+module Private::MembersHelper
+	include ApplicationHelper
 	
 	#
 	# Use this to wrap view elements that the user can't access.
@@ -75,20 +76,4 @@ module MembersHelper
 			link_to h(content_text), login_path, options
 		end
 	end
-
-	#
-	# Link to the current user's page (using link_to_member) or to the login page
-	# (using link_to_login_with_IP).
-	#
-	def link_to_current_member(options={})
-		if current_member
-			link_to_member current_member, options
-		else
-			content_text = options.delete(:content_text) || 'not signed in'
-			# kill ignored options from link_to_member
-			[:content_method, :title_method].each{|opt| options.delete(opt)} 
-			link_to_login_with_IP content_text, options
-		end
-	end
-
 end

@@ -7,8 +7,8 @@
 	<div id="HeadshotContainer">
 		<%= image_tag @member.photo.url(:headshot), :id => 'Headshot', :alt => "Picture of #{@member}" %>
 		<p>
-			<%= f.label :photo_file_name, 'Change Photo' %><br />
-			<%= f.file_field :photo_file_name %>
+			<%= f.label :photo, 'Change Photo' %><br />
+			<%= f.file_field :photo %>
 		</p>
 	</div>
 	

@@ -10,7 +10,7 @@
 <%= f.text_field :email %></p>
 
 <p><%= label_tag 'section_id', 'Section' %><br/>
-<%= f.select 'section_id', Section.all.collect {|s| [s.instrument, s.id] } %></p>
+<%= f.select 'section_id', Section.all.collect {|s| [s.name, s.id] } %></p>
 
 <p><%= submit_tag 'Create Member' %></p>
 <% end -%>

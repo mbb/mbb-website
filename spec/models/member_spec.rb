@@ -8,116 +8,101 @@ include AuthenticatedTestHelper
 describe Member do
 	fixtures :members
 	fixtures :sections
+
+	# Basic columns and validations
+	it { should belong_to(:section) }
+	it { should have_db_column(:name) }
+	it { should have_db_column(:email) }
+	it { should have_db_column(:biography) }
+	it { should validate_presence_of(:section) }
+	it { should validate_presence_of(:name) }
+	it { should validate_presence_of(:email) }
+	it { should_not validate_presence_of(:password) }
+	it { should_not validate_presence_of(:password_confirmation) }
+	it { should_not validate_presence_of(:biography) }
 	
-	context '(in general)' do
-		it { should belong_to(:section) }
-		it { should have_db_column(:name) }
-		it { should have_db_column(:email) }
-		it { should have_db_column(:biography) }
-		it { should validate_presence_of(:section) }
-		it { should validate_presence_of(:name) }
-		it { should validate_presence_of(:email) }
-		it { should_not validate_presence_of(:password) }
-		it { should_not validate_presence_of(:password_confirmation) }
-		it { should_not validate_presence_of(:biography) }
-		
-		describe 'allows legitimate emails:' do
-			['foo@bar.com', 'foo@newskool-tld.museum', 'foo@twoletter-tld.de', 'foo@nonexistant-tld.qq',
-			 'r@a.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail.com',
-			 'hello.-_there@funnychar.com', 'uucp%addr@gmail.com', 'hello+routing-str@gmail.com',
-			 'domain@can.haz.many.sub.doma.in', 'student.name@university.edu'
-			].each do |email_str|
-				it "'#{email_str}'" do
-					lambda do
-						u = create_member(:email => email_str)
-						u.errors.on(:email).should		 be_nil
-					end.should change(Member, :count).by(1)
-				end
+	describe 'allows legitimate emails:' do
+		['foo@bar.com', 'foo@newskool-tld.museum', 'foo@twoletter-tld.de', 'foo@nonexistant-tld.qq',
+		 'r@a.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail.com',
+		 'hello.-_there@funnychar.com', 'uucp%addr@gmail.com', 'hello+routing-str@gmail.com',
+		 'domain@can.haz.many.sub.doma.in', 'student.name@university.edu'
+		].each do |email_str|
+			it "'#{email_str}' should be allowed" do
+				u = create_member(:email => email_str)
+				u.should have(:no).errors_on(:email)
 			end
 		end
-		
-		describe 'disallows illegitimate emails' do
-			['!!@nobadchars.com', 'foo@no-rep-dots..com', 'foo@badtld.xxx', 'foo@toolongtld.abcdefg',
-			 'Iñtërnâtiônàlizætiøn@hasnt.happened.to.email', 'need.domain.and.tld@de', "tab\t", "newline\n",
-			 'r@.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail2.com',
-			 # these are technically allowed but not seen in practice:
-			 'uucp!addr@gmail.com', 'semicolon;@gmail.com', 'quote"@gmail.com', 'tick\'@gmail.com', 'backtick`@gmail.com', 'space @gmail.com', 'bracket<@gmail.com', 'bracket>@gmail.com'
-			].each do |email_str|
-				it "'#{email_str}'" do
-					lambda do
-						u = create_member(:email => email_str)
-						u.errors.on(:email).should_not be_nil
-					end.should_not change(Member, :count)
-				end
+	end
+	
+	describe 'disallows illegitimate emails' do
+		['!!@nobadchars.com', 'foo@no-rep-dots..com', 'foo@badtld.xxx', 'foo@toolongtld.abcdefg',
+		 'Iñtërnâtiônàlizætiøn@hasnt.happened.to.email', 'need.domain.and.tld@de', "tab\t", "newline\n",
+		 'r@.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail2.com'
+		].each do |email_str|
+			it "'#{email_str}' should be disallowed" do
+				u = create_member(:email => email_str)
+				u.should_not have(:no).errors_on(:email)
 			end
 		end
 	end
 
+	# Ordering within a section
+	it { should have_db_column(:position) }
+	it { should_not validate_presence_of(:position) }
+	
+	it 'should get a default position at the bottom of the section' do
+		Member.create(:position => nil).position.should_not be_nil
+	end
+	
+	it 'should be listed in order within their section' do
+		natural_order = sections(:euphonium).members
+		sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
+		natural_order.should eql(sorted_order)
+	end
+
+	# Generation of path components.
 	context 'with valid attributes' do
 		subject { Member.create(@valid_attributes) }
-		it { should be_valid }
 		it { should generate_a_stable_path_component }
 	end
 
 	context 'with an abbreviated' do
 		context 'first name' do
 			subject { Member.create(@valid_attributes.merge(:name => 'A. Jaworski Smith Sullivan')) }
-			it { should be_valid }
+			it { should have(:no).errors_on(:name) }
 			it { should generate_a_stable_path_component }
 		end
 	
 		context 'middle name' do
 			subject	{ Member.create(@valid_attributes.merge(:name => 'Anthony J. S. Sullivan')) }
-			it { should be_valid }
+			it { should have(:no).errors_on(:name) }
 			it { should generate_a_stable_path_component }
 		end
 	
 		context 'last name' do
 			subject	{ Member.create(@valid_attributes.merge(:name => 'Anthony Jaworski Smith S.')) }
-			it { should be_valid }
+			it { should have(:no).errors_on(:name) }
 			it { should generate_a_stable_path_component }
 		end
 	end
 
 	context 'with no middle name' do
 		subject { Member.create(@valid_attributes.merge(:name => 'Anthony Sullivan')) }
-		it { should be_valid }
+		it { should have(:no).errors_on(:name) }
 		it { should generate_a_stable_path_component }
 	end
 
 	context 'with only one name' do
 		subject { Member.new(@valid_attributes.merge(:name => 'Anthony')) }
-		it { should_not be_valid }
+		it { should_not have(:no).errors_on(:name) }
 	end
 
-	before(:each) do
-		@valid_attributes = {
-			:name => 'Anthony Jaworski Smith Sullivan',
-			:email => 'ajay@test.net',
-			:section => sections(:euphonium)
-		}
-	end
-
-	describe 'being created' do
-		before do
-			@member = nil
-			@creating_member = lambda do
-				@member = create_member
-				violated "#{@member.errors.full_messages.to_sentence}" if @member.new_record?
-			end
-		end
-
-		it 'increments Member#count' do
-			@creating_member.should change(Member, :count).by(1)
-		end
-	end
-
-	it 'resets password' do
+	it 'resets password when given a new password and confirmation' do
 		members(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
 		Member.authenticate(members(:quentin).email, 'new password').should == members(:quentin)
 	end
 
-	it 'does not rehash password' do
+	it 'does not rehash password when updating the name' do
 		members(:quentin).update_attributes(:name => 'Quentin Florin')
 		Member.authenticate(members(:quentin).email, 'monkey').should == members(:quentin)
 	end
@@ -193,6 +178,14 @@ describe Member do
 		members(:quentin).remember_token.should_not be_nil
 		members(:quentin).remember_token_expires_at.should_not be_nil
 		members(:quentin).remember_token_expires_at.between?(before, after).should be_true
+	end
+	
+	before(:each) do
+		@valid_attributes = {
+			:name => 'Anthony Jaworski Smith Sullivan',
+			:email => 'ajay@test.net',
+			:section => sections(:euphonium)
+		}
 	end
 
 protected

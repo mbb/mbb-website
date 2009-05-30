@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090527022025) do
+ActiveRecord::Schema.define(:version => 20090530054231) do
 
   create_table "concerts", :force => true do |t|
     t.string   "title"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20090527022025) do
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
+    t.integer  "position"
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true
@@ -52,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20090527022025) do
   end
 
   create_table "sections", :force => true do |t|
-    t.string   "instrument"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
