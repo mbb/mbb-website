@@ -2,9 +2,10 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-	helper :all # include all helpers, all the time
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	activate_css_auto_include
 	include AuthenticatedSystem
-  include RoleRequirementSystem
+	include RoleRequirementSystem
+
+	helper :application
 end

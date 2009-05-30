@@ -35,7 +35,7 @@ Story: Creating Accounts for Band Members
 	Scenario: Board member can not create an account with bad email
 		Given a board member logged in as 'Reggie Funkle'
 		  And no member with name: 'Oona Funkle' exists
-		 When he registers an account with name: 'Oona Funkle', email: '', and section: 'Cornet'
+		 When he registers an account with name: 'Oona Funkle', email: '', and section: 'Soprano Cornet'
 		 Then he should be at the create-new-member page
 		  And he should see an errorExplanation entry 'Email can't be blank'
 		  And no member with name: 'Oona Funkle' should exist

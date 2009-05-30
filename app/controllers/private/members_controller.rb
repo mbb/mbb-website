@@ -2,6 +2,7 @@ class Private::MembersController < ApplicationController
 	before_filter :login_required
 	before_filter :must_be_this_member_or_board, :only => [:edit, :update]
 	require_role 'board', :only => [:new, :create, :destroy]
+	helper 'private/members'
 	
 	# GET /private/members
 	# GET /private/members.xml

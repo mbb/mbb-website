@@ -173,7 +173,7 @@ def clean_member_params!(member_params)
 		member_params['section_id'] = section
 		member_params['section'] = Section.find(section)
 	when 'String':
-		member_params['section'] = Section.find_by_instrument(section)
+		member_params['section'] = Section.find_by_name(section)
 		member_params['section_id'] = member_params['section'].id
 	when 'Section':
 		member_params['section_id'] = section.id
@@ -188,7 +188,7 @@ def register_member(member_params)
 	response.should render_template('private/members/new')
 	fill_in 'member_name', :with => member_params['name']
 	fill_in 'member_email', :with => member_params['email']
-	select member_params['section'].instrument, :from => 'member_section_id'
+	select member_params['section'].name, :from => 'member_section_id'
 	click_button 'Create Member'
 end
 

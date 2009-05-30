@@ -8,12 +8,4 @@ describe Story do
 	it { should validate_presence_of(:title) }
 	it { should validate_presence_of(:date) }
 	it { should validate_presence_of(:body) }
-	
-	context 'with a valid date' do
-		subject { Story.new(:date => 'April 4, 2009') }
-		
-		it 'should print its date to a string in a nice format' do
-			subject.date.to_s.should eql('April 4, 2009')
-		end
-	end
 end
