@@ -1,4 +1,5 @@
 module Private::MembersHelper
+	include ApplicationHelper
 	
 	#
 	# Use this to wrap view elements that the user can't access.
@@ -50,7 +51,7 @@ module Private::MembersHelper
 		content_method = options.delete(:content_method)
 		content_text		||= member.send(content_method) unless content_method.nil?
 		options[:title] ||= member.send(options.delete(:title_method))
-		link_to h(content_text), private_member_path(member.to_pc), options
+		link_to h(content_text), private_member_path(member), options
 	end
 
 	#
