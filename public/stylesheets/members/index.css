@@ -9,31 +9,24 @@ ul.sections li	{
 
 ul.sections li.section h2	{
 	width: 100%;
+	letter-spacing: 1px;
+	text-transform: uppercase;
 	text-align: left;
 	color: #555555;
 	font-size: 10pt;
-}
-
-ul.sections li.sub_section h2	{
-	max-width: 700px;
-	min-width: 150px;
-}
-
-ul.sections li.sub_section ul.sections h2	{
-	padding-left: 50px;
-	font-size: 9pt;
+	border-top: 1px solid #222222;
 }
 
 ul.section_membership	{
 	margin: auto;
 	max-width: 700px;
-	min-width: 150px;
-	margin-left: 100px;
+	min-width: 100px;
+	margin-left: 70px;
 }
 
 ul.section_membership li.member	{
-	width: 150px;
-	margin: 10px;
+	width: 125px;
+	margin: 15px;
 
 	clear: none;
 	float: left;
@@ -42,13 +35,12 @@ ul.section_membership li.member	{
 }
 
 ul.section_membership li img	{
-	width: 150px;
-	height: 150px;
+	width: 100px;
+	height: 100px;
 	margin-bottom: 5px;
 }
 
 ul.section_membership p	{
-	width: 150px;
 	font-size: 14pt;
 	margin: 0;
 	text-align: center;

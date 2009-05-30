@@ -1,66 +1,57 @@
 # Note: This file doubles as the full list of sections in the band. Look at rake tasks
 # in the namespace 'sections' for how to apply them to a database.
-cornet:
-  name: Cornet
-  position: 3
-
 soprano_cornet:
-  name: Soprano
+  name: Soprano Cornet
   position: 1
-  parent_id: <%= Fixtures.identify(:cornet) %>
 
 solo_cornet:
-  name: Solo
+  name: Solo Cornet
   position: 2
-  parent_id: <%= Fixtures.identify(:cornet) %>
 
 repiano_cornet:
-  name: Repiano
+  name: Repiano Cornet
   position: 3
-  parent_id: <%= Fixtures.identify(:cornet) %>
 
 second_cornet:
-  name: 2nd
+  name: 2nd Cornet
   position: 4
-  parent_id: <%= Fixtures.identify(:cornet) %>
 
 third_cornet:
-  name: 3rd
+  name: 3rd Cornet
   position: 5
-  parent_id: <%= Fixtures.identify(:cornet) %>
 
 flugelhorn:
   name: Flugelhorn
-  position: 4
+  position: 6
 
 alto_horn:
   name: Alto Horn
-  position: 5
+  position: 7
 
 trombone:
   name: Trombone
-  position: 6
+  position: 8
 
 bass_trombone:
   name: Bass Trombone
-  position: 7
+  position: 9
 
 euphonium:
   name: Euphonium
-  position: 8
+  position: 10
 
 baritone:
   name: Baritone
-  position: 9
+  position: 11
 
 eb_bass:
   name: E-flat Bass
-  position: 10
+  position: 12
 
 bb_bass:
   name: B-flat Bass
-  position: 11
+  position: 13
 
 percussion:
   name: Percussion
-  position: 12
+  position: 14

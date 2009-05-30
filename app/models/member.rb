@@ -14,10 +14,10 @@ class Member < ActiveRecord::Base
 	has_attached_file :photo,
 		:url => '/images/:class/:attachment/:id/:style/:basename.:extension',
 		:path => ':rails_root/public/images/:class/:attachment/:id/:style/:basename.:extension',
-		:default_url => '/images/:class/:attachment/missing_:style.png',
+		:default_url => '/images/:class/:attachment/missing_:style.jpg',
 		:styles =>	{
 			:headshot => '212x287#',
-			:thumbnail => '150x150#'
+			:thumbnail => '100x100#'
 		}
 	before_validation_on_create do |record|
 		if record.crypted_password.blank? and record.password.blank?

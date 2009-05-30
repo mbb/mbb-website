@@ -1,6 +1,6 @@
 <li class="section">
 	<h2><%= section.name %></h2>
-	<ul class="section_membership" id="<%= section.full_name.tableize %>">
+	<ul class="section_membership" id="<%= section.name.tableize %>">
 		<% section.members.each do |member| -%>
 			<%= render member %>
 		<% end -%>
