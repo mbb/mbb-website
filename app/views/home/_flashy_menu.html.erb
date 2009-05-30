@@ -8,8 +8,8 @@
 					<h1>Our Next Concert</h1>
 					<%= next_concert_image %>
 					<h2>
-						<%= Concert.next.date -%><br />
-						<%= Concert.next.title -%>
+						<%= Concert.next.date.strftime('%B %d, %Y') -%><br />
+						<%= Concert.next.location -%>
 					</h2>
 				</div>
 			</a>

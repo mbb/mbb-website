@@ -1,6 +1,7 @@
 <div class="concert">
 	<h2>
-		<%= concert.date_and_time %><br />
+		<%= concert.date.strftime('%A %B %d, %Y') -%><br />
+		<%= concert.time.strftime('%I:%M%p') unless concert.time.blank? -%><br />
 		<%= concert.title %>
 	</h2>
 	<h4>

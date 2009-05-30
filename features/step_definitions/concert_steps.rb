@@ -10,5 +10,10 @@ Given /no upcoming concert/ do
 end
 
 Given '$actor should see the concert $datum' do |_, datum|
-	response.should have_text(/#{Concert.next.send(datum)}/)
+	case datum
+	when 'date'
+		response.should have_text(/#{Concert.next.date.strftime('%B %d, %Y')}/)
+	else
+		response.should have_text(/#{Concert.next.send(datum)}/)
+	end
 end

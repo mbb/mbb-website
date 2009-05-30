@@ -11,19 +11,7 @@ class Concert < ActiveRecord::Base
 		self.upcoming.first
 	end
 	
-	def date_and_time
-		if date.nil?
-			nil
-		else
-			if time.nil?
-				date
-			else
-				date + time
-			end
-		end
-	end
-	
 	def to_s
-		"#{date}: #{title}"
+		"#{date.strftime('%B %d, %Y')}: #{title}"
 	end
 end
