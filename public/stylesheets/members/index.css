@@ -1,23 +1,55 @@
 #Sections	{
-	width: 70%;
+	width: 700px;
 	margin: auto;
 }
 
-#Sections h2	{
-	width: 50%;
-	margin: 1em 0 0 0;
-	text-align: right;
+ul.sections li	{
+	clear: both;
 }
 
-#Sections li	{
+ul.sections li.section h2	{
+	width: 100%;
 	text-align: left;
+	color: #555555;
+	font-size: 10pt;
 }
 
-#Sections h2	{
-	font-size: 12pt;
+ul.sections li.sub_section h2	{
+	max-width: 700px;
+	min-width: 150px;
 }
 
-#Sections ul.section_members li	{
-	margin-left: 50%;
-	padding-left: 5px;
+ul.sections li.sub_section ul.sections h2	{
+	padding-left: 50px;
+	font-size: 9pt;
+}
+
+ul.section_membership	{
+	margin: auto;
+	max-width: 700px;
+	min-width: 150px;
+	margin-left: 100px;
+}
+
+ul.section_membership li.member	{
+	width: 150px;
+	margin: 10px;
+
+	clear: none;
+	float: left;
+
+	text-align: center;
+}
+
+ul.section_membership li img	{
+	width: 150px;
+	height: 150px;
+	margin-bottom: 5px;
+}
+
+ul.section_membership p	{
+	width: 150px;
+	font-size: 14pt;
+	margin: 0;
+	text-align: center;
 }

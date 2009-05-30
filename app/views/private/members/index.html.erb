@@ -7,7 +7,7 @@
 <% Section.all.each do |section| -%>
 	<li>
 		<h2><%= section.name -%></h2>
-		<ul class="section_members" id="<%= section.instrument.tableize %>">
+		<ul class="section_members" id="<%= section.name.tableize %>">
 		<% section.members.each do |member| -%>
 			<li><%= link_to member, private_member_path(member) -%>, <%= mail_to member.email %></li>
 		<% end -%>

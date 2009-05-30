@@ -3,21 +3,6 @@
 	We are fortunate to have an exceptional roster of players, many of them professional musicians and music educators, from throughout Southern Wisconsin. Our roster allows us to play challenging pieces and solo events, and our players have seen some of the best brass band repertoire through their tenure with the group. Our members are not paid; they play for the music and for the exciting musical experience which is the Madison Brass Band.
 </p>
 
-<ul id="Sections">
-<% Section.all.each do |section| -%>
-	<li>
-		<h2><%= section.instrument -%></h2>
-		<ul class="section_members" id="<%= section.instrument.tableize %>">
-		<% section.members.each do |member| -%>
-			<li>
-			<% unless member.biography.nil? and member.photo_file_name.nil? -%>
-				<%= link_to member, member_path(member) %>
-			<% else -%>
-				<%= member.name %>
-			<% end -%>
-			</li>
-		<% end -%>
-		</ul>
-	</li>
-<% end -%>
+<ul id="Sections" class="sections">
+	<%= render :partial => 'section', :collection => Section.leaves %>
 </ul>

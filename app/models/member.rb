@@ -11,10 +11,14 @@ class Member < ActiveRecord::Base
 	default_scope :order => 'position ASC'
 	
 	has_and_belongs_to_many :roles
-	has_attached_file :photo, :styles =>	{
-		:headshot => '212x287#',
-		:thumbnail => '80x80#'
-	}
+	has_attached_file :photo,
+		:url => '/images/:class/:attachment/:id/:style/:basename.:extension',
+		:path => ':rails_root/public/images/:class/:attachment/:id/:style/:basename.:extension',
+		:default_url => '/images/:class/:attachment/missing_:style.png',
+		:styles =>	{
+			:headshot => '212x287#',
+			:thumbnail => '150x150#'
+		}
 	before_validation_on_create do |record|
 		if record.crypted_password.blank? and record.password.blank?
 			record.password_is_temporary = true

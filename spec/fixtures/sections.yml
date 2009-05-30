@@ -1,10 +1,5 @@
 # Note: This file doubles as the full list of sections in the band. Look at rake tasks
 # in the namespace 'sections' for how to apply them to a database.
-
-director:
-  name: Director
-  position: 1
-
 cornet:
   name: Cornet
   position: 3
@@ -12,22 +7,27 @@ cornet:
 soprano_cornet:
   name: Soprano
   position: 1
-  parent: cornet
+  parent_id: <%= Fixtures.identify(:cornet) %>
 
-first_cornet:
-  name: 1st
+solo_cornet:
+  name: Solo
   position: 2
-  parent: cornet
+  parent_id: <%= Fixtures.identify(:cornet) %>
+
+repiano_cornet:
+  name: Repiano
+  position: 3
+  parent_id: <%= Fixtures.identify(:cornet) %>
 
 second_cornet:
   name: 2nd
-  position: 3
-  parent: cornet
+  position: 4
+  parent_id: <%= Fixtures.identify(:cornet) %>
 
 third_cornet:
   name: 3rd
-  position: 4
-  parent: cornet
+  position: 5
+  parent_id: <%= Fixtures.identify(:cornet) %>
 
 flugelhorn:
   name: Flugelhorn
