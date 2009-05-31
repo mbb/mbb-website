@@ -91,11 +91,19 @@ class Private::MembersController < ApplicationController
 		end
 	end
 	
-	# PUT /private/members/move_up (rjs)
+	# PUT /private/members/Quentin_Daniels/move_up (rjs)
 	def move_up
 		@member = Member.find_by_path_component(params[:id])
 		old_position = @member.position
 		@member.move_higher
+		@position_changed = (old_position != @member.reload.position)
+	end
+	
+	# PUT /private/members/Quentin_Daniels/move_down (rjs)
+	def move_down
+		@member = Member.find_by_path_component(params[:id])
+		old_position = @member.position
+		@member.move_lower
 		@position_changed = (old_position != @member.reload.position)
 	end
 	

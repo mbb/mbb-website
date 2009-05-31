@@ -14,7 +14,7 @@ module AuthenticatedTestHelper
 			:name	 => 'Quentin Daniels',
 			:to_xml => "Member-in-XML", :to_json => "Member-in-JSON", 
 			:errors => [],
-			:to_param => 'quentin_daniels')
+			:to_param => 'Quentin_Daniels')
 		member
 	end
 end
