@@ -24,11 +24,12 @@ aaron:
 
 old_password_holder:
   name:                      Old Password Holder
-  section:                   cornet
+  section:                   solo_cornet
   email:                     salty_dog@example.com
   salt:                      7e3041ebc2fc05a40c60028e2c4901a81035d3cd
   crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   created_at:                <%= 1.days.ago.to_s :db %>
+  position:                  4
 
 beaker:
   name:                      Gina Beaker
@@ -38,3 +39,28 @@ beaker:
   crypted_password:          c298e6b8f05dca40becc440dadda78cd1581c01f # 'monkey'
   created_at:                <%= 1.days.ago.to_s :db %>
   roles:                     board
+
+
+first_cornet:
+  name:                      First Cornet Player
+  position:                  1
+  section:                   solo_cornet
+  email:                     1@cornet.com
+  salt:                      1b6453892473a467d07372d45eb05abc2031647a # SHA1('0')
+  crypted_password:          c298e6b8f05dca40becc440dadda78cd1581c01f # 'monkey'
+
+second_cornet:
+  name:                      Second Cornet Player
+  position:                  2
+  section:                   solo_cornet
+  email:                     2@cornet.com
+  salt:                      1b6453892473a467d07372d45eb05abc2031647a # SHA1('0')
+  crypted_password:          c298e6b8f05dca40becc440dadda78cd1581c01f # 'monkey'
+
+third_cornet:
+  name:                      Third Cornet Player
+  position:                  3
+  section:                   solo_cornet
+  email:                     3@cornet.com
+  salt:                      1b6453892473a467d07372d45eb05abc2031647a # SHA1('0')
+  crypted_password:          c298e6b8f05dca40becc440dadda78cd1581c01f # 'monkey'

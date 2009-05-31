@@ -51,13 +51,33 @@ describe Member do
 	it { should_not validate_presence_of(:position) }
 	
 	it 'should get a default position at the bottom of the section' do
-		Member.create(:position => nil).position.should_not be_nil
+		member = Member.new(:position => nil, :section => sections(:solo_cornet))
+		member.valid? # triggers validations
+		member.position.should_not be_nil
 	end
 	
 	it 'should be listed in order within their section' do
 		natural_order = sections(:euphonium).members
 		sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
 		natural_order.should eql(sorted_order)
+	end
+	
+	describe 'upon saving' do
+		it 'should not be re-ordered (from the top)' do
+			cornet_1 = sections(:solo_cornet).members.first
+			old_position = cornet_1.position
+			cornet_1.email = 'new@email.com'
+			cornet_1.save
+			cornet_1.position.should eql(old_position)
+		end
+		
+		it 'should not be re-ordered (from the bottom)' do
+			cornet_last = sections(:solo_cornet).members.last
+			old_position = cornet_last.position
+			cornet_last.email = 'new@email.com'
+			cornet_last.save
+			cornet_last.position.should eql(old_position)
+		end
 	end
 
 	# Generation of path components.

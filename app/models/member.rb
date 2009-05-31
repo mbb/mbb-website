@@ -7,7 +7,7 @@ class Member < ActiveRecord::Base
 
 	belongs_to :section
 	acts_as_list :scope => :section_id
-	before_validation :add_to_list_bottom
+	before_validation :set_default_position
 	default_scope :order => 'position ASC'
 	
 	has_and_belongs_to_many :roles
@@ -41,7 +41,6 @@ class Member < ActiveRecord::Base
 	validates_uniqueness_of	 :email
 	validates_format_of			 :email, :with => Authentication.email_regex, :message => Authentication.bad_email_message
 	validates_presence_of    :section
-	validates_presence_of    :position
 
 	def to_pc
 		self.class.to_pc(name)
@@ -98,5 +97,11 @@ class Member < ActiveRecord::Base
 	# (pc => "path component")
 	def self.to_pc(name)
 		name.gsub(' ', '_').downcase
+	end
+	
+	def set_default_position
+		if position.blank? and not section.blank?
+			write_attribute('position', section.members.last.position + 1)
+		end
 	end
 end
