@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
 	
 	# Private for Members with Login
 	map.namespace :private do |private|
-		private.resources :members, :requirements => {:id => PathComponent}
+		private.resources :members, :requirements => {:id => PathComponent},
+			:member => {:move_up => :put, :move_down => :put}
 	end
 end

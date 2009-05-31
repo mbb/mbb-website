@@ -1,17 +1,21 @@
 class Private::MembersController < ApplicationController
 	before_filter :login_required
 	before_filter :must_be_this_member_or_board, :only => [:edit, :update]
-	require_role 'board', :only => [:new, :create, :destroy]
+	require_role 'Roster Adjustment', :only => [:new, :create, :destroy, :move_up, :move_down]
 	helper 'private/members'
 	
 	# GET /private/members
-	# GET /private/members.xml
+	# GET /private/members.json
 	def index
-		@members = Member.find(:all)
+		if (params.has_key? :section)
+			@members = Section.find(params[:section]).members
+		else
+			@members = Member.find(:all)
+		end
 
 		respond_to do |format|
 			format.html # index.html.erb
-			format.xml	{ render :xml => @members }
+			format.json	{ render :json => @members }
 		end
 	end
 
@@ -85,6 +89,14 @@ class Private::MembersController < ApplicationController
 				format.xml	{ render :xml => @member.errors, :status => :unprocessable_entity }
 			end
 		end
+	end
+	
+	# PUT /private/members/move_up (rjs)
+	def move_up
+		@member = Member.find_by_path_component(params[:id])
+		old_position = @member.position
+		@member.move_higher
+		@position_changed = (old_position != @member.reload.position)
 	end
 	
 	private

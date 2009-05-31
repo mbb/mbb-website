@@ -1,17 +1,19 @@
 <h1>Our Members</h1>
 <p>
-	This is the current roster of the band, reflected on the <%= link_to 'public member list', private_members_path -%> we publish. <%= link_to_current_member :content_text => 'Your profile' -%> is editable.
+	This is the current roster of the band, reflected on the <%= link_to 'public member page', private_members_path -%>. Members appear in order within their sections.
 </p>
 
-<ul id="Sections">
-<% Section.all.each do |section| -%>
-	<li>
-		<h2><%= section.name -%></h2>
-		<ul class="section_members" id="<%= section.name.tableize %>">
-		<% section.members.each do |member| -%>
-			<li><%= link_to_member(member) -%>, <%= mail_to member.email %></li>
-		<% end -%>
-		</ul>
-	</li>
-<% end -%>
-</ul>
+<table>
+	<thead>
+		<tr>
+			<th>Photo</th>
+			<th>Member Name</th>
+			<th>E-Mail Address</th>
+			<th>Section</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<%= render :partial => 'section', :collection => Section.all %>
+	</tbody>
+</table>

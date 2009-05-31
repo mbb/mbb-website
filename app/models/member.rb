@@ -17,7 +17,8 @@ class Member < ActiveRecord::Base
 		:default_url => '/images/:class/:attachment/missing_:style.jpg',
 		:styles =>	{
 			:headshot => '212x287#',
-			:thumbnail => '100x100#'
+			:thumbnail => '100x100#',
+			:tiny => '50x50#'
 		}
 	before_validation_on_create do |record|
 		if record.crypted_password.blank? and record.password.blank?
@@ -47,7 +48,7 @@ class Member < ActiveRecord::Base
 	end
 
 	def self.find_by_path_component(component)
-		self.find_by_name(component.humanize.titleize)
+		self.find_by_name(component.gsub('_', ' '))
 	end
 
 	def to_param
@@ -93,10 +94,10 @@ class Member < ActiveRecord::Base
 		'brass4life'
 	end
 	
-	# Turns Andres J. Tack into andres_j._tack
+	# Turns Andres J. Tack into Andres_J._Tack
 	# (pc => "path component")
 	def self.to_pc(name)
-		name.gsub(' ', '_').downcase
+		name.gsub(' ', '_')
 	end
 	
 	def set_default_position

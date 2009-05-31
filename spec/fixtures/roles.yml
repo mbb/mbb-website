@@ -1,2 +1,5 @@
 board:
-  name: board
+  name: Board Activities
+
+roster_adjustment:
+  name: Roster Adjustment
