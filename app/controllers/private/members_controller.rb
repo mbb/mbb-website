@@ -1,6 +1,6 @@
 class Private::MembersController < ApplicationController
 	before_filter :login_required
-	before_filter :must_be_this_member_or_board, :only => [:edit, :update]
+	before_filter :check_credentials, :only => [:edit, :update]
 	require_role 'Roster Adjustment', :only => [:new, :create, :destroy, :move_up, :move_down]
 	helper 'private/members'
 	
@@ -70,7 +70,7 @@ class Private::MembersController < ApplicationController
 		
 		respond_to do |format|
 			format.html # edit.html.erb
-			format.xml	{ render :xml => @member }
+			format.js	  { render :partial => 'edit_form.html.erb', :member => @member }
 		end
 	end
 
@@ -83,10 +83,10 @@ class Private::MembersController < ApplicationController
 			if @member.update_attributes(params[:member])
 				flash[:notice] = 'Member was successfully updated.'
 				format.html { redirect_to private_member_path(@member) }
-				format.xml	{ head :ok }
+				format.js   # update.js.rjs
 			else
 				format.html { render :action => "edit" }
-				format.xml	{ render :xml => @member.errors, :status => :unprocessable_entity }
+				format.js   # update.js.rjs
 			end
 		end
 	end
@@ -108,8 +108,8 @@ class Private::MembersController < ApplicationController
 	end
 	
 	private
-		def must_be_this_member_or_board
-			unless current_member.has_role?('board') or params[:id] == current_member.to_pc
+		def check_credentials
+			unless current_member.has_role?('Roster Adjustment') or params[:id] == current_member.to_pc
 				flash[:error] = "You do not have permission to #{action_name} another member."
 				redirect_to private_members_path
 				false
