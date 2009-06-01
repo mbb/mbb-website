@@ -1,4 +1,15 @@
 <li class="member">
-	<%= image_tag member.photo.url(:thumbnail) %>
-	<p><%= member %></p>
+	<% unless member.biography.blank? -%>
+		<% link_to member_path(member) do -%>
+			<div>
+				<%= image_tag member.photo.url(:thumbnail) %>
+				<p><%= member %></p>
+			</div>
+		<% end -%>
+	<% else -%>
+		<div>
+			<%= image_tag member.photo.url(:thumbnail) %>
+			<p><%= member %></p>
+		</div>
+	<% end -%>
 </li>
