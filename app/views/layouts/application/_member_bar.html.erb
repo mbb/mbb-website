@@ -4,6 +4,6 @@
 	<li class="member-bar-action"><%= link_to 'Add a New Member', new_private_member_path %></li>
 	<% end -%>
 	<li class="member-bar-action"><%= link_to 'Private Roster', private_members_path -%></li>
-	<li class="member-bar-action"><%= link_to_current_member :content_text => 'My Profile' -%></li>
+	<li class="member-bar-action"><%= link_to 'My Profile', private_member_path(current_member) -%></li>
 	<li class="member-bar-action"><%= link_to "Log out", logout_path, { :title => "Log out" } -%></li>
 </ul>

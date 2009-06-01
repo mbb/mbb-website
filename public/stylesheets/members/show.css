@@ -38,8 +38,16 @@ div.container	{
 .member_datum p	{
 	text-align: left;
 	display: inline;
+	margin: 0;
 }
 
 .member_datum .label	{
+	float: left;
 	font-weight: bold;
+	margin: 0;
+	margin-right: 10px;
+}
+
+.member_datum .label:after	{
+	content: ": ";
 }

@@ -21,6 +21,26 @@ div.container	{
 	margin-bottom: 0;
 }
 
+#PasswordFields	{
+	display: none;
+}
+
+#PasswordFields h3	{
+	text-align: center;
+	font-size: 8pt;
+	color: orange;
+}
+#PasswordFields p	{
+	margin: 0;
+	text-align: right;
+}
+#PasswordFields p label	{
+	width: 150px;
+}
+#PasswordFields p input	{
+	width: 150px;
+}
+
 #Section	{
 	margin-top: 0;
 	font-size: 12pt;
