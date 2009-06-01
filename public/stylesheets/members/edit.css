@@ -5,13 +5,13 @@ div.container	{
 
 #HeadshotContainer	{
 	float: left;
-	width: 218px;
+	width: 300px;
 	margin: auto 40px;
 }
 
 #Headshot	{
-	height: 287px;
-	width: 212px;
+	height: 300px;
+	width: 300px;
 	background-color: #bbbbbb;
 	float: left;
 	padding: 4px;

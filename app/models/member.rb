@@ -16,7 +16,7 @@ class Member < ActiveRecord::Base
 		:path => ':rails_root/public/images/:class/:attachment/:id/:style/:basename.:extension',
 		:default_url => '/images/:class/:attachment/missing_:style.jpg',
 		:styles =>	{
-			:headshot => '212x287#',
+			:headshot => '300x300#',
 			:thumbnail => '100x100#',
 			:tiny => '50x50#'
 		}
