@@ -1,4 +1,7 @@
 <tr>
+	<% if current_member.has_role?('Roster Adjustment') %>
+		<td></td>
+	<% end %>
 	<th colspan="4"><%= section.name -%></th>
 </tr>
 

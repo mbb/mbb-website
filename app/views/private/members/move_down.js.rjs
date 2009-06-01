@@ -1,0 +1,9 @@
+unless not @position_changed
+	page.remove "member_#{@member.id}"
+	unless @member.higher_item.nil?
+		page.insert_html :after, "member_#{@member.higher_item.id}", :partial => 'member', :locals => {:member => @member}
+		page.replace "member_#{@member.higher_item.id}", :partial => 'member', :locals => {:member => @member.higher_item}
+	end
+end
+
+# Visual effects here!

@@ -1,11 +1,11 @@
 <tr id="member_<%= member.id -%>">
-	<td><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></td>
-	<td><%= member.name -%></td>
-	<td><%= member.email -%></td>
-	<td><%= member.section %></td>
 	<% if current_member.has_role?('Roster Adjustment') %>
 		<td class="operations">
 			<%= render :partial => 'operations', :locals => {:member => member} %>
 		</td>
 	<% end %>
+	<td><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></td>
+	<td><%= member.name -%></td>
+	<td><%= member.email -%></td>
+	<td><%= member.section %></td>
 </tr>

@@ -1,4 +1,19 @@
-<%= link_to_remote (image_tag 'knobs/up.png', :alt => "Move #{member.name} up in this section"),
-                    :url => move_up_private_member_url(member), :method => :put %>
-<%= link_to_remote (image_tag 'knobs/down.png', :alt => "Move #{member.name} down in this section"),
-                    :url => move_down_private_member_url(member), :method => :put %>
+<ul class="operations">
+	<li>
+		<div class="operation">
+			<% unless member.lower_item.nil? -%>
+				<%= link_to_remote (image_tag 'knobs/down.png', :alt => "Move #{member.name} down in this section"),
+				                    :url => move_down_private_member_url(member), :method => :put %>
+			<% end -%>
+		</div>
+	</li>
+
+	<li>
+		<div class="operation">
+			<% unless member.higher_item.nil? -%>
+				<%= link_to_remote (image_tag 'knobs/up.png', :alt => "Move #{member.name} up in this section"),
+				                    :url => move_up_private_member_url(member), :method => :put %>
+			<% end -%>
+		</div>
+	</li>
+</ul>
