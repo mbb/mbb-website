@@ -20,7 +20,7 @@ class Member < ActiveRecord::Base
 			:thumbnail => '100x100#',
 			:tiny => '50x50#'
 		}
-	before_validation_on_create do |record|
+	before_validation do |record|
 		if record.crypted_password.blank? and record.password.blank?
 			record.password_is_temporary = true
 			record.password = default_password
@@ -102,7 +102,11 @@ class Member < ActiveRecord::Base
 	
 	def set_default_position
 		if position.blank? and not section.blank?
-			write_attribute('position', section.members.last.position + 1)
+			unless section.members.count == 0
+				write_attribute('position', section.members.last.position + 1)
+			else
+				write_attribute('position', 1)
+			end
 		end
 	end
 end

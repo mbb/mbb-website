@@ -56,6 +56,12 @@ describe Member do
 		member.position.should_not be_nil
 	end
 	
+	it 'should be positioned at the top of their section if that section is empty' do
+		member = Member.new(:position => nil, :section => Section.create!(:name => 'Penis', :position => 1000))
+		member.valid? # triggers validations
+		member.position.should be(1)
+	end
+	
 	it 'should be listed in order within their section' do
 		natural_order = sections(:euphonium).members
 		sorted_order = natural_order.sort { |a, b| a.position <=> b.position }

@@ -16,6 +16,7 @@ quentins_bitch:
 
 aaron:
   name:                      Aaron Brockovich
+  position:                  1
   section:                   trombone
   email:                     aaron@example.com
   salt:                      ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 # SHA1('1')
@@ -38,7 +39,7 @@ beaker:
   salt:                      1b6453892473a467d07372d45eb05abc2031647a # SHA1('0')
   crypted_password:          c298e6b8f05dca40becc440dadda78cd1581c01f # 'monkey'
   created_at:                <%= 1.days.ago.to_s :db %>
-  roles:                     board
+  roles:                     roster_adjustment
 
 
 first_cornet:

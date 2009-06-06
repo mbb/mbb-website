@@ -7,7 +7,7 @@ include AuthenticatedTestHelper
 describe Private::MembersController do
 	fixtures :members, :sections, :roles
 
-	context 'when a board member is logged in' do
+	context 'when a Roster Adjustment member is logged in' do
 		before :each do
 			login_as members(:beaker)
 		end
