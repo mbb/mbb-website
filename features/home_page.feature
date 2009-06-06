@@ -7,7 +7,7 @@ Story:
 		Given an upcoming concert
 		  And an anonymous visitor
 		 When he goes to the home page
-		 Then he should see the concert location
+		 Then he should see the concert title
 		  And he should see the concert date
 		  And he should see a link labeled Our Next Concert
 		 When he clicks "Our Next Concert"
