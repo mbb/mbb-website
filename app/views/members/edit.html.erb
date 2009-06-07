@@ -1,6 +1,6 @@
 <h1>Edit <%= @member -%>'s Profile</h1>
 
-<% form_for [:private, @member], :html => { :multipart => true, :method => :put } do |f| %>
+<% form_for @member do |f| %>
 	<%= f.error_messages %>
 
 	<div id="HeadshotContainer">

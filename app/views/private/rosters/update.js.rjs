@@ -1,0 +1,2 @@
+page.replace_html "member_#{@member.id}", :partial => 'member', :locals => {:member => @member}
+page.visual_effect :highlight, "member_#{@member.id}", :duration => '0.3s', :startcolor => '#74e868'

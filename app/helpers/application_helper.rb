@@ -1,6 +1,12 @@
 module ApplicationHelper
-	def has_member_edit_permission(member)
-		(current_member.id == member.id) or (member.has_role?(:board))
+	
+	#
+	#
+	#
+	def current_member_has_member_edit_permission(member)
+		unless not logged_in?
+			(current_member.id == member.id) or (current_member.has_role?('Roster Adjustment'))
+		end
 	end
 	
 	#

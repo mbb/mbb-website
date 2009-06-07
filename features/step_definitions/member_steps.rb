@@ -184,8 +184,8 @@ end
 
 def register_member(member_params)
 	clean_member_params!(member_params)
-	visit '/private/members/new'
-	response.should render_template('private/members/new')
+	visit '/members/new'
+	response.should render_template('members/new')
 	fill_in 'member_name', :with => member_params['name']
 	fill_in 'member_email', :with => member_params['email']
 	select member_params['section'].name, :from => 'member_section_id'

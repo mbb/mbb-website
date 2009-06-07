@@ -2,7 +2,7 @@
 <% @member.password = @member.password_confirmation = nil %>
 
 <%= error_messages_for :member %>
-<% form_for :member, :url => private_members_path do |f| -%>
+<% form_for @member do |f| -%>
 <p><%= label_tag 'name' %><br/>
 <%= f.text_field :name %></p>
 

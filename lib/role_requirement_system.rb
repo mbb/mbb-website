@@ -110,7 +110,7 @@ module RoleRequirementSystem
 		def access_denied
 			if logged_in?
 				flash[:error] = "You do not have permission to access #{request.path}."
-				redirect_back_or_default(private_members_path)
+				redirect_back_or_default(private_roster_path)
 				false
 			else
 				flash[:error] = 'You must be a member to access this page. Please log in.'
