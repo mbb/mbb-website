@@ -17,6 +17,11 @@ body	{
 	max-width: 900px;
 }
 
+.members_only	{
+	border: 1px solid orange;
+	background-color: #f5b800;
+}
+
 a	{
 	color: #933;
 	text-decoration: none;

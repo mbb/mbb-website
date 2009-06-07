@@ -1,8 +1,8 @@
 <ul class="operations">
 	<li>
 		<div class="operation">
-			<% if has_member_edit_permission(member) -%>
-				<%= link_to (image_tag 'knobs/pencil.png', :alt => "Edit #{member.name}."), edit_private_member_path(member) %>
+			<% if current_member_has_member_edit_permission(member) -%>
+				<%= link_to (image_tag 'knobs/pencil.png', :alt => "Edit #{member.name}."), edit_member_path(member) %>
 			<% end -%>
 		</div>
 	</li>
@@ -12,7 +12,7 @@
 			<% if current_member.has_role?('Roster Adjustment') -%>
 				<% unless member.lower_item.nil? -%>
 					<%= link_to_remote (image_tag 'knobs/down.png', :alt => "Move #{member.name} down in this section."),
-					                    :url => move_down_private_member_url(member), :method => :put %>
+					                    :url => move_down_member_url(member), :method => :put %>
 				<% end -%>
 			<% end -%>
 		</div>
@@ -23,7 +23,7 @@
 			<% if current_member.has_role?('Roster Adjustment') -%>
 				<% unless member.higher_item.nil? -%>
 					<%= link_to_remote (image_tag 'knobs/up.png', :alt => "Move #{member.name} up in this section."),
-					                    :url => move_up_private_member_url(member), :method => :put %>
+					                    :url => move_up_member_url(member), :method => :put %>
 				<% end -%>
 			<% end %>
 		</div>

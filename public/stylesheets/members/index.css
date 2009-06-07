@@ -45,23 +45,3 @@ ul.section_membership p	{
 	margin: 0;
 	text-align: center;
 }
-
-table.sections thead th	{
-	text-align: left;
-	border-bottom: none;
-	font-size: 14pt;
-}
-
-table.sections tbody th	{
-	text-align: left;
-	border-bottom: 1px solid black;
-}
-
-ul.operations li	{
-	float: left;
-}
-
-ul.operations li .operation	{
-	width: 16px;
-	height: 16px;
-}

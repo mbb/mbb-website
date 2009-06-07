@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
 			self.current_member = member
 			new_cookie_flag = true
 			handle_remember_cookie! new_cookie_flag
-			redirect_back_or_default private_member_path(member)
+			redirect_back_or_default member_path(member)
 			flash[:notice] = "Logged in successfully"
 		else
 			note_failed_signin
