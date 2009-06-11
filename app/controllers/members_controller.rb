@@ -92,6 +92,7 @@ class MembersController < ApplicationController
 		old_position = @member.position
 		@member.move_higher
 		@position_changed = (old_position != @member.reload.position)
+		render 'private/rosters/move_up'
 	end
 	
 	# PUT /private/members/Quentin_Daniels/move_down (rjs)
@@ -100,6 +101,7 @@ class MembersController < ApplicationController
 		old_position = @member.position
 		@member.move_lower
 		@position_changed = (old_position != @member.reload.position)
+		render 'private/rosters/move_down'
 	end
 	
 	private

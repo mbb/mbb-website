@@ -1,6 +1,6 @@
 <tr id="member_<%= member.id -%>">
 	<td class="operations">
-		<%= render :partial => 'operations', :locals => {:member => member} %>
+		<%= render :partial => 'private/rosters/operations', :locals => {:member => member} %>
 	</td>
 	
 	<td><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></td>
