@@ -1,0 +1,24 @@
+#Concerts	{
+	margin: auto;
+	width: 70%;
+}
+
+table#Concerts	{
+	border-collapse: collapse;
+}
+
+table#Concerts td	{
+	padding: 4px;
+}
+
+table#Concerts tr:nth-child(2) td	{
+	border-top: none;
+}
+
+table#Concerts td	{
+	border-top: 1px solid black;
+}
+
+table#Concerts td.date	{
+	width: 50%;
+}
