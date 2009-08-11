@@ -19,10 +19,15 @@ class MembersController < ApplicationController
 	def show
 		@member = Member.find_by_path_component(params[:id])
 	
-		respond_to do |format|
-			format.html # show.html.erb
-			format.xml	{ render :xml => @member }
-		end
+	  unless @member.nil?
+  		respond_to do |format|
+  			format.html # show.html.erb
+  			format.xml	{ render :xml => @member }
+  		end
+		else
+		  flash[:error] = "The member page you bookmarked no longer exists."
+		  redirect_to home_url
+	  end
 	end
 
 	# GET /private/members/new
