@@ -13,6 +13,8 @@ module NavigationHelpers
 				book_path
 			when /next concert/
 				next_concerts_path
+			when /upcoming concerts/
+			  upcoming_concerts_path
 			when /private member list/
 				private_roster_path
 			when /create-new-member/
