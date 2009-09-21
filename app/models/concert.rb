@@ -4,8 +4,8 @@ class Concert < ActiveRecord::Base
 	validates_presence_of :time
 	validates_presence_of :location
 	
-	named_scope :upcoming, :conditions => ['date >= ?', Time.zone.today]
-	named_scope :past, :conditions => ['date < ?', Time.zone.today]
+	named_scope :upcoming, :conditions => ['date >= ?', Time.zone.today], :order => 'date ASC'
+	named_scope :past, :conditions => ['date < ?', Time.zone.today], :order => 'date DESC'
 	
 	def self.next
 		self.upcoming.first
