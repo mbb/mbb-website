@@ -2,7 +2,11 @@ PathComponent = /([\w\d]|(\._))+/
 
 ActionController::Routing::Routes.draw do |map|
 	# Main site links
-	map.history 'history', :controller => 'history'
+	map.with_options :controller => 'about' do |about|
+    about.about 'about', :action => 'index'
+    about.about_director 'about/director', :action => 'director'
+    about.history 'about/history', :action => 'history'
+	end
 	map.news 'news', :controller => 'news'
 	map.book 'book', :controller => 'book'
 	map.join 'join', :controller => 'join'
