@@ -3,6 +3,7 @@
 director:
   name: Musical Director
   position: 0
+  visible: false
 
 soprano_cornet:
   name: Soprano Cornet
