@@ -1,5 +1,9 @@
 # Note: This file doubles as the full list of sections in the band. Look at rake tasks
 # in the namespace 'sections' for how to apply them to a database.
+director:
+  name: Musical Director
+  position: 0
+
 soprano_cornet:
   name: Soprano Cornet
   position: 1
