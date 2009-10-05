@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090530054231) do
+ActiveRecord::Schema.define(:version => 20091002030537) do
 
   create_table "concerts", :force => true do |t|
     t.string   "title"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20090530054231) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.integer  "position"
+    t.boolean  "visible",                                  :default => true
+    t.string   "phone_number"
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20090530054231) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
+    t.boolean  "visible",    :default => true
   end
 
   create_table "stories", :force => true do |t|

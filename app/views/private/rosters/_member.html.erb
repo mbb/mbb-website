@@ -5,6 +5,9 @@
 	
 	<td><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></td>
 	<td><%= member.name -%></td>
-	<td><%= member.email -%></td>
+	<td>
+	  <%= member.email -%><br />
+	  <%= member.phone_number %>
+	</td>
 	<td><%= member.section %></td>
 </tr>
