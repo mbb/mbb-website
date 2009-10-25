@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     about.about 'about', :action => 'index'
     about.about_director 'about/director', :action => 'director'
     about.history 'about/history', :action => 'history'
+    about.about_bylaws 'about/bylaws', :action => 'bylaws'
 	end
 	map.news 'news', :controller => 'news'
 	map.book 'book', :controller => 'book'
