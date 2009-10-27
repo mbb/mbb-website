@@ -1,5 +1,19 @@
-img#CraigMasonPicture	{
+#PageHeaderWithPhoto	{
+	width: 75%;
+	margin: auto;
+}
+
+#PageHeaderWithPhoto h1	{
+	padding-top: 40px;
+}
+
+#PageHeaderWithPhoto img#CraigMasonPicture	{
 	display: block;
 	margin: auto;
+	float: left;
 	padding: 15px;
+}
+
+p	{
+	clear: both;
 }
