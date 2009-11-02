@@ -3,11 +3,21 @@
 
 <%= image_tag @member.photo.url(:headshot), :id => 'Headshot', :alt => "Picture of #{@member}" %>
 <div class="member_datum">
-  <%= @member.biography %>
+  <% if (@member.biography.nil?) -%>
+    <% if can_edit_member(@member) -%>
+      <% if current_member == @member -%>
+        <p>Nothing here yet... <%= link_to 'Write your biography!', edit_member_path(@member) -%></p>
+      <% else -%>
+        <p>Nothing here yet... <%= link_to "Write #{@member}'s biography!", edit_member_path(@member) -%></p>
+      <% end -%>
+    <% end %>
+  <% else -%>
+    <%= RedCloth.new(@member.biography).to_html %>
+  <% end -%>
 </div>
 <div class="spacer"></div>
 
-<% if current_member_has_member_edit_permission(@member) -%>
+<% if can_edit_member(@member) -%>
 	<div id="Actions" class="members_only">
 		<%= link_to 'Edit Profile', edit_member_path(@member) %>
 	</div>

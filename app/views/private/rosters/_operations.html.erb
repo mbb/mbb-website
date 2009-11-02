@@ -1,7 +1,7 @@
 <ul class="operations">
 	<li>
 		<div class="operation">
-			<% if current_member_has_member_edit_permission(member) -%>
+			<% if can_edit_member(member) -%>
 				<%= link_to (image_tag 'knobs/pencil.png', :alt => "Edit #{member.name}."), edit_member_path(member) %>
 			<% end -%>
 		</div>

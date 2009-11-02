@@ -6,7 +6,7 @@
 		<li class="story">
 			<h2><%= story.date -%><br /> <%= story.title -%></h2>
 			<p>
-				<%= story.body %>
+				<%= RedCloth.new(story.body).to_html %>
 			</p>
 		</li>
 	<% end %>

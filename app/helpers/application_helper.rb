@@ -1,11 +1,12 @@
 module ApplicationHelper
 	
 	#
+	# Checks whether the currently logged-in member is allowed to edit the profile of
+	# another member, here "other_member."
 	#
-	#
-	def current_member_has_member_edit_permission(member)
+	def can_edit_member(other_member)
 		unless not logged_in?
-			(current_member.id == member.id) or (current_member.has_role?('Roster Adjustment'))
+			(current_member.id == other_member.id) or (current_member.has_role?('Roster Adjustment'))
 		end
 	end
 	
