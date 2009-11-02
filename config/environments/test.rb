@@ -30,4 +30,4 @@ config.gem "rspec", :lib => false, :version => ">= 1.2.0"
 config.gem "rspec-rails", :lib => false, :version => ">= 1.2.0"
 config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
 config.gem 'cucumber', :version => '0.2.0'
-config.gem 'webrat', :version => '0.4.4'
+config.gem 'webrat', :version => '0.5.3'
