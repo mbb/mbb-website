@@ -48,8 +48,8 @@ class Member < ActiveRecord::Base
 	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
 	validates_presence_of    :section
 
-  def phone_number
-    MadisonBrassBand::PhoneNumber.to_display(attributes['phone_number'])
+  def pretty_phone_number
+    MadisonBrassBand::PhoneNumber.to_display(self.attributes['phone_number'])
   end
 
 	def to_pc

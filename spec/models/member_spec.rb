@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../sample_data/phone_numbers'
 
 # Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead.
 # Then, you can remove it from this and the functional test.
@@ -29,10 +30,19 @@ describe Member do
   #
   SampleData::InvalidNorthAmericanPhoneNumbers.each do |example|
     it "should not accept a phone number of #{example.number} because #{example.description}" do
-      user = User.new(:phone_number => example.number)
+      user = Member.new(:phone_number => example.number)
       user.valid? # Triggers validation errors.
       user.should have_at_least(1).errors_on(:phone_number)
     end
+  end
+  
+  #
+  # Verify display of phone number versus the internal storage mechanism.
+  # Note that we only test that an internal representation is offered, not that it
+  #
+  it 'should display a phone number in an attractive format' do
+    user = Member.new(:phone_number => '9099999999')
+    user.pretty_phone_number.should == '(909) 999-9999'
   end
 	
 	describe 'allows legitimate emails:' do
