@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091002001128) do
+ActiveRecord::Schema.define(:version => 20091002030537) do
 
   create_table "concerts", :force => true do |t|
     t.string   "title"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20091002001128) do
     t.integer  "photo_file_size"
     t.integer  "position"
     t.boolean  "visible",                                  :default => true
+    t.string   "phone_number"
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true

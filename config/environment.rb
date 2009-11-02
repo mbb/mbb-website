@@ -10,4 +10,5 @@ Rails::Initializer.run do |config|
 	config.time_zone = 'Central Time (US & Canada)'
 	config.i18n.default_locale = :en
 	config.gem 'RedCloth', :version => '>= 4.0'
+	config.active_record.observers = :member_observer
 end

@@ -16,6 +16,11 @@
 		<%= f.text_field :email %>
 	</div>
 	
+	<div class="member_datum">
+	  <%= f.label :phone_number, 'Phone', :class => 'label' %>
+	  <%= f.text_field :phone_number, :value => @member.pretty_phone_number %>
+	</div>
+	
 	<%= link_to_function 'Change Password', "$('#PasswordFields').show(); $(this).hide();" %>
 	<div id="PasswordFields">
 		<%= render :partial => 'password', :locals => {:f => f} %>

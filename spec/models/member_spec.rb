@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../sample_data/phone_numbers'
 
 # Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead.
 # Then, you can remove it from this and the functional test.
@@ -17,9 +18,32 @@ describe Member do
 	it { should validate_presence_of(:section) }
 	it { should validate_presence_of(:name) }
 	it { should validate_presence_of(:email) }
+	it { should_not validate_presence_of(:phone_number) }
 	it { should_not validate_presence_of(:password) }
 	it { should_not validate_presence_of(:password_confirmation) }
 	it { should_not validate_presence_of(:biography) }
+	
+	#
+  # Verify format of phone number
+  # Tests which express what the user should see are at the story/integration
+  # level. This is only a valid/invalid specification.
+  #
+  SampleData::InvalidNorthAmericanPhoneNumbers.each do |example|
+    it "should not accept a phone number of #{example.number} because #{example.description}" do
+      user = Member.new(:phone_number => example.number)
+      user.valid? # Triggers validation errors.
+      user.should have_at_least(1).errors_on(:phone_number)
+    end
+  end
+  
+  #
+  # Verify display of phone number versus the internal storage mechanism.
+  # Note that we only test that an internal representation is offered, not that it
+  #
+  it 'should display a phone number in an attractive format' do
+    user = Member.new(:phone_number => '9099999999')
+    user.pretty_phone_number.should == '(909) 999-9999'
+  end
 	
 	describe 'allows legitimate emails:' do
 		['foo@bar.com', 'foo@newskool-tld.museum', 'foo@twoletter-tld.de', 'foo@nonexistant-tld.qq',

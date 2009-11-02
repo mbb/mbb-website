@@ -1,4 +1,6 @@
 require 'digest/sha1'
+require 'mbb/phone_number'
+require 'threedegrees/regex'
 
 class Member < ActiveRecord::Base
 	include Authentication
@@ -43,7 +45,12 @@ class Member < ActiveRecord::Base
 	validates_length_of			 :email, :within => 6..100
 	validates_uniqueness_of	 :email
 	validates_format_of			 :email, :with => Authentication.email_regex, :message => Authentication.bad_email_message
+	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
 	validates_presence_of    :section
+
+  def pretty_phone_number
+    MadisonBrassBand::PhoneNumber.to_display(self.attributes['phone_number'])
+  end
 
 	def to_pc
 		self.class.to_pc(name)
@@ -64,7 +71,7 @@ class Member < ActiveRecord::Base
 	# prevents a user from submitting a crafted form that bypasses activation
 	# anything else you want your user to change should be added here.
 	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id,
-		:roles, :updated_at, :created_at, :photo, :biography
+		:roles, :updated_at, :created_at, :photo, :biography, :phone_number
 
 	# Authenticates a user by their login name and unencrypted password.	Returns the user or nil.
 	#
