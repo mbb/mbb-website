@@ -1,0 +1,10 @@
+<%= render :partial => "menu" %>
+<% @craig = Member.find_by_name('Craig Mason') -%>
+
+<div id="PageHeaderWithPhoto">
+  <%= image_tag @craig.photo.url(:headshot), :id => 'CraigMasonPicture', :alt => "Picture of #{@craig}" %>
+  <h1>Craig Mason</h1>
+  <h2>Musical Director of Madison&nbsp;Brass&nbsp;Band</h2>
+</div>
+
+<%= @craig.biography %>

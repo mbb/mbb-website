@@ -11,6 +11,8 @@ class Member < ActiveRecord::Base
 	acts_as_list :scope => :section_id
 	before_validation :set_default_position
 	default_scope :order => 'position ASC'
+	named_scope :visible, :conditions => {:visible => true}
+	named_scope :invisible, :conditions => {:visible => false}
 	
 	has_and_belongs_to_many :roles
 	has_attached_file :photo,

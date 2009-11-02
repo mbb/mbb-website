@@ -37,7 +37,7 @@ div.container	{
 
 .member_datum p	{
 	text-align: left;
-	display: inline;
+	display: block;
 	margin: 0;
 }
 

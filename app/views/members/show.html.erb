@@ -3,16 +3,7 @@
 
 <%= image_tag @member.photo.url(:headshot), :id => 'Headshot', :alt => "Picture of #{@member}" %>
 <div class="member_datum">
-	<p class="label">E-Mail Address</p>
-	<p><%=h @member.email -%></p>
-</div>
-<div class="member_datum">
-	<p class="label">Phone Number</p><br />
-  <p><%=h @member.phone_number -%></p>
-</div>
-<div class="member_datum">
-	<p class="label">Biography</p><br />
-  <p><%=h @member.biography %></p>
+  <%= @member.biography %>
 </div>
 <div class="spacer"></div>
 
