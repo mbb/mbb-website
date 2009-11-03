@@ -32,25 +32,49 @@ set :git_enable_submodules, 1
 set :use_sudo, false
 set :deploy_via, :remote_cache
 
+#
+# For a cold (first-time) deploy, this sets up the log files which the server will
+# use. They are shared across deployments and automatically linked by default
+# Rails recipes.
+#
 before 'deploy:cold' do
   run "mkdir -p #{deploy_to}/shared/log"
-  run "touch #{deploy_to}/shared/log/development.log"
-  run "touch #{deploy_to}/shared/log/test.log"
   run "touch #{deploy_to}/shared/log/production.log"
   run "chmod 0666 #{deploy_to}/shared/log/*.log"
 end
+
+#
+# We trigger the following recipes after a deployment, which are not the default:
+#
+#  deploy:cleanup - Default Rails recipe. Removes older releases that take up space.
+#        The keep_releases variable controls how many are left after each cleanup.
+#        The only reason to keep the old versions around is if something were to go
+#        wrong (in which case you might run `cap deploy:rollback`).
+#
+#  deploy:link_db_config - A new recipe that links the application's private database
+#        configuration to an existing global configuration for the server. This way,
+#        you don't have to leave a password in version control.
+#
+#  deploy:migrate - Default Rails recipe. Runs migrations. For some reason, this isn't
+#        a natural part of a deployment, even though not migrating would obviously
+#        break things.
+#
 after 'deploy', 'deploy:cleanup'
 after 'deploy:update_code', 'deploy:link_db_config'
-after 'deploy:update_code', 'deploy:migrate'
+after 'deploy:link_db_config', 'deploy:migrate'
 
+#
+# New and overridden task definitions follow.
+#
 namespace :passenger do
-  desc "Restart Application"
+  desc "Restarts a Passenger instance on the server."
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
   end
 end
 
 namespace :deploy do
+  desc "Performs a cold deployment which assumes no existing setup on the server."
   task :cold do
     update
     load_schema
