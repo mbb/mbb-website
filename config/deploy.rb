@@ -26,7 +26,7 @@ end
 set :scm, 'git'
 set :repository, 'git://github.com/ajtack/mbb.git'
 ssh_options[:forward_agent] = true
-set :branch, 'master'
+set :branch, 'fb_212_move_to_hostingrails'
 set :git_shallow_clone, 1
 set :git_enable_submodules, 1
 set :use_sudo, false
@@ -40,7 +40,8 @@ before 'deploy:cold' do
   run "chmod 0666 #{deploy_to}/shared/log/*.log"
 end
 after 'deploy', 'deploy:cleanup'
-after 'deploy:update_code', 'deploy:symlink_db'
+after 'deploy:update_code', 'deploy:link_db_config'
+after 'deploy:update_code', 'deploy:migrate'
 
 namespace :passenger do
   desc "Restart Application"
@@ -69,7 +70,7 @@ end
 
 namespace :deploy do
   desc "Symlinks the database.yml"
-  task :symlink_db, :roles => :app do
+  task :link_db_config, :roles => :app do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
   end
   
