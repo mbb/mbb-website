@@ -56,7 +56,7 @@ private
       @controller = @controller.class.new
       @request = @request.class.new
       @response = @response.class.new
-      login_as member
+      login({}, member.attributes)
       if should_access
         assert request_passes_role_security_system?(action, params), "request to #{@controller.class}##{action} with member #{member} and params #{params.inspect} should have passed "
       else

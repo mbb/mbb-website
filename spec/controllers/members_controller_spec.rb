@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe MembersController do
+  setup :activate_authlogic
+  
 	it { should route(:get,    '/members'       ).to(:controller => :members, :action => :index) }
 	it { should route(:get,    '/members/new'   ).to(:controller => :members, :action => :new) }
 	it { should route(:post,   '/members'       ).to(:controller => :members, :action => :create) }
@@ -9,9 +11,9 @@ describe MembersController do
 	it { should route(:delete, '/members/1'     ).to(:controller => :members, :action => :destroy, :id => 1) }
 	
 	context 'when a Roster Adjustment member is logged in' do
-		fixtures :members, :sections
+		fixtures :members, :sections, :roles
 		before :each do
-			login_as members(:beaker)
+			login({}, {:roles => [roles(:roster_adjustment)]})
 		end
 		
 		it 'allows registration' do

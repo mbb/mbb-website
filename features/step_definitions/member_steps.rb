@@ -74,7 +74,7 @@ end
 
 Then "$actor should be logged in" do |name|
 	controller.logged_in?.should be_true
-	controller.current_member.name.should == name
+	controller.current_user.name.should == name
 end
 
 Then '$actor should have the default password' do |member_name|
@@ -199,7 +199,7 @@ def log_in_member member_params=nil
 	fill_in 'email', :with => member_params['email']
 	fill_in 'password', :with => member_params['password']
 	click_button 'Log in'
-	@member = controller.current_member
+	@member = controller.current_user
 end
 
 def log_in_member! member_params

@@ -1,11 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Private::RostersController do	
+describe Private::RostersController do
+  setup :activate_authlogic
+  
 	it { should route(:get, '/private/roster').to(:controller => [:private, :rosters], :action => :show) }
 
 	context 'when logged in as a roster adjuster' do
 		fixtures :members, :sections, :roles
-		before :each do login_as(roles(:roster_adjustment).members.first) end
+		before :each do login({}, {:roles => [roles(:roster_adjustment)]}) end
 			
 		describe 'the show action' do
 			before :each do get :show end

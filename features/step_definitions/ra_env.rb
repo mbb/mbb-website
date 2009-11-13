@@ -5,4 +5,4 @@ Before do
 end
 
 # Make visible for testing
-ApplicationController.send(:public, :logged_in?, :current_member, :authorized?)
+ApplicationController.send(:public, :logged_in?, :current_user, :authorized?)
