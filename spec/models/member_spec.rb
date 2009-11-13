@@ -121,16 +121,6 @@ describe Member do
 		subject { Member.new(@valid_attributes.merge(:name => 'Anthony')) }
 		it { should_not have(:no).errors_on(:name) }
 	end
-
-	it 'resets password when given a new password and confirmation' do
-		members(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-		Member.authenticate(members(:quentin).email, 'new password').should == members(:quentin)
-	end
-
-	it 'does not rehash password when updating the name' do
-		members(:quentin).update_attributes(:name => 'Quentin Florin')
-		Member.authenticate(members(:quentin).email, 'monkey').should == members(:quentin)
-	end
 	
 	before(:each) do
 		@valid_attributes = {

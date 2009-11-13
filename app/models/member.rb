@@ -41,6 +41,7 @@ class Member < ActiveRecord::Base
 	validates_presence_of		 :name
 	validates_format_of			 :name,	:with => FullName
 	validates_uniqueness_of  :name
+	validates_presence_of    :email
 	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
 	validates_presence_of    :section
 
