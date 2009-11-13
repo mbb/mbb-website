@@ -60,7 +60,7 @@ end
 #        break things.
 #
 after 'deploy', 'deploy:cleanup'
-after 'deploy:update_code', 'deploy:link_db_config'
+before 'deploy:start', 'deploy:link_db_config'
 after 'deploy:link_db_config', 'deploy:migrate'
 
 #
