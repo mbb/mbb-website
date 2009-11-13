@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091002030537) do
+ActiveRecord::Schema.define(:version => 20091113031503) do
 
   create_table "concerts", :force => true do |t|
     t.string   "title"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20091002030537) do
     t.datetime "created_at"
     t.string   "name"
     t.string   "email",                     :limit => 100, :default => "",    :null => false
-    t.string   "crypted_password",          :limit => 100
-    t.string   "salt",                      :limit => 40
+    t.string   "crypted_password",          :limit => 128, :default => "",    :null => false
+    t.string   "salt",                      :limit => 128, :default => "",    :null => false
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
     t.boolean  "password_is_temporary",                    :default => false
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(:version => 20091002030537) do
     t.integer  "position"
     t.boolean  "visible",                                  :default => true
     t.string   "phone_number"
+    t.string   "persistence_token"
+    t.string   "perishable_token"
+    t.integer  "failed_login_count",                       :default => 0,     :null => false
+    t.datetime "last_login_at"
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true

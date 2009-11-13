@@ -1,5 +1,5 @@
 class Private::RostersController < ApplicationController
-	before_filter :login_required
+	before_filter :require_user
 			
 	# GET /private/roster
 	# GET /private/roster.json

@@ -1,9 +1,9 @@
-<h3 id="MemberBarGreeting">Logged in as <%= current_member.name %>.</h3>
+<h3 id="MemberBarGreeting">Logged in as <%= current_user.name %>.</h3>
 <ul id="MemberBar">
-	<% if current_member.has_role?('Roster Adjustment') -%>
+	<% if current_user.has_role?('Roster Adjustment') -%>
 	<li class="member-bar-action"><%= link_to 'Add a New Member', new_member_path %></li>
 	<% end -%>
 	<li class="member-bar-action"><%= link_to 'Private Roster', private_roster_path -%></li>
-	<li class="member-bar-action"><%= link_to 'My Profile', member_path(current_member) -%></li>
+	<li class="member-bar-action"><%= link_to 'My Profile', member_path(current_user) -%></li>
 	<li class="member-bar-action"><%= link_to "Log out", logout_path, { :title => "Log out" } -%></li>
 </ul>

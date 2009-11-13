@@ -17,9 +17,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.root :home
 	
 	# Authentication
-	map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.resource :session
+	map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
+  map.login '/login', :controller => 'user_sessions', :action => 'new'
+  map.resource :user_session
 	
 	# Private for Members with Login
 	map.namespace :private do |private|

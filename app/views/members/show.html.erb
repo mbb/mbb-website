@@ -5,7 +5,7 @@
 <div class="member_datum">
   <% if (@member.biography.nil?) -%>
     <% if can_edit_member(@member) -%>
-      <% if current_member == @member -%>
+      <% if current_user == @member -%>
         <p>Nothing here yet... <%= link_to 'Write your biography!', edit_member_path(@member) -%></p>
       <% else -%>
         <p>Nothing here yet... <%= link_to "Write #{@member}'s biography!", edit_member_path(@member) -%></p>

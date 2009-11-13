@@ -3,10 +3,10 @@ require 'mbb/phone_number'
 require 'threedegrees/regex'
 
 class Member < ActiveRecord::Base
-	include Authentication
-	include Authentication::ByPassword
-	include Authentication::ByCookieToken
-
+	acts_as_authentic do |config|
+		config.transition_from_restful_authentication = true
+	end
+	
 	belongs_to :section
 	acts_as_list :scope => :section_id
 	before_validation :set_default_position
@@ -40,11 +40,7 @@ class Member < ActiveRecord::Base
 	validates_length_of			 :name,	:maximum => 100
 	validates_presence_of		 :name
 	validates_format_of			 :name,	:with => FullName
-	validates_uniqueness_of  :name	
-	validates_presence_of		 :email
-	validates_length_of			 :email, :within => 6..100
-	validates_uniqueness_of	 :email
-	validates_format_of			 :email, :with => Authentication.email_regex, :message => Authentication.bad_email_message
+	validates_uniqueness_of  :name
 	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
 	validates_presence_of    :section
 
@@ -72,26 +68,6 @@ class Member < ActiveRecord::Base
 	# anything else you want your user to change should be added here.
 	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id,
 		:roles, :updated_at, :created_at, :photo, :biography, :phone_number
-
-	# Authenticates a user by their login name and unencrypted password.	Returns the user or nil.
-	#
-	# uff.	this is really an authorization, not authentication routine.	
-	# We really need a Dispatch Chain here or something.
-	# This will also let us return a human error message.
-	#
-	def self.authenticate(email, password)
-		return nil if email.blank? || password.blank?
-		u = find_by_email(email) # need to get the salt
-		u && u.authenticated?(password) ? u : nil
-	end
-
-	def login=(value)
-		write_attribute :login, (value ? value.downcase : nil)
-	end
-
-	def email=(value)
-		write_attribute :email, (value ? value.downcase : nil)
-	end
 	
 	def has_role?(role_in_question)
     @_list ||= self.roles.collect(&:name)

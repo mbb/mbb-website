@@ -9,6 +9,9 @@ require File.join(File.dirname(__FILE__), 'boot')
 Rails::Initializer.run do |config|
 	config.time_zone = 'Central Time (US & Canada)'
 	config.i18n.default_locale = :en
+	
+	config.gem 'authlogic', :version => '>= 2.1.3'
 	config.gem 'RedCloth', :version => '>= 4.0'
+	
 	config.active_record.observers = :member_observer
 end

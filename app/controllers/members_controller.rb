@@ -1,5 +1,5 @@
 class MembersController < ApplicationController	
-	before_filter :login_required, :except => [:index, :show]
+	before_filter :require_user, :except => [:index, :show]
 	before_filter :check_credentials, :only => [:edit, :update]
 	require_role 'Roster Adjustment', :only => [:new, :create, :destroy, :move_up, :move_down]
 	
@@ -111,7 +111,7 @@ class MembersController < ApplicationController
 	
 	private
 		def check_credentials
-			unless current_member.has_role?('Roster Adjustment') or params[:id] == current_member.to_pc
+			unless current_user.has_role?('Roster Adjustment') or params[:id] == current_user.to_pc
 				flash[:error] = "You do not have permission to #{action_name} another member."
 				redirect_to private_roster_path
 				false

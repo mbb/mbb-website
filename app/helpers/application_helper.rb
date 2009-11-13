@@ -6,7 +6,7 @@ module ApplicationHelper
 	#
 	def can_edit_member(other_member)
 		unless not logged_in?
-			(current_member.id == other_member.id) or (current_member.has_role?('Roster Adjustment'))
+			(current_user.id == other_member.id) or (current_user.has_role?('Roster Adjustment'))
 		end
 	end
 	
@@ -14,9 +14,9 @@ module ApplicationHelper
 	# Link to the current user's page (using link_to_member) or to the login page
 	# (using link_to_login_with_IP).
 	#
-	def link_to_current_member(options={})
-		if current_member
-			link_to_member current_member, options
+	def link_to_current_user(options={})
+		if current_user
+			link_to_member current_user, options
 		else
 			content_text = options.delete(:content_text) || 'not signed in'
 			# kill ignored options from link_to_member
