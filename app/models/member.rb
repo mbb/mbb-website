@@ -57,6 +57,12 @@ class Member < ActiveRecord::Base
 		self.find_by_name(component.gsub('_', ' '))
 	end
 
+  def to_json
+    super(:except => [:crypted_password, :salt, :perishable_token,
+                      :persistence_token, :remember_token, :remember_token_expires_at,
+                      :photo_file_name, :photo_file_size, :photo_content_type])
+  end
+
 	def to_param
 		to_pc
 	end

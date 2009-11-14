@@ -103,14 +103,12 @@ class MembersController < ApplicationController
       @member.update_attributes(params[:member])
     end
 	
-		respond_to do |format|
-			if @member.save
+		respond_to do |wants|
+			if @member.update_attributes(params[:member])
 				flash[:notice] = 'Member was successfully updated.'
-				format.html { redirect_to member_path(@member) }
-				format.js   # update.js.rjs
+				wants.html { redirect_back_or_default(member_path(@member)) }
 			else
-				format.html { render :action => "edit" }
-				format.js   # update.js.rjs
+				wants.html { render :action => "edit" }
 			end
 		end
 	end

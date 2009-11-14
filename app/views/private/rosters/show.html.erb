@@ -3,18 +3,6 @@
 	This is the current roster of the band, reflected on the <%= link_to 'public roster', members_path -%>. Members appear in order within their sections.
 </p>
 
-<table id="Sections" class="sections">
-	<thead>
-		<tr>
-			<td></td>
-			<th><!-- Photo --></th>
-			<th>Member Name</th>
-			<th>Contact Information</th>
-			<th>Section</th>
-		</tr>
-	</thead>
-	
-	<tbody>
-		<%= render :partial => 'section', :collection => @sections %>
-	</tbody>
+<ul id="Sections" class="sections">
+	<%= render :partial => 'section', :collection => @sections %>
 </table>

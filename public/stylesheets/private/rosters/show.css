@@ -1,15 +1,26 @@
-@import "/stylesheets/members/index.css";
-
-table.sections thead th	{
-	text-align: left;
-	border-bottom: none;
-	font-size: 14pt;
+ul#Sections	{
+	margin: 0;
+	list-style: none;
+	width: 700px;
 }
 
-table.sections tbody th	{
+ul#Sections li h2	{
 	text-align: left;
+	font-size: 14pt;
+	margin: 0;
 	border-bottom: 1px solid black;
 }
+
+table.section	{
+	width: 100%;
+}
+
+table.section td.operations {  width: 48px;   } /* 3 knobs @ 16px */
+table.section td.photo      {  width: 50px;   } /* Member "tiny" photo class width. */
+table.section td.name       {  width: 200px;  }
+table.section td.contact    {  width: 252px;  } /* 2px extra to round out td.operations */
+table.section td.section    {  width: 150px;  }
+
 
 ul.operations li	{
 	float: left;
