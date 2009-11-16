@@ -78,9 +78,33 @@ class MembersController < ApplicationController
 	# PUT /private/members/john_smith.xml
 	def update
 		@member = Member.find_by_path_component(params[:id])
+		
+		if params[:member].has_key?(:section_id) and @member.section_id != params[:member][:section_id]
+		  # Change the member's section.
+		  old_section = @member.section
+		  new_section = Section.find(params[:member][:section_id])
+		  @member.remove_from_list
+		  @member.section = new_section
+		  
+		  # Place the member somewhere in the order within the new section. This must
+		  # be done explicitly to avoid using the position from the old section (which
+		  # will probably be invalid or duplicate another member's position).
+		  if new_section.position < old_section.position and new_section.members.count > 0
+        @member.insert_at(new_section.members.last.position + 1) # Move up to "bottom" of higher section
+      else
+        @member.insert_at(1)
+      end
+      
+      # Update the rest of the attributes.
+      other_attributes = params[:member].delete_if { |attribute_name, _| attribute_name == :section }
+      @member.update_attributes(other_attributes)
+    else
+      # No section changes mean we can mass-update.
+      @member.update_attributes(params[:member])
+    end
 	
 		respond_to do |format|
-			if @member.update_attributes(params[:member])
+			if @member.save
 				flash[:notice] = 'Member was successfully updated.'
 				format.html { redirect_to member_path(@member) }
 				format.js   # update.js.rjs
