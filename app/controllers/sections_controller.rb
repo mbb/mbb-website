@@ -1,3 +1,13 @@
+# Note that this is an unconventional controller, according to REST. Instead of the usual
+# organization where slashes are a has-a relation, e.g.
+#    /people/John/ponies   "John has many ponies,"
+# wherein the sub-resources can themselves be changed, this resource is under a belongs-to
+# relation: A member _belongs_ to a section. Those sections never change aside from their
+# membership.
+#
+# It's possible that this section-changing logic really doesn't belong in a controller,
+# exactly because it violates REST. Perhaps it should be an overloaded function of
+# Member.section?
 class SectionsController < ApplicationController
   before_filter :require_user
   
