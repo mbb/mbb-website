@@ -43,6 +43,7 @@ before 'deploy:cold' do
   run "mkdir -p #{deploy_to}/shared/log"
   run "touch #{deploy_to}/shared/log/production.log"
   run "chmod 0666 #{deploy_to}/shared/log/*.log"
+  run "chmod -R 0644 #{deploy_to}/shared/public"
 end
 
 #
@@ -64,7 +65,7 @@ end
 after 'deploy', 'deploy:cleanup'
 before 'deploy:migrate', 'deploy:link_db_config'
 before 'deploy:load_schema', 'deploy:link_db_config'
-after 'deploy:update', 'deploy:link_attachments'
+after "deploy:update_code", "deploy:copy_attachments_directory"
 
 #
 # New and overridden task definitions follow.
@@ -77,6 +78,12 @@ namespace :passenger do
 end
 
 namespace :deploy do
+  task :default do
+    update
+    migrate
+    restart
+  end
+  
   desc "Performs a cold deployment which assumes no existing setup on the server."
   task :cold do
     update
@@ -96,9 +103,13 @@ namespace :deploy do
 end
 
 namespace :deploy do
-  desc 'Links the attachments folder to a shared location.'
-  task :link_attachments, :roles => :app do
-    run "ln -nfs #{deploy_to}/shared/public/attachments #{release_path}/public/attachments"
+
+  desc 'Copies the uploads directory from the previous deployment'
+  task :copy_attachments_directory do
+    previous_attachments = "#{previous_release}/public/attachments"
+    run "[ -d #{previous_attachments} ] " +
+      "&& (echo 'Copying previous attachments.' && cp -R #{previous_attachments} #{latest_release}/public/) " +
+      "|| echo 'No previous uploads directory. Skipping.'"
   end
   
   desc "Symlinks the database.yml"
