@@ -28,7 +28,7 @@ end
 set :scm, 'git'
 set :repository, 'git://github.com/ajtack/mbb.git'
 ssh_options[:forward_agent] = true
-set :branch, 'fb_212_move_to_hostingrails'
+set :branch, 'master'
 set :git_shallow_clone, 1
 set :git_enable_submodules, 1
 set :use_sudo, false
