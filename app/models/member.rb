@@ -16,9 +16,9 @@ class Member < ActiveRecord::Base
 	
 	has_and_belongs_to_many :roles
 	has_attached_file :photo,
-		:url => '/images/:class/:attachment/:id/:style/:basename.:extension',
-		:path => ':rails_root/public/images/:class/:attachment/:id/:style/:basename.:extension',
-		:default_url => '/images/:class/:attachment/missing_:style.jpg',
+		:url => '/attachments/:class/:attachment/:id/:style/:basename.:extension',
+		:path => ':rails_root/public/attachments/:class/:attachment/:id/:style/:basename.:extension',
+		:default_url => '/attachments/:class/:attachment/missing_:style.jpg',
 		:styles =>	{
 			:headshot => '300x300#',
 			:thumbnail => '100x100#',

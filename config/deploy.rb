@@ -64,6 +64,7 @@ end
 after 'deploy', 'deploy:cleanup'
 before 'deploy:migrate', 'deploy:link_db_config'
 before 'deploy:load_schema', 'deploy:link_db_config'
+after 'deploy:update', 'deploy:link_attachments'
 
 #
 # New and overridden task definitions follow.
@@ -95,6 +96,11 @@ namespace :deploy do
 end
 
 namespace :deploy do
+  desc 'Links the attachments folder to a shared location.'
+  task :link_attachments, :roles => :app do
+    run "ln -nfs #{deploy_to}/shared/public/attachments #{release_path}/public/attachments"
+  end
+  
   desc "Symlinks the database.yml"
   task :link_db_config, :roles => :app do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
