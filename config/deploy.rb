@@ -2,20 +2,22 @@
 # production. They should be used as:
 #   $ cap production deploy
 task :production do
+  set :environment, 'production'
   set :domain, 'madisonbrass.com'
-  use_minusuu
+  use_madisonbrass
 end
 
-task :staging do
-  set :domain, 'mbb-test.minusuu.com'
+task :stage do
+  set :environment, 'stage'
+  set :domain, 'stage.madisonbrass.com'
   set :keep_releases, 1
-  use_minusuu
+  use_madisonbrass
 end
 
 # Sets up to use Tack's server at minusuu.com for the deployment.
-task :use_minusuu do
-  set :user, 'minusuu'
-  set :server_hostname, 'minusuu.com'
+task :use_madisonbrass do
+  set :user, 'madison'
+  set :server_hostname, '585mad.albertus.hostingrails.com'
   set :deploy_to, "/home/#{user}/sites/#{domain}"
   role :app, server_hostname
   role :web, server_hostname
@@ -60,8 +62,8 @@ end
 #        break things.
 #
 after 'deploy', 'deploy:cleanup'
-before 'deploy:start', 'deploy:link_db_config'
-after 'deploy:link_db_config', 'deploy:migrate'
+before 'deploy:migrate', 'deploy:link_db_config'
+before 'deploy:load_schema', 'deploy:link_db_config'
 
 #
 # New and overridden task definitions follow.
