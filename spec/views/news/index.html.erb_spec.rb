@@ -16,8 +16,8 @@ describe 'news/index.html.erb' do
 		before :each do
 			# Create a set of five mock stories for the view to render.
 			assigns[:stories] = (1..5).to_a.collect do |story_number|
-				stub_model(Story,
-					:title => "Story ###{story_number}}",
+				stub_model(NewsItem,
+					:title => "NewsItem ###{story_number}}",
 					:date => story_number.days.ago,
 					:body => "Body of story ###{story_number}."
 				)				

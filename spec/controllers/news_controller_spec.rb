@@ -4,7 +4,7 @@ describe NewsController do
 	it { should route(:get, '/news').to(:controller => :news, :action => :index) }
 	
 	describe 'index' do
-		fixtures :stories
+		fixtures :news_items
 		
 		before :each do
 			get :index
@@ -19,7 +19,7 @@ describe NewsController do
 		end
 		
 		it 'should expose the very last ten stories in @stories' do
-			assigns(:stories).should eql(Story.find(:all, :order => 'date DESC', :limit => 10))
+			assigns(:stories).should eql(NewsItem.find(:all, :order => 'date DESC', :limit => 10))
 		end
 	end
 end

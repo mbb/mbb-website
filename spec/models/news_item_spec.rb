@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Story do
+describe NewsItem do
 	it { should have_db_column(:title) }
 	it { should have_db_column(:date) }
 	it { should have_db_column(:body) }

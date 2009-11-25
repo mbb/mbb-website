@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091113031503) do
+ActiveRecord::Schema.define(:version => 20091125201111) do
 
   create_table "concerts", :force => true do |t|
     t.string   "title"
@@ -54,6 +54,12 @@ ActiveRecord::Schema.define(:version => 20091113031503) do
   add_index "members_roles", ["member_id"], :name => "index_members_roles_on_member_id"
   add_index "members_roles", ["role_id"], :name => "index_members_roles_on_role_id"
 
+  create_table "news_items", :force => true do |t|
+    t.string "title"
+    t.date   "date"
+    t.text   "body"
+  end
+
   create_table "roles", :force => true do |t|
     t.string "name"
   end
@@ -64,12 +70,6 @@ ActiveRecord::Schema.define(:version => 20091113031503) do
     t.datetime "updated_at"
     t.integer  "position"
     t.boolean  "visible",    :default => true
-  end
-
-  create_table "stories", :force => true do |t|
-    t.string "title"
-    t.date   "date"
-    t.text   "body"
   end
 
 end
