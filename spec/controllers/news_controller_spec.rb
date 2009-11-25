@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe NewsController do
+describe NewsItemsController do
 	it { should route(:get, '/news').to(:controller => :news, :action => :index) }
 	
 	describe 'index' do

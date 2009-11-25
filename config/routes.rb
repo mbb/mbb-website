@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
     about.history 'about/history', :action => 'history'
     about.about_bylaws 'about/bylaws', :action => 'bylaws'
 	end
-	map.news 'news', :controller => 'news'
+	map.resources :news_items, :as => 'news', :only => [:index]
 	map.book 'book', :controller => 'book'
 	map.join 'join', :controller => 'join'
 	map.resources :concerts, :only => [:index], :collection => {:next => :get, :past => :get, :upcoming => :get}
