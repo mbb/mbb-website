@@ -1,5 +1,5 @@
 class NewsItemsController < ApplicationController
 	def index
-		@stories = NewsItem.find(:all, :limit => 10)
+		@stories = NewsItem.recent
 	end
 end
