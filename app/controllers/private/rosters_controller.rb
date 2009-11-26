@@ -1,6 +1,4 @@
-class Private::RostersController < PrivateController
-	before_filter :require_user
-			
+class Private::RostersController < PrivateController			
 	# GET /private/roster
 	# GET /private/roster.json
 	def show

@@ -1,6 +1,4 @@
-class Private::NewsItemsController < PrivateController
-	before_filter :require_user
-	
+class Private::NewsItemsController < PrivateController	
   def index
     @news_items = NewsItem.recent
   end
