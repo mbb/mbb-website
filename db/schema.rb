@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091125201111) do
+ActiveRecord::Schema.define(:version => 20091125215339) do
 
   create_table "concerts", :force => true do |t|
     t.string   "title"
@@ -55,9 +55,10 @@ ActiveRecord::Schema.define(:version => 20091125201111) do
   add_index "members_roles", ["role_id"], :name => "index_members_roles_on_role_id"
 
   create_table "news_items", :force => true do |t|
-    t.string "title"
-    t.date   "date"
-    t.text   "body"
+    t.string  "title"
+    t.date    "date"
+    t.text    "body"
+    t.boolean "is_private", :default => true, :null => false
   end
 
   create_table "roles", :force => true do |t|

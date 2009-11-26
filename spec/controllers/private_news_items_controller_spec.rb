@@ -39,6 +39,30 @@ describe Private::NewsItemsController do
 				get :index
 				assigns(:news_items).should eql(recent_news_items)
 			end
+			
+			it 'should expose public news items' do
+				# Create a recent item which is also private
+				public_item = unless NewsItem.recent.first.nil?
+					Factory.create(:news_item, :is_private => true, :date => NewsItem.recent.first.date + 1.day)
+				else
+					Factory.create(:news_item, :is_private => false)
+				end
+
+				get :index
+				assigns(:news_items).should include(public_item)
+			end
+			
+			it 'should expose private news items' do
+				# Create a recent item which is also private
+				private_item = unless NewsItem.recent.first.nil?
+					Factory.create(:news_item, :is_private => true, :date => NewsItem.recent.first.date + 1.day)
+				else
+					Factory.create(:news_item, :is_private => true)
+				end
+
+				get :index
+				assigns(:news_items).should include(private_item)
+			end
 		end
 	end
 	
