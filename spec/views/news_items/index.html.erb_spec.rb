@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe 'news/index.html.erb' do
+describe 'news_items/index.html.erb' do
 	context 'when there are no new stories' do
 		before :each do
 			assigns[:stories] = []
