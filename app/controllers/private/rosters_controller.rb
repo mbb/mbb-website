@@ -1,4 +1,4 @@
-class Private::RostersController < ApplicationController
+class Private::RostersController < PrivateController
 	before_filter :require_user
 			
 	# GET /private/roster

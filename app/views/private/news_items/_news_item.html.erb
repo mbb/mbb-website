@@ -1,0 +1,12 @@
+<li>
+  <h2><%= news_item.title %></h2>
+  <h3><%= news_item.date %></h3>
+  <div class="private_story_indicator">
+    <% if news_item.is_private? -%>
+      (private)
+    <% else -%>
+      (public)
+    <% end -%>
+  </div>
+  <%= RedCloth.new(news_item.body).to_html %>
+</li>

@@ -21,8 +21,11 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'user_sessions', :action => 'new'
   map.resource :user_session
 	
-	# Private for Members with Login
+	# Private for Members, only accessible with a Username/Password
 	map.namespace :private do |private|
-		private.resource :roster, :only => [:show]
+		private.with_options(:layout => 'private') do |private|
+			private.resource :roster, :only => [:show]
+			private.resources :news_items
+		end
 	end
 end

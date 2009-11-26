@@ -1,4 +1,4 @@
-class Private::NewsItemsController < ApplicationController
+class Private::NewsItemsController < PrivateController
 	before_filter :require_user
 	
   def index

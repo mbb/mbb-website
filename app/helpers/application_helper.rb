@@ -1,5 +1,11 @@
 module ApplicationHelper
 	
+	# Allow nested layouts with this directive at the bottom of your inner layout.
+	def parent_layout(layout)
+		@content_for_layout = self.output_buffer
+		self.output_buffer = render(:file => "layouts/#{layout}")
+	end
+	
 	#
 	# Checks whether the currently logged-in member is allowed to edit the profile of
 	# another member, here "other_member."
