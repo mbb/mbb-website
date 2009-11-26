@@ -65,7 +65,7 @@ end
 after 'deploy', 'deploy:cleanup'
 before 'deploy:migrate', 'deploy:link_db_config'
 before 'deploy:load_schema', 'deploy:link_db_config'
-after "deploy:update_code", "deploy:copy_assets_directory"
+after "deploy:update_code", "deploy:copy_assets"
 
 #
 # New and overridden task definitions follow.
@@ -105,7 +105,7 @@ end
 namespace :deploy do
 
   desc 'Copies the uploads directory from the previous deployment'
-  task :copy_assets_directory do
+  task :copy_assets do
     previous_assets = "#{previous_release}/public/assets"
     run "[ -d #{previous_assets} ] " +
       "&& (echo 'Copying previous assets.' && cp -R #{previous_assets} #{latest_release}/public/) " +

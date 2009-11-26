@@ -1,0 +1,20 @@
+#FileUploadForm	{
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+.news_item	{
+	border: 4px solid red;
+	width: 80%;
+	margin: auto;
+}
+
+.news_item h2, .news_item h3, .news_item p.private_story_indicator	{
+	display: inline;
+	margin-left: 1em;
+}
+
+.news_item p	{
+	margin-left: 40px;
+}

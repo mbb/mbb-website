@@ -1,4 +1,6 @@
 class NewsItem < ActiveRecord::Base
+	has_many :attached_files
+	
 	validates_presence_of :title, :date, :body
 	validates_inclusion_of :is_private, :in => [true, false]
 	default_scope :order => 'date DESC'
