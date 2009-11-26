@@ -2,6 +2,12 @@ div.container	{
 	width: 90%;
 }
 
+div.inner_container	{
+	width: 70%;
+	margin: auto;
+	padding: 0;
+}
+
 #Summary	{
 	margin: auto;
 	max-width: 700px;
@@ -11,9 +17,13 @@ div.container	{
 
 #Summary h1	{
 	text-align: center;
-	width: 250px;
-	float: left;
+	width: 200px;
 	margin: 10px;
+	
+	float: left;
+	position: relative;
+	left: -30px;
+	margin-right: -20px;
 }
 
 #FlashyMenu	{

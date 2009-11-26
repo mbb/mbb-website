@@ -37,10 +37,6 @@ div.container	{
 	padding: 0;
 }
 
-div.container p	{
-	margin: 40px;
-}
-
 div.container p.summary	{
 	width: 50%;
 	margin: auto;

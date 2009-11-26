@@ -1,0 +1,12 @@
+#NewsItems h2, #NewsItems h3, #NewsItems p.private_story_indicator	{
+	display: inline;
+	margin-left: 1em;
+}
+
+ul#NewsItems li p	{
+	margin-left: 40px;
+}
+
+ul#NewsItems li	{
+	margin-bottom: 2em;
+}
