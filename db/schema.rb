@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091126070716) do
+ActiveRecord::Schema.define(:version => 20091127035214) do
 
   create_table "attached_files", :force => true do |t|
     t.string   "data_file_name"
@@ -64,10 +64,10 @@ ActiveRecord::Schema.define(:version => 20091126070716) do
   add_index "members_roles", ["role_id"], :name => "index_members_roles_on_role_id"
 
   create_table "news_items", :force => true do |t|
-    t.string  "title"
-    t.date    "date"
-    t.text    "body"
-    t.boolean "is_private", :default => true, :null => false
+    t.string   "title"
+    t.text     "body"
+    t.boolean  "is_private", :default => true, :null => false
+    t.datetime "created_at"
   end
 
   create_table "roles", :force => true do |t|
