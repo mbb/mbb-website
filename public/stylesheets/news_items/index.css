@@ -7,10 +7,6 @@
 	color: #999;
 }
 
-ul#NewsItems li p	{
-	margin-left: 2em;
-}
-
 ul#NewsItems li	{
 	margin-bottom: 2em;
 }
@@ -21,4 +17,22 @@ ul#NewsItems li	{
 
 ul#NewsItems ul.attached_files li	{
 	margin-bottom: 1em;
+}
+
+ul#NewsItems ul.attached_files li a img	{
+	border: none;
+}
+
+ul#NewsItems li div.body	{
+	padding-left: 2em;
+	margin-bottom: 1em;
+}
+
+ul#NewsItems div.body ul	{
+	list-style-type: circle;
+	padding-left: 40px;
+}
+
+ul#NewsItems div.body ul li	{
+	margin-bottom: 0;
 }

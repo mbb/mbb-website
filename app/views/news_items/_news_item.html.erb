@@ -8,7 +8,9 @@
       (public)
     <% end -%>
   </p>
-  <%= RedCloth.new(news_item.body).to_html %>
+  <div class="body">
+    <%= RedCloth.new(news_item.body).to_html %>
+  </div>
   <% if news_item.attached_files.count > 0 -%>
     <ul class="attached_files">
       <%= render :partial => 'private/news_items/attached_file', :collection => news_item.attached_files %>
