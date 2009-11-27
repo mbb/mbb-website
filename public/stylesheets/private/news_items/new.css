@@ -1,0 +1,20 @@
+#NewNewsItemForm	{
+	margin: 0 1em 0 2em;
+}
+
+#NewNewsItemForm h2, #NewNewsItemForm h3	{
+	display: inline;
+}
+
+#NewNewsItemForm label	{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+#NewNewsItemForm #news_item_title	{
+	font-size: 14pt;
+}
+
+#NewNewsItemForm textarea	{
+	width: 100%;
+}

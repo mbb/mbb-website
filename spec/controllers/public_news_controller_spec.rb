@@ -21,8 +21,8 @@ describe NewsItemsController do
 		it 'should expose only the ten most recent NewsItems' do
 		  # Create a pretend set of news items that are "Recent".
 			NewsItem.delete_all
-		  10.times { Factory.create(:news_item, :date => Date.today, :is_private => false) }
-			non_recent_item = Factory.create(:news_item, :date => Date.yesterday, :is_private => false)
+		  10.times { Factory.create(:news_item, :created_at => Date.today, :is_private => false) }
+			non_recent_item = Factory.create(:news_item, :created_at => Date.yesterday, :is_private => false)
 	    
 			get :index
 			assigns(:stories).should_not include(non_recent_item)
@@ -31,7 +31,7 @@ describe NewsItemsController do
 		it 'should only expose public news items' do
 			# Create a recent item which is also private
 			private_item = unless NewsItem.recent.first.nil?
-				Factory.create(:news_item, :is_private => true, :date => NewsItem.recent.first.date + 1.day)
+				Factory.create(:news_item, :is_private => true, :created_at => NewsItem.recent.first.date + 1.day)
 			else
 				Factory.create(:news_item, :is_private => true)
 			end

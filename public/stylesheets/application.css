@@ -17,6 +17,12 @@ body	{
 	max-width: 900px;
 }
 
+p.subtle	{
+	font-color: #333;
+	font-style: oblique;
+	font-size: 10pt;
+}
+
 .members_only	{
 	border: 1px solid orange;
 	background-color: #f5b800;

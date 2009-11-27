@@ -18,7 +18,7 @@ describe 'news_items/index.html.erb' do
 			assigns[:stories] = (1..5).to_a.collect do |story_number|
 				stub_model(NewsItem,
 					:title => "NewsItem ###{story_number}}",
-					:date => story_number.days.ago,
+					:created_at => story_number.days.ago,
 					:body => "Body of story ###{story_number}."
 				)				
 			end
@@ -28,7 +28,7 @@ describe 'news_items/index.html.erb' do
 
 		it 'should list all the given stories' do
 			response.should have_tag('ul#NewsItems') do
-				with_tag('li.story', :count => assigns(:stories).length)
+				with_tag('li', :count => assigns(:stories).length)
 			end
 		end
 	end

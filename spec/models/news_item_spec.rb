@@ -2,13 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe NewsItem do
 	it { should have_db_column(:title) }
-	it { should have_db_column(:date) }
 	it { should have_db_column(:body) }
 	it { should have_db_column(:is_private) }
+	it { should respond_to(:date) }
 	it { should respond_to(:is_private?) }
 	
 	it { should validate_presence_of(:title) }
-	it { should validate_presence_of(:date) }
 	it { should validate_presence_of(:body) }
 	
 	describe 'scoped by' do
@@ -21,10 +20,10 @@ describe NewsItem do
 			end
 
 			it 'should only return the ten most recent stories' do
-				Factory.create(:news_item, :date => Date.yesterday)
+				Factory.create(:news_item, :created_at => Date.yesterday)
 				recent_items = []
-				10.times { recent_items << Factory.create(:news_item, :date => Date.today) }
-				Factory.create(:news_item, :date => Date.yesterday)
+				10.times { recent_items << Factory.create(:news_item, :created_at => Date.today) }
+				Factory.create(:news_item, :created_at => Date.yesterday)
 
 				NewsItem.recent.should == recent_items
 			end

@@ -33,7 +33,7 @@ describe Private::NewsItemsController do
 			  # Create a pretend set of news items that are "Recent".
 			  # (Don't save them, so they only exist if the correct scope is applied.)
 			  recent_news_items = Array.new
-			  10.times { recent_news_items << Factory.build(:news_item, :date => Date.today) }
+			  10.times { recent_news_items << Factory.build(:news_item, :created_at => Date.today) }
 			  NewsItem.stub(:recent).and_return(recent_news_items)  # the "recent" scope
 
 				get :index
@@ -43,7 +43,7 @@ describe Private::NewsItemsController do
 			it 'should expose public news items' do
 				# Create a recent item which is also private
 				public_item = unless NewsItem.recent.first.nil?
-					Factory.create(:news_item, :is_private => true, :date => NewsItem.recent.first.date + 1.day)
+					Factory.create(:news_item, :is_private => true, :created_at => NewsItem.recent.first.date + 1.day)
 				else
 					Factory.create(:news_item, :is_private => false)
 				end
@@ -55,7 +55,7 @@ describe Private::NewsItemsController do
 			it 'should expose private news items' do
 				# Create a recent item which is also private
 				private_item = unless NewsItem.recent.first.nil?
-					Factory.create(:news_item, :is_private => true, :date => NewsItem.recent.first.date + 1.day)
+					Factory.create(:news_item, :is_private => true, :created_at => NewsItem.recent.first.date + 1.day)
 				else
 					Factory.create(:news_item, :is_private => true)
 				end

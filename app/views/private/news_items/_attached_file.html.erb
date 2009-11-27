@@ -1,4 +1,6 @@
 <li>
-  <% debugger %>
-  <%= link_to attached_file.file_name, attached_file.data.url %>
+  <% link_to attached_file.data.url do -%>
+    <%= image_tag 'news_items/page_download.png' %>
+    <%= attached_file.file_name %>
+  <% end -%>
 </li>

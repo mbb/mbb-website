@@ -1,18 +1,19 @@
-<h1>New Attachment</h1>
+<h1>Add Attachment</h1>
 
 <% form_for @attached_file,
       :url => private_news_item_attached_files_url(@attached_file.news_item),
       :html => {:multipart => true} do |f| -%>
   <h2 id="FileUploadForm">
-    <%= f.label :data, 'Choose a File' %>
     <%= f.file_field :data %>
-    <p><%= f.submit 'Upload Attachment' -%></p>
+    <p><%= f.submit 'Upload This Attachment' -%></p>
+    <p class="subtle">You can always add more attachments.</p>
   </h2>
   
   <%= f.hidden_field :news_item_id %>
 <% end -%>
 
+<h3><%= link_to 'I\'m done posting attachments to this news story.', private_news_items_url -%></h3>
+
 <p>
-  This file will be attached to the news item:
   <%= render :partial => 'private/attached_files/news_item', :object => @attached_file.news_item %>
 </p>

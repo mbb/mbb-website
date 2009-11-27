@@ -2,14 +2,7 @@
 
 <% unless @stories.empty? -%>
 	<ul id="NewsItems">
-	<% @stories.each do |story| -%>
-		<li class="story">
-			<h2><%= story.date -%><br /> <%= story.title -%></h2>
-			<p>
-				<%= RedCloth.new(story.body).to_html %>
-			</p>
-		</li>
-	<% end %>
+  	<%= render @stories %>
 	</ul>
 <% else -%>
 	<h4>
