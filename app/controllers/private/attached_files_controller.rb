@@ -9,10 +9,14 @@ class Private::AttachedFilesController < PrivateController
 		@attached_file = AttachedFile.new(params[:attached_file])
 		
 		if @attached_file.save
-			flash[:notice] = "Attached file #{@attached_file.file_name}!"
+			flash[:notice] = "Attached file #{@attached_file.original_filename}!"
 			redirect_to new_private_news_item_attached_file_url(@attached_file.news_item)
 		else
-			flash[:error] = 'Couldn\'t make attachment.'
+			if @attached_file.data.original_filename.nil?
+				flash[:error] = "You must choose a file to attach."
+			else
+				flash[:error] = "Couldn't attach file #{@attached_file.data.original_filename}"
+			end
 			render 'new'
 		end
 	end

@@ -4,6 +4,7 @@ class AttachedFile < ActiveRecord::Base
 	has_attached_file :data,
 		:path => ':rails_root/public/assets/:class/:id/:basename.:extension',
 		:url => '/assets/:class/:id/:basename.:extension'
+	validates_attachment_presence :data
 	
 	def file_name
 		data_file_name
