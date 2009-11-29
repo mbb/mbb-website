@@ -4,9 +4,17 @@
 	text-align: center;
 }
 
+.news_item h2	{
+	display: inline;
+}
+
+.news_item h3, .news_item p.private_story_indicator	{
+	display: inline;
+	color: #999;
+}
+
 .news_item	{
 	border: 4px solid red;
-	width: 80%;
 	margin: auto;
 }
 
@@ -17,4 +25,16 @@
 
 .news_item p	{
 	margin-left: 40px;
+}
+
+.attached_files	{
+	margin-left: 4em;
+}
+
+ul#NewsItems ul.attached_files li	{
+	margin-bottom: 1em;
+}
+
+ul#NewsItems ul.attached_files li a img	{
+	border: none;
 }
