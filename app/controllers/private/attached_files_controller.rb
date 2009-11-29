@@ -9,7 +9,7 @@ class Private::AttachedFilesController < PrivateController
 		@attached_file = AttachedFile.new(params[:attached_file])
 		
 		if @attached_file.save
-			flash[:notice] = "Attached file #{@attached_file.original_filename}!"
+			flash[:notice] = "Attached file #{@attached_file.data.original_filename}!"
 			redirect_to new_private_news_item_attached_file_url(@attached_file.news_item)
 		else
 			if @attached_file.data.original_filename.nil?
