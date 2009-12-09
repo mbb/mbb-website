@@ -3,8 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/../sample_data/phone_numbers'
 
 describe Member do
-	fixtures :members
-	fixtures :sections
 
 	# Basic columns and validations
 	it { should belong_to(:section) }
@@ -26,7 +24,7 @@ describe Member do
   #
   SampleData::InvalidNorthAmericanPhoneNumbers.each do |example|
     it "should not accept a phone number of #{example.number} because #{example.description}" do
-      user = Member.new(:phone_number => example.number)
+      user = Factory.stub(:member, :phone_number => example.number)
       user.valid? # Triggers validation errors.
       user.should have_at_least(1).errors_on(:phone_number)
     end
@@ -37,7 +35,7 @@ describe Member do
   # Note that we only test that an internal representation is offered, not that it
   #
   it 'should display a phone number in an attractive format' do
-    user = Member.new(:phone_number => '9099999999')
+    user = Factory.stub(:member, :phone_number => '9099999999')
     user.pretty_phone_number.should == '(909) 999-9999'
   end
 
@@ -47,93 +45,94 @@ describe Member do
 	it { should have_db_column(:position) }
 	it { should_not validate_presence_of(:position) }
 	
-	it 'should get a default position at the bottom of the section' do
-		member = Member.new(:position => nil, :section => sections(:solo_cornet))
-		member.valid? # triggers validations
-		member.position.should_not be_nil
-	end
-	
-	it 'should be positioned at the top of their section if that section is empty' do
-		member = Member.new(:position => nil, :section => Section.create!(:name => 'Penis', :position => 1000))
-		member.valid? # triggers validations
-		member.position.should be(1)
-	end
-	
-	it 'should be listed in order within their section' do
-		natural_order = sections(:euphonium).members
-		sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
-		natural_order.should eql(sorted_order)
-	end
-	
-	describe 'upon saving' do
-		it 'should not be re-ordered (from the top)' do
-			cornet_1 = sections(:solo_cornet).members.first
-			old_position = cornet_1.position
-			cornet_1.email = 'new@email.com'
-			cornet_1.save
-			cornet_1.position.should eql(old_position)
+	describe 'position' do
+		it 'should determine ordering of a section' do
+			section = Factory.create(:section)
+			2.times { Factory.create(:member, :section => section) }
+			section.members[1].move_to_top # Perturb the list
+			natural_order = section.members
+			sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
+			natural_order.should eql(sorted_order)
 		end
 		
-		it 'should not be re-ordered (from the bottom)' do
-			cornet_last = sections(:solo_cornet).members.last
-			old_position = cornet_last.position
-			cornet_last.email = 'new@email.com'
-			cornet_last.save
-			cornet_last.position.should eql(old_position)
+		context 'at record create' do
+			it 'should default to something' do
+				section = Factory.create(:section)
+				Factory.create(:member, :section => section)  # Existing member in section.
+				new_member = Factory.create(:member, :section => section)
+				new_member.valid? # triggers validations and position setting
+				new_member.position.should_not be_nil
+			end
+
+			it 'should default to the bottom of a full section' do
+				section = Factory.create(:section)
+				Factory.create(:member, :section => section)  # Existing member in section.
+				new_member = Factory.create(:member, :section => section)
+				new_member.valid? # triggers validations and position setting
+				new_member.last?.should be_true
+			end
+			
+			it 'should be positioned at the top of their section if that section is empty' do
+				member = Factory.create(:member, :section => Factory.create(:section))
+				member.valid? # triggers validations
+				member.position.should be(1)
+			end
+		end
+		
+		context 'at record save' do
+			context 'without a section change' do
+				it 'should not change from the top of the section' do
+					section = Factory.create(:section, :members => [Factory(:member), Factory(:member)])
+					member = section.members.first
+					old_position = member.position
+					member.email = 'new@email.com'
+					member.save
+					member.position.should eql(old_position)
+				end
+
+				it 'should not change from the bottom of the section' do
+					section = Factory.create(:section, :members => [Factory(:member), Factory(:member)])
+					member = section.members.last
+					old_position = member.position
+					member.email = 'new@email.com'
+					member.save
+					member.position.should eql(old_position)
+				end
+			end
+			
+			context 'with a section change' do
+				before :each do
+					# Note that this relies on the factory creating linearly-increasing positions for the sections.
+					@higher_section = Factory(:section)
+					@lower_section = Factory(:section)
+					
+					[@higher_section, @lower_section].each { |s| Factory(:member, :section => s) }
+				end
+				
+				it 'should explicitly remove the member from the old section' do
+					@moving_member = @lower_section.members.first
+					extra_member = Factory.build(:member, :section => nil)
+					@lower_section.members << extra_member
+					@moving_member.section = @higher_section
+					@lower_section.members.first.should == extra_member
+					@lower_section.members.first.position.should == 1
+				end
+				
+				it 'should place the member at the bottom of a higher section' do
+					@moving_member = @lower_section.members.first
+					last_high_member = @higher_section.members.last
+					@moving_member.section = @higher_section
+					@moving_member.higher_item.should == last_high_member
+				end
+				
+				it 'sholud place the member at the top of a lower section' do
+					@moving_member = @higher_section.members.last
+					first_low_member = @lower_section.members.first
+					@moving_member.section = @lower_section
+					@moving_member.lower_item.should == first_low_member
+				end
+			end
 		end
 	end
 
-  #
-	# Generation of path components.
-	#
-	context 'with valid attributes' do
-		subject { Member.create(@valid_attributes) }
-		it { should generate_a_stable_path_component }
-	end
-
-	context 'with an abbreviated' do
-		context 'first name' do
-			subject { Member.create(@valid_attributes.merge(:name => 'A. Jaworski Smith Sullivan')) }
-			it { should have(:no).errors_on(:name) }
-			it { should generate_a_stable_path_component }
-		end
-	
-		context 'middle name' do
-			subject	{ Member.create(@valid_attributes.merge(:name => 'Anthony J. S. Sullivan')) }
-			it { should have(:no).errors_on(:name) }
-			it { should generate_a_stable_path_component }
-		end
-	
-		context 'last name' do
-			subject	{ Member.create(@valid_attributes.merge(:name => 'Anthony Jaworski Smith S.')) }
-			it { should have(:no).errors_on(:name) }
-			it { should generate_a_stable_path_component }
-		end
-	end
-
-	context 'with no middle name' do
-		subject { Member.create(@valid_attributes.merge(:name => 'Anthony Sullivan')) }
-		it { should have(:no).errors_on(:name) }
-		it { should generate_a_stable_path_component }
-	end
-
-	context 'with only one name' do
-		subject { Member.new(@valid_attributes.merge(:name => 'Anthony')) }
-		it { should_not have(:no).errors_on(:name) }
-	end
-	
-	before(:each) do
-		@valid_attributes = {
-			:name => 'Anthony Jaworski Smith Sullivan',
-			:email => 'ajay@test.net',
-			:section => sections(:euphonium)
-		}
-	end
-
-protected
-	def create_member(options = {})
-		record = Member.new(@valid_attributes.merge(options))
-		record.save
-		record
-	end
 end
