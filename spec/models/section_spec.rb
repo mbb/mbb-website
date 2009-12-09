@@ -7,6 +7,53 @@ describe Section do
 	it { should have_db_column(:position) }
 	it { should validate_presence_of(:name) }
 	it { should validate_presence_of(:position) }
+	
+	# Adding members to a section (w.r.t. ordering)
+	context 'when gaining members' do
+		before :each do
+			@new_section = Factory.create(:section, :members => [Factory(:member)])
+			@old_section = Factory.create(:section)
+			@moving_member = Factory.create(:member, :section => @old_section)
+		end
+		
+		context 'one at a time' do
+			it 'should remove members from the old section' do
+				@moving_member.should_receive(:remove_from_list)
+				@new_section.members << @moving_member
+			end
+
+			it 'should place the members at the bottom of the new section' do
+				last_position =	@new_section.members.last.position
+				@new_section.members << @moving_member
+				@moving_member.position.should == last_position + 1
+			end
+			
+			it 'should not leave their new positions unsaved' do
+				@new_section.members << @moving_member
+				@moving_member.position_changed?.should be_false
+			end
+		end
+		
+		context 'all at once' do
+			it 'should remove any existing members of the section' do
+				former_new_section_members =	@new_section.members
+				former_old_section_members = @old_section.members
+				@new_section.members = [@moving_member]
+				former_new_section_members.each { |m| m.position.should == nil }
+			end
+			
+			it 'should be sure to assign new positions to new members' do
+				new_member = Factory.build(:member, :section => nil)
+				@new_section.members = [new_member]
+				new_member.position.should_not be_nil
+			end
+			
+			it 'should not leave new positions changed?' do
+				@new_section.members = [@moving_member]
+				@moving_member.position_changed?.should be_false
+			end
+		end
+	end
 
 	# Ordering properties
 	it 'should respond to #all with sections appearing in order' do
