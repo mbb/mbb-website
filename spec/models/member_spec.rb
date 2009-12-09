@@ -48,7 +48,7 @@ describe Member do
 	describe 'position' do
 		it 'should determine ordering of a section' do
 			section = Factory.create(:section)
-			section.members = [Factory.create(:member), Factory.create(:member)]
+			2.times { Factory.create(:member, :section => section) }
 			section.members[1].move_to_top # Perturb the list
 			natural_order = section.members
 			sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
@@ -103,8 +103,10 @@ describe Member do
 			context 'with a section change' do
 				before :each do
 					# Note that this relies on the factory creating linearly-increasing positions for the sections.
-					@higher_section = Factory(:section, :members => [Factory(:member)])
-					@lower_section = Factory(:section, :members => [Factory(:member)])
+					@higher_section = Factory(:section)
+					@lower_section = Factory(:section)
+					
+					[@higher_section, @lower_section].each { |s| Factory(:member, :section => s) }
 				end
 				
 				it 'should explicitly remove the member from the old section' do

@@ -11,9 +11,10 @@ describe Section do
 	# Adding members to a section (w.r.t. ordering)
 	context 'when gaining members' do
 		before :each do
-			@new_section = Factory.create(:section, :members => [Factory(:member)])
-			@old_section = Factory.create(:section)
-			@moving_member = Factory.create(:member, :section => @old_section)
+			@new_section = Factory(:section)
+			@old_section = Factory(:section)
+			@moving_member = Factory(:member, :section => @old_section)
+			Factory(:member, :section => @new_section)  # Just some extra member.
 		end
 		
 		context 'one at a time' do
