@@ -45,56 +45,91 @@ describe Member do
 	it { should have_db_column(:position) }
 	it { should_not validate_presence_of(:position) }
 	
-	describe 'position in section' do
-		it 'should default to something' do
+	describe 'position' do
+		it 'should determine ordering of a section' do
 			section = Factory.create(:section)
-			Factory.create(:member, :section => section)  # Existing member in section.
-			new_member = Factory.create(:member, :section => section)
-			new_member.valid? # triggers validations and position setting
-			new_member.position.should_not be_nil
+			section.members = [Factory.create(:member), Factory.create(:member)]
+			section.members[1].move_to_top # Perturb the list
+			natural_order = section.members
+			sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
+			natural_order.should eql(sorted_order)
 		end
 		
-		it 'should default to the bottom of the list' do
-			section = Factory.create(:section)
-			Factory.create(:member, :section => section)  # Existing member in section.
-			new_member = Factory.create(:member, :section => section)
-			new_member.valid? # triggers validations and position setting
-			new_member.last?.should be_true
-		end
-	end
-	
-	it 'should be positioned at the top of their section if that section is empty' do
-		member = Factory.create(:member, :section => Factory.create(:section))
-		member.valid? # triggers validations
-		member.position.should be(1)
-	end
-	
-	it 'should be listed in order within their section' do
-		section = Factory.create(:section)
-		section.members = [Factory.create(:member), Factory.create(:member)]
-		section.members[1].move_to_top
-		natural_order = section.members
-		sorted_order = natural_order.sort { |a, b| a.position <=> b.position }
-		natural_order.should eql(sorted_order)
-	end
-	
-	describe 'upon saving' do
-		it 'should not be re-ordered (from the top)' do
-			section = Factory.create(:section, :members => [Factory(:member), Factory(:member)])
-			member = section.members.first
-			old_position = member.position
-			member.email = 'new@email.com'
-			member.save
-			member.position.should eql(old_position)
+		context 'at record create' do
+			it 'should default to something' do
+				section = Factory.create(:section)
+				Factory.create(:member, :section => section)  # Existing member in section.
+				new_member = Factory.create(:member, :section => section)
+				new_member.valid? # triggers validations and position setting
+				new_member.position.should_not be_nil
+			end
+
+			it 'should default to the bottom of a full section' do
+				section = Factory.create(:section)
+				Factory.create(:member, :section => section)  # Existing member in section.
+				new_member = Factory.create(:member, :section => section)
+				new_member.valid? # triggers validations and position setting
+				new_member.last?.should be_true
+			end
+			
+			it 'should be positioned at the top of their section if that section is empty' do
+				member = Factory.create(:member, :section => Factory.create(:section))
+				member.valid? # triggers validations
+				member.position.should be(1)
+			end
 		end
 		
-		it 'should not be re-ordered (from the bottom)' do
-			section = Factory.create(:section, :members => [Factory(:member), Factory(:member)])
-			member = section.members.last
-			old_position = member.position
-			member.email = 'new@email.com'
-			member.save
-			member.position.should eql(old_position)
+		context 'at record save' do
+			context 'without a section change' do
+				it 'should not change from the top of the section' do
+					section = Factory.create(:section, :members => [Factory(:member), Factory(:member)])
+					member = section.members.first
+					old_position = member.position
+					member.email = 'new@email.com'
+					member.save
+					member.position.should eql(old_position)
+				end
+
+				it 'should not change from the bottom of the section' do
+					section = Factory.create(:section, :members => [Factory(:member), Factory(:member)])
+					member = section.members.last
+					old_position = member.position
+					member.email = 'new@email.com'
+					member.save
+					member.position.should eql(old_position)
+				end
+			end
+			
+			context 'with a section change' do
+				before :each do
+					# Note that this relies on the factory creating linearly-increasing positions for the sections.
+					@higher_section = Factory(:section, :members => [Factory(:member)])
+					@lower_section = Factory(:section, :members => [Factory(:member)])
+				end
+				
+				it 'should explicitly remove the member from the old section' do
+					@moving_member = @lower_section.members.first
+					extra_member = Factory.build(:member, :section => nil)
+					@lower_section.members << extra_member
+					@moving_member.section = @higher_section
+					@lower_section.members.first.should == extra_member
+					@lower_section.members.first.position.should == 1
+				end
+				
+				it 'should place the member at the bottom of a higher section' do
+					@moving_member = @lower_section.members.first
+					last_high_member = @higher_section.members.last
+					@moving_member.section = @higher_section
+					@moving_member.higher_item.should == last_high_member
+				end
+				
+				it 'sholud place the member at the top of a lower section' do
+					@moving_member = @higher_section.members.last
+					first_low_member = @lower_section.members.first
+					@moving_member.section = @lower_section
+					@moving_member.lower_item.should == first_low_member
+				end
+			end
 		end
 	end
 
