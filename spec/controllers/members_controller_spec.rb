@@ -9,6 +9,7 @@ describe MembersController do
 	it { should route(:get,    '/members/1/edit').to(:controller => :members, :action => :edit,    :id => 1) }
 	it { should route(:put,    '/members/1'     ).to(:controller => :members, :action => :update,  :id => 1) }
 	it { should route(:delete, '/members/1'     ).to(:controller => :members, :action => :destroy, :id => 1) }
+	it { should route(:get,    '/members/1'     ).to(:controller => :members, :action => :show,    :id => 1) }
 	
 	context 'when a Roster Adjustment member is logged in' do
 		fixtures :members, :sections, :roles
