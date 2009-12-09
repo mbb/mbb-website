@@ -6,9 +6,9 @@ module GenerateAStablePathComponentMatcher
 			Member.stub!(:find_by_name).with(target.name).and_return(target)
 			
 			@target = target
-			pc = target.to_pc
+			pc = target.to_param
 			@path_does_not_require_parsing = (pc == URI.parse(pc).to_s)
-			@path_is_recognizable = (Member.find_by_path_component(pc) == @target)
+			@path_is_recognizable = (Member.find(pc) == @target)
 			@path_does_not_require_parsing and @path_is_recognizable
 		end
 		

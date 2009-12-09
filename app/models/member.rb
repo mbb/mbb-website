@@ -7,6 +7,7 @@ class Member < ActiveRecord::Base
 		config.transition_from_restful_authentication = true
 	end
 	
+	has_friendly_id :name, :use_slug => true
 	belongs_to :section
 	acts_as_list :scope => :section_id
 	before_validation :set_default_position
@@ -49,18 +50,6 @@ class Member < ActiveRecord::Base
     MadisonBrassBand::PhoneNumber.to_display(self.attributes['phone_number'])
   end
 
-	def to_pc
-		self.class.to_pc(name)
-	end
-
-	def self.find_by_path_component(component)
-		self.find_by_name(component.gsub('_', ' '))
-	end
-
-	def to_param
-		to_pc
-	end
-
 	def to_s
 		name
 	end
@@ -78,12 +67,6 @@ class Member < ActiveRecord::Base
 
 	def self.default_password
 		'brass4life'
-	end
-	
-	# Turns Andres J. Tack into Andres_J._Tack
-	# (pc => "path component")
-	def self.to_pc(name)
-		name.gsub(' ', '_')
 	end
 	
 	def set_default_position

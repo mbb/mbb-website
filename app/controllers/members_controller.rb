@@ -17,7 +17,7 @@ class MembersController < ApplicationController
 	# GET /members/john_smith
 	# GET /members/john_smith.xml
 	def show
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 	
 	  unless @member.nil?
   		respond_to do |format|
@@ -66,7 +66,7 @@ class MembersController < ApplicationController
 	# GET /private/members/john_smith/edit
 	# GET /private/members/john_smith/edit.xml
 	def edit
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		
 		respond_to do |format|
 			format.html # edit.html.erb
@@ -77,7 +77,7 @@ class MembersController < ApplicationController
 	# PUT /private/members/john_smith
 	# PUT /private/members/john_smith.xml
 	def update
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		
 		if params[:member].has_key?(:section_id) and @member.section_id != params[:member][:section_id]
 		  # Change the member's section.
@@ -117,7 +117,7 @@ class MembersController < ApplicationController
 	
 	# PUT /private/members/Quentin_Daniels/move_up (rjs)
 	def move_up
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		old_position = @member.position
 		@member.move_higher
 		@position_changed = (old_position != @member.reload.position)
@@ -126,7 +126,7 @@ class MembersController < ApplicationController
 	
 	# PUT /private/members/Quentin_Daniels/move_down (rjs)
 	def move_down
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		old_position = @member.position
 		@member.move_lower
 		@position_changed = (old_position != @member.reload.position)
