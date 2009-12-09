@@ -103,33 +103,35 @@ describe Member do
 			context 'with a section change' do
 				before :each do
 					# Note that this relies on the factory creating linearly-increasing positions for the sections.
-					@higher_section = Factory(:section)
-					@lower_section = Factory(:section)
+					@higher_section = Factory.create(:section)
+					@lower_section = Factory.create(:section)
 					
-					[@higher_section, @lower_section].each { |s| Factory(:member, :section => s) }
+					# Some people just to fill in the sections. One per section.
+					Factory(:member, :section => @higher_section)
+					Factory(:member, :section => @lower_section)
 				end
 				
 				it 'should explicitly remove the member from the old section' do
-					@moving_member = @lower_section.members.first
+					moving_member = @lower_section.members.first
 					extra_member = Factory.build(:member, :section => nil)
 					@lower_section.members << extra_member
-					@moving_member.section = @higher_section
+					moving_member.section = @higher_section
 					@lower_section.members.first.should == extra_member
 					@lower_section.members.first.position.should == 1
 				end
 				
 				it 'should place the member at the bottom of a higher section' do
-					@moving_member = @lower_section.members.first
+					moving_member = @lower_section.members.first
 					last_high_member = @higher_section.members.last
-					@moving_member.section = @higher_section
-					@moving_member.higher_item.should == last_high_member
+					moving_member.section = @higher_section
+					moving_member.higher_item.should == last_high_member
 				end
 				
-				it 'sholud place the member at the top of a lower section' do
-					@moving_member = @higher_section.members.last
+				it 'should place the member at the top of a lower section' do
+					moving_member = @higher_section.members.last
 					first_low_member = @lower_section.members.first
-					@moving_member.section = @lower_section
-					@moving_member.lower_item.should == first_low_member
+					moving_member.section = @lower_section
+					moving_member.lower_item.should == first_low_member
 				end
 			end
 		end
