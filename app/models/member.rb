@@ -46,11 +46,11 @@ class Member < ActiveRecord::Base
 	validates_presence_of    :section
 	
 	alias_method :raw_section=, :section=
-	def section=(new_section)
+	def section=(new_section_object)
 		old_section = self.section
 		
-		unless new_record? || old_section.nil?
-			new_section = Section.find(new_section)
+		unless self.new_record? || old_section.nil?
+			new_section = if new_section_object.new_record? then new_section_object else Section.find(new_section_object) end
 			self.remove_from_list unless old_section.nil?
 			self.raw_section = new_section
 			
@@ -67,7 +67,7 @@ class Member < ActiveRecord::Base
 				self.insert_at(1)
 			end
 		else
-			self.raw_section = new_section
+			self.raw_section = new_section_object
 		end
 	end
 

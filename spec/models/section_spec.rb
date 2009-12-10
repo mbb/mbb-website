@@ -17,42 +17,20 @@ describe Section do
 			Factory(:member, :section => @new_section)  # Just some extra member.
 		end
 		
-		context 'one at a time' do
-			it 'should remove members from the old section' do
-				@moving_member.should_receive(:remove_from_list)
-				@new_section.members << @moving_member
-			end
+		it 'should remove members from the old section' do
+			@new_section.members << @moving_member
+			@old_section.members.should_not include(@moving_member)
+		end
 
-			it 'should place the members at the bottom of the new section' do
-				last_position =	@new_section.members.last.position
-				@new_section.members << @moving_member
-				@moving_member.position.should == last_position + 1
-			end
-			
-			it 'should not leave their new positions unsaved' do
-				@new_section.members << @moving_member
-				@moving_member.position_changed?.should be_false
-			end
+		it 'should place the members appropriately in the new section' do
+			last_position =	@new_section.members.last.position
+			@new_section.members << @moving_member
+			@moving_member.position.should == last_position + 1
 		end
 		
-		context 'all at once' do
-			it 'should remove any existing members of the section' do
-				former_new_section_members =	@new_section.members
-				former_old_section_members = @old_section.members
-				@new_section.members = [@moving_member]
-				former_new_section_members.each { |m| m.position.should == nil }
-			end
-			
-			it 'should be sure to assign new positions to new members' do
-				new_member = Factory.build(:member, :section => nil)
-				@new_section.members = [new_member]
-				new_member.position.should_not be_nil
-			end
-			
-			it 'should not leave new positions changed?' do
-				@new_section.members = [@moving_member]
-				@moving_member.position_changed?.should be_false
-			end
+		it 'should not leave their new positions unsaved' do
+			@new_section.members << @moving_member
+			@moving_member.position_changed?.should be_false
 		end
 	end
 
