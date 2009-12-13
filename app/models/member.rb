@@ -45,6 +45,32 @@ class Member < ActiveRecord::Base
 	validates_presence_of    :email
 	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
 	validates_presence_of    :section
+	
+	alias_method :raw_section=, :section=
+	def section=(new_section_object)
+		old_section = self.section
+		
+		unless self.new_record? || old_section.nil?
+			new_section = if new_section_object.new_record? then new_section_object else Section.find(new_section_object) end
+			self.remove_from_list unless old_section.nil?
+			self.raw_section = new_section
+			
+			# Place the member somewhere in the order within the new section. This must
+			# be done explicitly to avoid using the position from the old section (which
+			# will probably be invalid or duplicate another member's position).
+		  if new_section.members.count > 0
+				if (not old_section.nil?) and new_section.position < old_section.position
+					self.insert_at(new_section.members.last.position + 1) # Move up to "bottom" of higher section
+				else
+					self.insert_at(1)
+				end
+			else
+				self.insert_at(1)
+			end
+		else
+			self.raw_section = new_section_object
+		end
+	end
 
   def pretty_phone_number
     MadisonBrassBand::PhoneNumber.to_display(self.attributes['phone_number'])
