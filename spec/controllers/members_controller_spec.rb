@@ -12,7 +12,7 @@ describe MembersController do
 	it { should route(:get,    '/members/1'     ).to(:controller => :members, :action => :show,    :id => 1) }
 	
 	context 'when a Roster Adjustment member is logged in' do
-		fixtures :members, :sections, :roles
+		fixtures :sections, :roles
 		before :each do
 			login({}, {:roles => [roles(:roster_adjustment)]})
 		end
@@ -65,17 +65,10 @@ describe MembersController do
 		end
 		
 		private
-			def auth_token(token)
-				CGI::Cookie.new('name' => 'auth_token', 'value' => token)
-			end
-
-			def cookie_for(user)
-				auth_token members(user).reload.remember_token
-			end
-	
 			def create_member(options = {})
-				request.cookies["auth_token"] = cookie_for(:beaker)
-				post :create, :member => { :name => 'Quire Fox', :email => 'quire@example.com', :section => sections(:eb_bass) }.merge(options)
+				new_member = Factory.build(:member, options)
+				Member.stub!(:new).and_return(new_member)
+				post :create, :member => {}
 			end
 	end
 end
