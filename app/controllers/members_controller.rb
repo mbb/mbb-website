@@ -1,6 +1,7 @@
 class MembersController < ApplicationController	
 	before_filter :require_user, :except => [:index, :show]
 	before_filter :check_credentials, :only => [:edit, :update]
+	before_filter :update_identifier, :only => [:show, :edit]
 	require_role 'Roster Adjustment', :only => [:new, :create, :destroy, :move_up, :move_down]
 	
 	# GET /members
@@ -14,8 +15,8 @@ class MembersController < ApplicationController
 		end
 	end
 
-	# GET /members/john_smith
-	# GET /members/john_smith.xml
+	# GET /members/john-smith
+	# GET /members/john-smith.xml
 	def show
 		@member = Member.find(params[:id])
 	
@@ -63,8 +64,8 @@ class MembersController < ApplicationController
 		end
 	end
 	
-	# GET /private/members/john_smith/edit
-	# GET /private/members/john_smith/edit.xml
+	# GET /private/members/john-smith/edit
+	# GET /private/members/john-smith/edit.xml
 	def edit
 		@member = Member.find(params[:id])
 		
@@ -74,8 +75,8 @@ class MembersController < ApplicationController
 		end
 	end
 
-	# PUT /private/members/john_smith
-	# PUT /private/members/john_smith.xml
+	# PUT /private/members/john-smith
+	# PUT /private/members/john-smith.xml
 	def update
 		@member = Member.find(params[:id])
 		
@@ -141,6 +142,22 @@ class MembersController < ApplicationController
 				false
 			else
 				true
+			end
+		end
+		
+	private
+		def update_identifier
+			if MembersHelper.bad_identifier?(params[:id])
+				sans_underscores = params[:id].gsub('_', ' ')
+				new_slug = Slug.normalize(sans_underscores)
+				
+				unless new_slug == params[:id]
+					params[:id] = new_slug
+					redirect_to params, :status => :moved_permanently
+				else
+					flash[:error] = 'No member exists at this URL; are they in the list?'
+					render :index, :status => :gone
+				end
 			end
 		end
 end
