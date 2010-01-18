@@ -1,5 +1,0 @@
-the_one_concert:
-  title: MBB Plays Something
-  location: Your Mom's House
-  date: <%= Date.today %>
-  description: It's going to be hawt.

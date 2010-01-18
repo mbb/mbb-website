@@ -1,7 +1,0 @@
-<% 20.times do |story_number| %>
-story_<%= story_number %>:
-  title: NewsItem No. <%= story_number %>
-  date: <%= story_number.days.ago %>
-  body: Body of story <%= story_number %>.
-
-<% end %>
