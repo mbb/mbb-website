@@ -148,14 +148,12 @@ class MembersController < ApplicationController
 	private
 		def update_identifier
 			if MembersHelper.bad_identifier?(params[:id])
-				sans_underscores = params[:id].gsub('_', ' ')
-				new_slug = Slug.normalize(sans_underscores)
+				new_params = MembersHelper.update_identifier(params)
 				
-				unless new_slug == params[:id]
-					params[:id] = new_slug
-					redirect_to params, :status => :moved_permanently
+				unless new_params == params
+					redirect_to new_params, :status => :moved_permanently
 				else
-					flash[:error] = 'No member exists at this URL; are they in the list?'
+					flash[:error] = 'No member exists at this URL; are they currently a member?'
 					render :index, :status => :gone
 				end
 			end

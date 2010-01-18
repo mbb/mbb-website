@@ -74,7 +74,7 @@ describe MembersController do
 	
 	context 'when a bad id is given' do
 		old_slug_styles = {
-			'with a period' => 'Some O. Slug',
+			'with a period' => 'Some O. Slug',    # Relevant because of extension parsing.
 			'without a period' => 'Some Old Slug'
 		}
 		
@@ -103,7 +103,6 @@ describe MembersController do
 				end
 
 				it 'should redirect with the new slug ID' do
-					old_slug = 'Some Old Slug'
 					get :show, params_for_slug(@old_slug)
 					response.should redirect_to(member_url(:id => @new_slug))
 				end
