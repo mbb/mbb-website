@@ -9,9 +9,10 @@ describe MembersController do
 	it { should route(:get,    '/members/1/edit').to(:controller => :members, :action => :edit,    :id => 1) }
 	it { should route(:put,    '/members/1'     ).to(:controller => :members, :action => :update,  :id => 1) }
 	it { should route(:delete, '/members/1'     ).to(:controller => :members, :action => :destroy, :id => 1) }
+	it { should route(:get,    '/members/1'     ).to(:controller => :members, :action => :show,    :id => 1) }
 	
 	context 'when a Roster Adjustment member is logged in' do
-		fixtures :members, :sections, :roles
+		fixtures :sections, :roles
 		before :each do
 			login({}, {:roles => [roles(:roster_adjustment)]})
 		end
@@ -64,17 +65,68 @@ describe MembersController do
 		end
 		
 		private
-			def auth_token(token)
-				CGI::Cookie.new('name' => 'auth_token', 'value' => token)
-			end
-
-			def cookie_for(user)
-				auth_token members(user).reload.remember_token
-			end
-	
 			def create_member(options = {})
-				request.cookies["auth_token"] = cookie_for(:beaker)
-				post :create, :member => { :name => 'Quire Fox', :email => 'quire@example.com', :section => sections(:eb_bass) }.merge(options)
+				new_member = Factory.build(:member, options)
+				Member.stub!(:new).and_return(new_member)
+				post :create, :member => {}
 			end
+	end
+	
+	context 'when a bad id is given' do
+		old_slug_styles = {
+			'with a period' => 'Some O. Slug',    # Relevant because of extension parsing.
+			'without a period' => 'Some Old Slug'
+		}
+		
+		old_slug_styles.each do |style, member_name|
+			context "(#{style})" do
+				before do
+					@member = Factory.create(:member, :name => member_name)
+					@old_slug = @member.name.gsub(' ', '_')
+					@new_slug = @member.friendly_id
+					MembersHelper.stub!(:bad_identifier?).and_return(true)
+				end
+				
+				def params_for_slug(s)
+					slug_has_period = /(.+)\.([^\.]+)/.match(s)
+					if slug_has_period
+						id, format = slug_has_period[1..2]
+						{:id => id, :format => format}
+					else
+						{:id => s}
+					end
+				end
+
+				it 'should return a permanent redirect' do
+					get :show, params_for_slug(@old_slug)
+					response.code.should == '301'  # Permanent Redirect
+				end
+
+				it 'should redirect with the new slug ID' do
+					get :show, params_for_slug(@old_slug)
+					response.should redirect_to(member_url(:id => @new_slug))
+				end
+			end
+		end
+	end
+	
+	context '#show with a good identifier' do
+		context 'but no matching member' do
+			before do
+				@member = Factory.create(:member, :name => 'Some Old Slug')
+				@slug = @member.friendly_id
+				MembersHelper.stub!(:bad_identifier?).with(@slug).and_return(true)
+			end
+		
+			it 'should return a "Gone" status' do
+				get :show, :id => @slug
+				response.code.should == '410'  # Gone
+			end
+		
+			it 'should render the members home page' do
+				get :show, :id => @slug
+				response.should render_template('index')
+			end
+		end
 	end
 end

@@ -14,7 +14,7 @@ task :stage do
   use_madisonbrass
 end
 
-# Sets up to use Tack's server at minusuu.com for the deployment.
+# Sets up to use Darren's server at madisonbrass.com for deployment.
 task :use_madisonbrass do
   set :user, 'madison'
   set :server_hostname, '585mad.albertus.hostingrails.com'

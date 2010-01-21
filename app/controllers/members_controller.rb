@@ -1,6 +1,7 @@
 class MembersController < ApplicationController	
 	before_filter :require_user, :except => [:index, :show]
 	before_filter :check_credentials, :only => [:edit, :update]
+	before_filter :update_identifier, :only => [:show, :edit]
 	require_role 'Roster Adjustment', :only => [:new, :create, :destroy, :move_up, :move_down]
 	
 	# GET /members
@@ -14,10 +15,10 @@ class MembersController < ApplicationController
 		end
 	end
 
-	# GET /members/john_smith
-	# GET /members/john_smith.xml
+	# GET /members/john-smith
+	# GET /members/john-smith.xml
 	def show
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 	
 	  unless @member.nil?
   		respond_to do |format|
@@ -63,10 +64,10 @@ class MembersController < ApplicationController
 		end
 	end
 	
-	# GET /private/members/john_smith/edit
-	# GET /private/members/john_smith/edit.xml
+	# GET /private/members/john-smith/edit
+	# GET /private/members/john-smith/edit.xml
 	def edit
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		
 		respond_to do |format|
 			format.html # edit.html.erb
@@ -74,10 +75,10 @@ class MembersController < ApplicationController
 		end
 	end
 
-	# PUT /private/members/john_smith
-	# PUT /private/members/john_smith.xml
+	# PUT /private/members/john-smith
+	# PUT /private/members/john-smith.xml
 	def update
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		
 		if params[:member].has_key?(:section_id) and @member.section_id != params[:member][:section_id]
 		  # Change the member's section.
@@ -115,7 +116,7 @@ class MembersController < ApplicationController
 	
 	# PUT /private/members/Quentin_Daniels/move_up (rjs)
 	def move_up
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		old_position = @member.position
 		@member.move_higher
 		@position_changed = (old_position != @member.reload.position)
@@ -124,7 +125,7 @@ class MembersController < ApplicationController
 	
 	# PUT /private/members/Quentin_Daniels/move_down (rjs)
 	def move_down
-		@member = Member.find_by_path_component(params[:id])
+		@member = Member.find(params[:id])
 		old_position = @member.position
 		@member.move_lower
 		@position_changed = (old_position != @member.reload.position)
@@ -139,6 +140,20 @@ class MembersController < ApplicationController
 				false
 			else
 				true
+			end
+		end
+		
+	private
+		def update_identifier
+			if MembersHelper.bad_identifier?(params[:id])
+				new_params = MembersHelper.update_identifier(params)
+				
+				unless new_params == params
+					redirect_to new_params, :status => :moved_permanently
+				else
+					flash[:error] = 'No member exists at this URL; are they currently a member?'
+					render :index, :status => :gone
+				end
 			end
 		end
 end

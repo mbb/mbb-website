@@ -1,5 +1,3 @@
-PathComponent = /([\w\d]|(\._))+/
-
 ActionController::Routing::Routes.draw do |map|
   map.resources :attached_files
 
@@ -14,8 +12,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.book 'book', :controller => 'book'
 	map.join 'join', :controller => 'join'
 	map.resources :concerts, :only => [:index], :collection => {:next => :get, :past => :get, :upcoming => :get}
-	map.resources :members, :requirements => {:id => PathComponent}, :member => {:move_up => :put, :move_down => :put} do |member|
-	  member.resource :section, :only => [:update]
+	map.resources :members, :member => {:move_up => :put, :move_down => :put} do |member|
+		member.resource :section, :only => [:update]
 	end
 	map.home 'home', :controller => 'home'
 	map.root :home
