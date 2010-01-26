@@ -1,17 +1,17 @@
 <li>
-  <h2><%= news_item.title %></h2>
-  <h3><%= news_item.date %></h3>
-  <p class="private_story_indicator">
-    <% if news_item.is_private? -%>
-      (private)
-    <% else -%>
-      (public)
-    <% end -%>
-  </p>
-  <div class="body">
-    <%= RedCloth.new(news_item.body).to_html %>
-  </div>
-  <ul class="attached_files">
-    <%= render :partial => 'private/news_items/attached_file', :collection => news_item.attached_files %>
-  </ul>
+	<h2><%= news_item.title %></h2>
+	<h3><%= news_item.date %></h3>
+	<p class="private_story_indicator">
+		<% if news_item.is_private? -%>
+			(private)
+		<% else -%>
+			(public)
+		<% end -%>
+	</p>
+	<div class="body">
+		<%= RedCloth.new(news_item.body).to_html %>
+	</div>
+	<ul class="attached_files">
+		<%= render :partial => 'private/news_items/attached_file', :collection => news_item.attached_files %>
+	</ul>
 </li>

@@ -6,12 +6,12 @@
 	<td class="photo"><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></td>
 	<td class="name"><%= member.name -%></td>
 	<td class="contact">
-	  <%= member.email -%><br />
-	  <%= member.pretty_phone_number %>
+		<%= member.email -%><br />
+		<%= member.pretty_phone_number %>
 	</td>
 	<td class="section">
-	  <% form_for member.section, :url => member_section_url(member), :html => {:class => 'member_section_selector'} do |f| -%>
-  	  <%= f.select :id, Section.all.collect {|s| [s.name, s.id] } %>
-  	<% end -%>
+		<% form_for member.section, :url => member_section_url(member), :html => {:class => 'member_section_selector'} do |f| -%>
+			<%= f.select :id, Section.all.collect {|s| [s.name, s.id] } %>
+		<% end -%>
 	</td>
 </tr>

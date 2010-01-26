@@ -21,7 +21,7 @@ describe Section do
 			@new_section.members << @moving_member
 			@old_section.members.should_not include(@moving_member)
 		end
-
+		
 		it 'should place the members appropriately in the new section' do
 			last_position =	@new_section.members.last.position
 			@new_section.members << @moving_member
@@ -33,7 +33,7 @@ describe Section do
 			@moving_member.position_changed?.should be_false
 		end
 	end
-
+	
 	# Ordering properties
 	it 'should respond to #all with sections appearing in order' do
 		sections = [Factory(:section), Factory(:section)]
@@ -52,11 +52,10 @@ describe Section do
 		section_dot_find = Section.find(:all)
 		section_dot_find.should eql sections_in_order
 	end
-		
+	
 	# Output properties.
 	it 'should print to a string as its instrument' do
 		section = Factory(:section)
 		section.to_s.should == section.name
-	end
-	
+	end	
 end

@@ -1,8 +1,8 @@
 class Private::NewsItemsController < PrivateController	
-  def index
-    @news_items = NewsItem.recent
-  end
-
+	def index
+		@news_items = NewsItem.recent
+	end
+	
 	def new
 		@news_item = NewsItem.new
 	end

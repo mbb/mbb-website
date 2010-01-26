@@ -6,7 +6,7 @@ class CreateStories < ActiveRecord::Migration
 			t.text :body
 		end
 	end
-
+	
 	def self.down
 		drop_table :stories
 	end

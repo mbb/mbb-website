@@ -8,7 +8,7 @@ class AddConcertsToDatabase < ActiveRecord::Migration
 			t.text :google_map_url
 		end
 	end
-
+	
 	def self.down
 		drop_table :concerts
 	end
