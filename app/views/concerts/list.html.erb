@@ -2,18 +2,18 @@
 <h1>Our <%= action_name.capitalize %> Concerts</h1>
 
 <% unless @concerts.empty? %>
-  <table id="Concerts">
-    <tr>
-      <th>Date</th>
-      <th>Location</th>
-    </tr>
-  	<% @concerts.each do |concert| -%>
-    	<tr>
-    		<td class="date"><%= concert.date.strftime('%A %B %d, %Y') -%> <%= concert.time.strftime('%I:%M%p') unless concert.time.nil? -%></td>
-    		<td><%= concert.location -%></td>
-    	</tr>
-  	<% end -%>
-  </table>
+	<table id="Concerts">
+		<tr>
+			<th>Date</th>
+			<th>Location</th>
+		</tr>
+		<% @concerts.each do |concert| -%>
+			<tr>
+				<td class="date"><%= concert.date.strftime('%A %B %d, %Y') -%> <%= concert.time.strftime('%I:%M%p') unless concert.time.nil? -%></td>
+				<td><%= concert.location -%></td>
+			</tr>
+		<% end -%>
+	</table>
 <% else -%>
 	<p>Our schedule is constantly changing. We'll update you soon!</p>
 <% end -%>

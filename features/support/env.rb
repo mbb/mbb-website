@@ -9,7 +9,7 @@ Cucumber::Rails.use_transactional_fixtures
 require 'webrat'
 
 Webrat.configure do |config|
-  config.mode = :rails
+	config.mode = :rails
 end
 
 require 'cucumber/rails/rspec'

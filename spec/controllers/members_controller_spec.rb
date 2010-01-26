@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe MembersController do
-  setup :activate_authlogic
+	setup :activate_authlogic
   
 	it { should route(:get,    '/members'       ).to(:controller => :members, :action => :index) }
 	it { should route(:get,    '/members/new'   ).to(:controller => :members, :action => :new) }
@@ -23,7 +23,7 @@ describe MembersController do
 				response.should be_redirect
 			end.should change(Member, :count).by(1)
 		end
-
+		
 		it 'requires name on registration' do
 			lambda do
 				create_member(:name => nil)
@@ -31,7 +31,7 @@ describe MembersController do
 				response.should be_success
 			end.should_not change(Member, :count)
 		end
-	
+		
 		it 'does not require password on registration' do
 			lambda do
 				create_member(:password => nil)
@@ -39,7 +39,7 @@ describe MembersController do
 				response.should redirect_to(private_roster_path)
 			end.should change(Member, :count).by(1)
 		end
-	
+		
 		it 'does not require password confirmation on registration' do
 			lambda do
 				create_member(:password_confirmation => nil)
@@ -47,7 +47,7 @@ describe MembersController do
 				response.should redirect_to(private_roster_path)
 			end.should change(Member, :count).by(1)
 		end
-
+		
 		it 'requires email on registration' do
 			lambda do
 				create_member(:email => nil)
@@ -55,7 +55,7 @@ describe MembersController do
 				response.should be_success
 			end.should_not change(Member, :count)
 		end
-	
+		
 		it 'requires section on registration' do
 			lambda do
 				create_member(:section => nil)
@@ -96,12 +96,12 @@ describe MembersController do
 						{:id => s}
 					end
 				end
-
+				
 				it 'should return a permanent redirect' do
 					get :show, params_for_slug(@old_slug)
 					response.code.should == '301'  # Permanent Redirect
 				end
-
+				
 				it 'should redirect with the new slug ID' do
 					get :show, params_for_slug(@old_slug)
 					response.should redirect_to(member_url(:id => @new_slug))
@@ -117,12 +117,12 @@ describe MembersController do
 				@slug = @member.friendly_id
 				MembersHelper.stub!(:bad_identifier?).with(@slug).and_return(true)
 			end
-		
+			
 			it 'should return a "Gone" status' do
 				get :show, :id => @slug
 				response.code.should == '410'  # Gone
 			end
-		
+			
 			it 'should render the members home page' do
 				get :show, :id => @slug
 				response.should render_template('index')

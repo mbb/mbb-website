@@ -1,6 +1,6 @@
 <div id="Header">
 	<% unless logged_in? %>
-		<%= link_to 'Member Login',  login_path,  {:title => 'Member Login', :id => 'LoginLink'} %>
+		<%= link_to 'Member Login', login_path, {:title => 'Member Login', :id => 'LoginLink'} %>
 	<% else %>
 		<%= link_to 'Log Out', logout_path, {:title => 'Log Out', :id => 'LogoutLink'} %>
 	<% end %>

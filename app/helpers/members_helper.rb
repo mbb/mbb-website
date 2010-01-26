@@ -10,7 +10,7 @@ module MembersHelper
 	#   params = {:id => 'Andres_J', :format => '_Tack'}
 	#   MembersHelper.good_identifier(params)       # => {:id => 'andres-j-tack'}
 	#   MembersHelper.good_identifier(params[:id])  # => 'andres-j'
-  #
+	#
 	#   params[:format] = 'html'
 	#   MembersHelper.good_identifier(params)       # => {:id => 'andres-j', :format => 'html'}
 	#

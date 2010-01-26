@@ -32,15 +32,15 @@ class Member < ActiveRecord::Base
 			record.password_confirmation = default_password
 		end
 	end
-
+	
 	FirstName = /([\w\.]+)/
 	MiddleNames = /\s([\w\s\.]+)/
 	LastName = /\s([\w\.]+)/
 	FullName = /#{FirstName} #{MiddleNames}? #{LastName}/x
-
-	validates_length_of			 :name,	:maximum => 100
-	validates_presence_of		 :name
-	validates_format_of			 :name,	:with => FullName
+	
+	validates_length_of      :name, :maximum => 100
+	validates_presence_of    :name
+	validates_format_of      :name, :with => FullName
 	validates_uniqueness_of  :name
 	validates_presence_of    :email
 	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
@@ -58,7 +58,7 @@ class Member < ActiveRecord::Base
 			# Place the member somewhere in the order within the new section. This must
 			# be done explicitly to avoid using the position from the old section (which
 			# will probably be invalid or duplicate another member's position).
-		  if new_section.members.count > 0
+			if new_section.members.count > 0
 				if (not old_section.nil?) and new_section.position < old_section.position
 					self.insert_at(new_section.members.last.position + 1) # Move up to "bottom" of higher section
 				else
@@ -71,26 +71,32 @@ class Member < ActiveRecord::Base
 			self.raw_section = new_section_object
 		end
 	end
-
-  def pretty_phone_number
-    MadisonBrassBand::PhoneNumber.to_display(self.attributes['phone_number'])
-  end
-
+	
+	def pretty_phone_number
+		MadisonBrassBand::PhoneNumber.to_display(self.attributes['phone_number'])
+	end
+	
 	def to_s
 		name
 	end
-
+	
+	def to_json
+		super(:except => [:crypted_password, :salt, :perishable_token,
+		                 :persistence_token, :remember_token, :remember_token_expires_at,
+		                 :photo_file_name, :photo_file_size, :photo_content_type])
+	end
+	
 	# prevents a user from submitting a crafted form that bypasses activation
 	# anything else you want your user to change should be added here.
 	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id,
 		:roles, :updated_at, :created_at, :photo, :biography, :phone_number
 	
 	def has_role?(role_in_question)
-    @_list ||= self.roles.collect(&:name)
-    return true if @_list.include?("admin")
-    (@_list.include?(role_in_question.to_s) )
-  end
-
+		@_list ||= self.roles.collect(&:name)
+		return true if @_list.include?("admin")
+		(@_list.include?(role_in_question.to_s) )
+	end
+	
 	def self.default_password
 		'brass4life'
 	end

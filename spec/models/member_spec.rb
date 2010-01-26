@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/../sample_data/phone_numbers'
 
 describe Member do
-
 	# Basic columns and validations
 	it { should belong_to(:section) }
 	it { should have_db_column(:name) }
@@ -18,28 +17,28 @@ describe Member do
 	it { should_not validate_presence_of(:biography) }
 	
 	#
-  # Verify format of phone number
-  # Tests which express what the user should see are at the story/integration
-  # level. This is only a valid/invalid specification.
-  #
-  SampleData::InvalidNorthAmericanPhoneNumbers.each do |example|
-    it "should not accept a phone number of #{example.number} because #{example.description}" do
-      user = Factory.stub(:member, :phone_number => example.number)
-      user.valid? # Triggers validation errors.
-      user.should have_at_least(1).errors_on(:phone_number)
-    end
-  end
-  
-  #
-  # Verify display of phone number versus the internal storage mechanism.
-  # Note that we only test that an internal representation is offered, not that it
-  #
-  it 'should display a phone number in an attractive format' do
-    user = Factory.stub(:member, :phone_number => '9099999999')
-    user.pretty_phone_number.should == '(909) 999-9999'
-  end
-
-  #
+	# Verify format of phone number
+	# Tests which express what the user should see are at the story/integration
+	# level. This is only a valid/invalid specification.
+	#
+	SampleData::InvalidNorthAmericanPhoneNumbers.each do |example|
+		it "should not accept a phone number of #{example.number} because #{example.description}" do
+			user = Factory.stub(:member, :phone_number => example.number)
+			user.valid? # Triggers validation errors.
+			user.should have_at_least(1).errors_on(:phone_number)
+		end
+	end
+	
+	#
+	# Verify display of phone number versus the internal storage mechanism.
+	# Note that we only test that an internal representation is offered, not that it
+	#
+	it 'should display a phone number in an attractive format' do
+		user = Factory.stub(:member, :phone_number => '9099999999')
+		user.pretty_phone_number.should == '(909) 999-9999'
+	end
+	
+	#
 	# Ordering within a section
 	#
 	it { should have_db_column(:position) }
@@ -58,15 +57,15 @@ describe Member do
 		context 'at record create' do
 			it 'should default to something' do
 				section = Factory.create(:section)
-				Factory.create(:member, :section => section)  # Existing member in section.
+				Factory.create(:member, :section => section)	# Existing member in section.
 				new_member = Factory.create(:member, :section => section)
 				new_member.valid? # triggers validations and position setting
 				new_member.position.should_not be_nil
 			end
-
+			
 			it 'should default to the bottom of a full section' do
 				section = Factory.create(:section)
-				Factory.create(:member, :section => section)  # Existing member in section.
+				Factory.create(:member, :section => section)	# Existing member in section.
 				new_member = Factory.create(:member, :section => section)
 				new_member.valid? # triggers validations and position setting
 				new_member.last?.should be_true
@@ -136,5 +135,4 @@ describe Member do
 			end
 		end
 	end
-
 end

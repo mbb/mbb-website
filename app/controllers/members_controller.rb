@@ -19,16 +19,16 @@ class MembersController < ApplicationController
 	# GET /members/john-smith.xml
 	def show
 		@member = Member.find(params[:id])
-	
-	  unless @member.nil?
-  		respond_to do |format|
-  			format.html # show.html.erb
-  			format.xml	{ render :xml => @member }
-  		end
+		
+		unless @member.nil?
+			respond_to do |format|
+				format.html # show.html.erb
+				format.xml	{ render :xml => @member }
+			end
 		else
-		  flash[:error] = "The member page you bookmarked no longer exists."
-		  redirect_to home_url
-	  end
+			flash[:error] = "The member page you bookmarked no longer exists."
+			redirect_to home_url
+		end
 	end
 
 	# GET /private/members/new
@@ -71,7 +71,7 @@ class MembersController < ApplicationController
 		
 		respond_to do |format|
 			format.html # edit.html.erb
-			format.js	  { render :partial => 'edit_form.html.erb', :member => @member }
+			format.js	 { render :partial => 'edit_form.html.erb', :member => @member }
 		end
 	end
 
@@ -81,37 +81,35 @@ class MembersController < ApplicationController
 		@member = Member.find(params[:id])
 		
 		if params[:member].has_key?(:section_id) and @member.section_id != params[:member][:section_id]
-		  # Change the member's section.
-		  old_section = @member.section
-		  new_section = Section.find(params[:member][:section_id])
-		  @member.remove_from_list
-		  @member.section = new_section
-		  
-		  # Place the member somewhere in the order within the new section. This must
-		  # be done explicitly to avoid using the position from the old section (which
-		  # will probably be invalid or duplicate another member's position).
-		  if new_section.position < old_section.position and new_section.members.count > 0
-        @member.insert_at(new_section.members.last.position + 1) # Move up to "bottom" of higher section
-      else
-        @member.insert_at(1)
-      end
-      
-      # Update the rest of the attributes.
-      other_attributes = params[:member].delete_if { |attribute_name, _| attribute_name == :section }
-      @member.update_attributes(other_attributes)
-    else
-      # No section changes mean we can mass-update.
-      @member.update_attributes(params[:member])
-    end
-	
-		respond_to do |format|
-			if @member.save
-				flash[:notice] = 'Member was successfully updated.'
-				format.html { redirect_to member_path(@member) }
-				format.js   # update.js.rjs
+			# Change the member's section.
+			old_section = @member.section
+			new_section = Section.find(params[:member][:section_id])
+			@member.remove_from_list
+			@member.section = new_section
+			
+			# Place the member somewhere in the order within the new section. This must
+			# be done explicitly to avoid using the position from the old section (which
+			# will probably be invalid or duplicate another member's position).
+			if new_section.position < old_section.position and new_section.members.count > 0
+				@member.insert_at(new_section.members.last.position + 1) # Move up to "bottom" of higher section
 			else
-				format.html { render :action => "edit" }
-				format.js   # update.js.rjs
+				@member.insert_at(1)
+			end
+			
+			# Update the rest of the attributes.
+			other_attributes = params[:member].delete_if { |attribute_name, _| attribute_name == :section }
+			@member.update_attributes(other_attributes)
+		else
+			# No section changes mean we can mass-update.
+			@member.update_attributes(params[:member])
+		end
+		
+		respond_to do |wants|
+			if @member.update_attributes(params[:member])
+				flash[:notice] = 'Member was successfully updated.'
+				wants.html { redirect_back_or_default(member_path(@member)) }
+			else
+				wants.html { render :action => "edit" }
 			end
 		end
 	end
@@ -145,7 +143,6 @@ class MembersController < ApplicationController
 			end
 		end
 		
-	private
 		def update_identifier
 			if MembersHelper.bad_identifier?(params[:id])
 				new_params = MembersHelper.update_identifier(params)
