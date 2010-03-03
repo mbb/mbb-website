@@ -4,7 +4,7 @@
 }
 
 #WelcomeMessage {
-	font-size: 14pt;
+	margin-bottom: 35px;
 }
 
 #ContentBox label {
@@ -22,6 +22,7 @@
 }
 
 #FormFields input {
+	font-size: 14pt;
 	width: 95%;
 }
 
