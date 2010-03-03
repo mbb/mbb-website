@@ -1,0 +1,27 @@
+#ContentBox {
+	width: 70%;
+	margin: auto;
+}
+
+#WelcomeMessage {
+	font-size: 14pt;
+}
+
+#ContentBox label {
+	float: left;
+}
+
+#ContentBox form p {
+	text-align: center;
+}
+
+#FormFields {
+	margin: auto;
+	text-align: center;
+	width: 50%;
+}
+
+#FormFields input {
+	width: 95%;
+}
+

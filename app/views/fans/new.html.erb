@@ -1,0 +1,16 @@
+<h1>Join our Mailing List</h1>
+
+<div id="ContentBox">
+	<p id="WelcomeMessage">
+		You're a fan! Great! By signing up for our mailing list, you'll help us send you notices when we have something we want to be sure you don't miss. Don't worry; this is a low-volume list and we won't give your e-mail away to anyone, <emph>period.</emph>
+	</p>
+	
+	<% form_for(@fan) do |f| %>
+		<%= f.error_messages %>
+		
+		<div id="FormFields">
+			<p> <%= f.text_field :email, :value => 'your@email.address' %> </p>
+			<p> <%= f.submit 'Sign Me Up!' %> </p>
+		</div>
+	<% end %>
+</div>

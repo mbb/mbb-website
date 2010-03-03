@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :members, :member => {:move_up => :put, :move_down => :put} do |member|
 		member.resource :section, :only => [:update]
 	end
+	map.resources :fans, :only => [:new, :create, :destroy]
 	map.home 'home', :controller => 'home'
 	map.root :home
 	
