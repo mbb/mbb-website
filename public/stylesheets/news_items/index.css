@@ -36,3 +36,20 @@ ul#NewsItems div.body ul	{
 ul#NewsItems div.body ul li	{
 	margin-bottom: 0;
 }
+
+#InvitationToFans {
+	float: right;
+	width: 200px;
+	background-color: #cc6;
+	padding: 5px;
+	border: 4px solid #aa0;
+	text-align: center;
+}
+
+#InvitationToFans p {
+	font-size: 8pt;
+}
+
+#InvitationToFans h1 {
+	font-size: 16pt;
+}
