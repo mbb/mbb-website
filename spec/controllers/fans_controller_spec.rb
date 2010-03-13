@@ -22,7 +22,7 @@ describe FansController do
 			end
 		end
 		
-		describe "with invalid params" do
+		context "with invalid params" do
 			before :each do
 				Fan.stub!(:new).and_return(mock_model(Fan, :save => false))
 			end
