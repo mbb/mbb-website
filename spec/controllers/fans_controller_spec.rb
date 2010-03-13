@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe FansController do
-	it { should route(:get,		'/fans/new' ).to(:controller => :fans, :action => :new) }
-	it { should route(:post,	 '/fans'		 ).to(:controller => :fans, :action => :create) }
-	it { should route(:delete, '/fans/1'	 ).to(:controller => :fans, :action => :destroy, :id => 1) }
+	it { should route(:get,    '/fans/new').to(:controller => :fans, :action => :new) }
+	it { should route(:post,   '/fans'    ).to(:controller => :fans, :action => :create) }
+	it { should route(:delete, '/fans/1'  ).to(:controller => :fans, :action => :destroy, :id => 1) }
 	
 	describe "#create" do
 		context "with valid params" do
