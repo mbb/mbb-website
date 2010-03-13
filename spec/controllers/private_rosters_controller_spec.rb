@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Private::RostersController do
   setup :activate_authlogic
   
-	it { should route(:get, '/private/roster').to(:controller => [:private, :rosters], :action => :show) }
+	it { should route(:get, '/private/roster').to(:controller => 'private/rosters', :action => :show) }
 
 	context 'when logged in as a roster adjuster' do
 		fixtures :members, :sections, :roles
