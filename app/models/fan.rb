@@ -4,6 +4,7 @@
 class Fan < ActiveRecord::Base
 	validates_presence_of :email
 	validates_format_of :email, :with => Authlogic::Regex.email
+	validates_uniqueness_of :email
 	
 	def to_s
 		email

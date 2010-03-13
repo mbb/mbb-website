@@ -22,9 +22,28 @@ describe FansController do
 			end
 		end
 		
+		context 'when re-registering a fan (non-unique e-mail)' do
+			before :each do
+				existing_fan = Factory.create(:fan)
+				another_fan = Factory.build(:fan, :email => existing_fan.email)
+				Fan.stub!(:new).and_return(another_fan)
+			end
+			
+			it 'should redirect back to the news section' do
+				post :create, :fan => {}
+				response.should redirect_to(news_items_url)
+			end
+			
+			it 'should thank the user for signing up (even though nothing was done)!' do
+				post :create, :fan => {}
+				flash[:notice].should =~ /thanks|thank you/i
+			end
+		end
+		
 		context "with invalid params" do
 			before :each do
-				Fan.stub!(:new).and_return(mock_model(Fan, :save => false))
+				bad_fan = Factory.build(:fan, :email => 'nonsense')
+				Fan.stub!(:new).and_return(bad_fan)
 			end
 			
 			it 'should render the new fan page again' do
