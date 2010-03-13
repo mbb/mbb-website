@@ -28,5 +28,5 @@ config.action_mailer.delivery_method = :test
 
 config.gem "rspec", :lib => false, :version => ">= 1.2.9" 
 config.gem "rspec-rails", :lib => false, :version => ">= 1.2.9"
-config.gem "shoulda", :lib => "shoulda", :source => "http://gemscutter.org/"
+config.gem "shoulda", :lib => "shoulda", :version => '2.10.3', :source => "http://gemscutter.org/"
 config.gem 'factory_girl', :source => 'http://gemcutter.org/', :version => '>= 1.2.3'
