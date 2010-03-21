@@ -134,9 +134,9 @@ class MembersController < ApplicationController
 	
 	private
 		def check_credentials
-			unless current_user.has_role?('Roster Adjustment') or params[:id] == current_user.to_pc
+			unless current_user.has_role?('Roster Adjustment') or params[:id] == current_user.to_param
 				flash[:error] = "You do not have permission to #{action_name} another member."
-				redirect_to private_roster_path
+				render private_roster_path, :status => :forbidden
 				false
 			else
 				true
