@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100118203426) do
+ActiveRecord::Schema.define(:version => 20100227013022) do
 
   create_table "attached_files", :force => true do |t|
     t.string   "data_file_name"
@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(:version => 20100118203426) do
     t.time     "time"
     t.string   "google_map_embed_url"
     t.string   "google_map_link_url"
+  end
+
+  create_table "fans", :force => true do |t|
+    t.string   "email",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "members", :force => true do |t|

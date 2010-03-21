@@ -8,3 +8,12 @@ en:
               taken: "{{value}} is already in the band!"
             email:
               taken: "Someone already owns the e-mail address {{value}}."
+        
+        fan:
+          attributes:
+            email:
+              invalid: " doesn't look like a real address. Try again?"
+
+      template:
+        body: "Sorry; we couldn't make sense of some things..."
+        
