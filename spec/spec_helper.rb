@@ -23,7 +23,7 @@ Spec::Runner.configure do |config|
 	end
 	
 	def user_session(stubs = {}, user_stubs = {})
-		@current_user ||= mock_model(UserSession, {:member => current_user(user_stubs)}.merge(stubs))
+		@user_session ||= mock_model(UserSession, {:member => current_user(user_stubs)}.merge(stubs))
 	end
 	
 	def login(session_stubs = {}, user_stubs = {})

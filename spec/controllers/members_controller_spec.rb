@@ -72,6 +72,30 @@ describe MembersController do
 			end
 	end
 	
+	context 'when a normal member is logged in' do
+		before :each do
+			login({}, {:has_role? => false})
+		end
+		
+		it 'allows him to edit his profile' do
+			MembersHelper.stub!(:bad_identifier?).and_return(false)
+			Member.stub!(:find).and_return(current_user)
+			get :edit, :id => current_user.to_param
+			response.should be_success
+			response.should render_template('edit')
+		end
+		
+		it 'does not allow him to edit another person\'s profile' do
+			MembersHelper.stub!(:bad_identifier?).and_return(false)
+			Member.stub!(:find).and_return(current_user)
+			someone_else = Factory(:member)
+			get :edit, :id => someone_else.to_param
+			response.should_not be_success
+			response.code.should == '403'
+			response.should render_template('/private/roster')
+		end
+	end
+	
 	context 'when a bad id is given' do
 		old_slug_styles = {
 			'with a period' => 'Some O. Slug',    # Relevant because of extension parsing.
