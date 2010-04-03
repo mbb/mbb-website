@@ -86,11 +86,6 @@ class Member < ActiveRecord::Base
 		                 :photo_file_name, :photo_file_size, :photo_content_type])
 	end
 	
-	# prevents a user from submitting a crafted form that bypasses activation
-	# anything else you want your user to change should be added here.
-	attr_accessible :email, :name, :password, :password_confirmation, :section, :section_id,
-		:roles, :updated_at, :created_at, :photo, :biography, :phone_number
-	
 	def has_role?(role_in_question)
 		@_list ||= self.roles.collect(&:name)
 		return true if @_list.include?("admin")
