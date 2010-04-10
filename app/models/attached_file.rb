@@ -1,3 +1,5 @@
+require 'paperclip_filename'
+
 class AttachedFile < ActiveRecord::Base
 	belongs_to :news_item
 	validates_presence_of :news_item
