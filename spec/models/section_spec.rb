@@ -8,7 +8,24 @@ describe Section do
 	it { should validate_presence_of(:name) }
 	it { should validate_presence_of(:position) }
 	
-	# Adding members to a section (w.r.t. ordering)
+	# Ordering of sections in the band.
+	describe 'ordering' do
+		it 'should consider low section position numbers to be higher sections' do
+			high_section = Factory(:section)
+			low_section = Factory(:section)
+			high_section.move_to_top
+			high_section.should be_above(low_section)
+		end
+		
+		it 'should consider high section position numbers to be a lower sections' do
+			high_section = Factory(:section)
+			low_section = Factory(:section)
+			low_section.move_to_bottom
+			low_section.should be_below(high_section)
+		end
+	end
+	
+	# Adding members to a section (membership)
 	context 'when gaining members' do
 		before :each do
 			@new_section = Factory(:section)
@@ -22,15 +39,33 @@ describe Section do
 			@old_section.members.should_not include(@moving_member)
 		end
 		
-		it 'should place the members appropriately in the new section' do
-			last_position =	@new_section.members.last.position
-			@new_section.members << @moving_member
-			@moving_member.position.should == last_position + 1
-		end
-		
 		it 'should not leave their new positions unsaved' do
 			@new_section.members << @moving_member
 			@moving_member.position_changed?.should be_false
+		end
+	end
+	
+	# Moving members to a section (comparative ordering)
+	context 'when moving members from one section to another' do
+		before :each do
+			sections = [Factory(:section), Factory(:section)]
+			sections.each { |s| Factory(:member, :section => s) }
+			@high_section = sections.sort.first
+			@low_section = sections.sort.last
+		end
+		
+		it 'should place the members at the bottom of a higher section' do
+			moving_member = @low_section.members.first
+			existing_member = @high_section.members.last
+			@high_section.members << moving_member
+			moving_member.should be_last
+		end
+		
+		it 'should place members at the top of a lower section' do
+			moving_member = @high_section.members.last
+			existing_member = @low_section.members.first
+			@low_section.members << moving_member
+			moving_member.should be_first
 		end
 	end
 	
@@ -57,5 +92,5 @@ describe Section do
 	it 'should print to a string as its instrument' do
 		section = Factory(:section)
 		section.to_s.should == section.name
-	end	
+	end
 end
