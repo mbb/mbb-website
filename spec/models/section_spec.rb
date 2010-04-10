@@ -92,5 +92,5 @@ describe Section do
 	it 'should print to a string as its instrument' do
 		section = Factory(:section)
 		section.to_s.should == section.name
-	end	
+	end
 end

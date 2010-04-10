@@ -11,8 +11,11 @@ class SectionsController < ApplicationController
 	# PUT /member/:member_id/section.js (RJS)
 	def update
 		@member = Member.find(params[:member_id])
+		
+		@old_neighbors = @member.neighbors(true)
 		@member.section = Section.find(params[:section][:id])
 		@member.save!
+		@old_neighbors.each { |m| m.reload }  # Forces correct position numbers, so the old neighbors don't think @member is still there.
 		
 		respond_to do |wants|
 			wants.html { redirect_back_or_default(member_url(@member)) }

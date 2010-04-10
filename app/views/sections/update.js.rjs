@@ -1,4 +1,5 @@
 new_section = @member.section
+affected_neighbors = @old_neighbors
 
 # Get rid of the old member row.
 page.remove "member_#{@member.id}"
@@ -6,15 +7,16 @@ page.remove "member_#{@member.id}"
 # Insert the new member row and re-render his neighbors (so we get the nice arrows).
 if @member.first?
 	page.insert_html :top, "#Section#{new_section.id}", :partial => 'private/rosters/member', :locals => {:member => @member}
-	@other_member = @member.lower_item unless @member.last?
+	affected_neighbors << @member.lower_item unless @member.last?
 else
 	page.insert_html :after, "member_#{@member.higher_item.id}", :partial => 'private/rosters/member', :locals => {:member => @member}
-	@other_member = @member.higher_item
+	affected_neighbors << @member.higher_item
 end
 
-unless @other_member.nil?
-	page.replace "member_#{@other_member.id}", :partial => 'private/rosters/member', :locals => {:member => @other_member}
-	page << "activate_form_submit_on_section_change($(\"#member_#{@other_member.id} form.member_section_selector\"));"
+# Update any neighbors to the moving member.
+affected_neighbors.each do |neighbor|
+	page.replace "member_#{neighbor.id}", :partial => 'private/rosters/member', :locals => {:member => neighbor}
+	page << "activate_form_submit_on_section_change($(\"#member_#{neighbor.id} form.member_section_selector\"));"
 end
 
 page << "activate_form_submit_on_section_change($(\"#member_#{@member.id} form.member_section_selector\"));"

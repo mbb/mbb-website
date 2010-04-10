@@ -135,4 +135,28 @@ describe Member do
 			end
 		end
 	end
+	
+	it { should respond_to(:neighbors) }
+	context 'in a nonempty section' do
+		before :each do
+			@the_section = Factory(:section)
+			@top_member    = Factory(:member, :section => @the_section)
+			@this_member   = Factory(:member, :section => @the_section)
+			@bottom_member = Factory(:member, :section => @the_section)
+		end
+		
+		it 'should list only one neighbor when he is the first in the section' do
+			@this_member.move_to_top
+			@this_member.neighbors.should == [@top_member]
+		end
+		
+		it 'should only list one neighbor when he is the last in the section' do
+			@this_member.move_to_bottom
+			@this_member.neighbors.should == [@bottom_member]
+		end
+		
+		it 'should list two neighbors in order when he is inbetween them in the section' do
+			@this_member.neighbors.should == [@top_member, @bottom_member]
+		end
+	end
 end

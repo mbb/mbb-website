@@ -46,6 +46,10 @@ class Member < ActiveRecord::Base
 	validates_format_of      :phone_number, :with => ThreeDegrees::Regex::phone_number, :allow_blank => true
 	validates_presence_of    :section
 	
+	def neighbors(load_eagerly = false)
+		[higher_item, lower_item].compact
+	end
+	
 	alias_method :raw_section=, :section=
 	def section=(new_section_object)
 		old_section = self.section
