@@ -15,12 +15,13 @@ table.section	{
 	width: 100%;
 }
 
-table.section td.operations {  width: 48px;   } /* 3 knobs @ 16px */
-table.section td.photo      {  width: 50px;   } /* Member "tiny" photo class width. */
-table.section td.name       {  width: 200px;  }
-table.section td.contact    {  width: 252px;  } /* 2px extra to round out td.operations */
-table.section td.section    {  width: 150px;  }
+table.section td.operations   {  width: 51px;   } /* 3 knobs @ 16px + whatever the browser wants. */
+table.section td.photo        {  width: 50px;   } /* Member "tiny" photo class width. */
+table.section td.name         {  width: 200px;  }
+table.section td.contact      {  width: 249px;  } /* 1px extra to round out td.operations in Chrome. */
+table.section td.section      {  width: 150px;  }
 
+table.section td.operations   {  padding: 0;    }
 
 ul.operations li	{
 	float: left;
