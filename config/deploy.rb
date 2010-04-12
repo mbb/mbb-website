@@ -1,18 +1,8 @@
-# Methods of deployment. One will deploy to the test server, the other deploys to
-# production. They should be used as:
+# Base methods of deployment. One will deploy to the test server, the other deploys to
+# production. This recipe uses capistrano-ext to trigger the recipes in config/deploy.
+# They should be used from the root of the rails application as:
 #	 $ cap production deploy
-task :production do
-	set :environment, 'production'
-	set :domain, 'madisonbrass.com'
-	use_madisonbrass
-end
-
-task :stage do
-	set :environment, 'stage'
-	set :domain, 'stage.madisonbrass.com'
-	set :keep_releases, 1
-	use_madisonbrass
-end
+require 'capistrano/ext/multistage'
 
 # Sets up to use Darren's server at madisonbrass.com for deployment.
 task :use_madisonbrass do
@@ -28,7 +18,6 @@ end
 set :scm, 'git'
 set :repository, 'git://github.com/ajtack/mbb.git'
 ssh_options[:forward_agent] = true
-set :branch, 'current_release'
 set :git_shallow_clone, 1
 set :git_enable_submodules, 1
 set :use_sudo, false
@@ -77,6 +66,7 @@ namespace :passenger do
 	end
 end
 
+# Overriding recipe tasks that are included with Capistrano.
 namespace :deploy do
 	task :default do
 		update
@@ -102,6 +92,7 @@ namespace :deploy do
 	end
 end
 
+# Custom tasks, written to deploy this particular application correctly.
 namespace :deploy do
 
 	desc 'Copies the uploads directory from the previous deployment'
@@ -122,4 +113,6 @@ namespace :deploy do
 		run "cd #{current_path}; rake db:schema:load"
 		run "cd #{current_path}; rake db:defaults:load"
 	end
+	
+	desc 'Copies the entire production environment'
 end
