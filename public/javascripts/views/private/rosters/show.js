@@ -7,7 +7,6 @@
 function activate_form_submit_on_section_change(affected_forms)	{
 	// Generate an AJAX call when the section-changing form is submitted
 	affected_forms.submit(function()	{
-		console.debug($(this).attr('action') + '.json');
 		$.ajax({
 			data: $(this).serialize(),
 			type: 'post',
