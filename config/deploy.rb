@@ -16,7 +16,7 @@ end
 
 # Point to the code repository wherefrom to get the stuff.
 set :scm, 'git'
-set :repository, 'https://github.com/mbb/mbb-website.git'
+set :repository, 'git://github.com/mbb/mbb-website.git'
 set :git_shallow_clone, 1
 set :git_enable_submodules, 1
 set :use_sudo, false
