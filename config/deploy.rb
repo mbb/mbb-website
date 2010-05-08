@@ -7,7 +7,7 @@ require 'capistrano/ext/multistage'
 # Sets up to use Darren's server at madisonbrass.com for deployment.
 task :use_madisonbrass do
 	set :user, 'madison'
-	set :server_hostname, '585mad.albertus.hostingrails.com'
+	set :server_hostname, 'madisonbrass.com'
 	set :deploy_to, "/home/#{user}/sites/#{domain}"
 	role :app, server_hostname
 	role :web, server_hostname
@@ -16,8 +16,7 @@ end
 
 # Point to the code repository wherefrom to get the stuff.
 set :scm, 'git'
-set :repository, 'git://github.com/ajtack/mbb.git'
-ssh_options[:forward_agent] = true
+set :repository, 'https://github.com/mbb/mbb-website.git'
 set :git_shallow_clone, 1
 set :git_enable_submodules, 1
 set :use_sudo, false
