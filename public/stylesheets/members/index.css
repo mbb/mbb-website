@@ -18,6 +18,8 @@ ul.sections li.section h2	{
 }
 
 ul.section_membership	{
+  list-style: none;
+  padding-left: 0;
 	margin: auto;
 	max-width: 700px;
 	min-width: 100px;
