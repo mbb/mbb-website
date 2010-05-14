@@ -28,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.namespace :private do |private|
 		private.with_options(:layout => 'private') do |private|
 			private.resource :roster, :only => [:show]
+			private.resources :privileges, :only => [:index]
 			private.resources :news_items do |news_item|
 				news_item.resources :attached_files, :only => [:new, :create, :destroy]
 			end

@@ -1,0 +1,8 @@
+<tr>
+	<td>
+		<% form_for member, :url => member_url(member) do |f| -%>
+			<%= f.check_box :privileged %>
+		<% end -%>
+	</td>
+	<td><%= member.name -%></td>
+</tr>

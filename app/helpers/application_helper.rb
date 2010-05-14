@@ -12,7 +12,7 @@ module ApplicationHelper
 	#
 	def can_edit_member(other_member)
 		unless not logged_in?
-			(current_user.id == other_member.id) or (current_user.has_role?('Roster Adjustment'))
+			(current_user.id == other_member.id) or (current_user.privileged?)
 		end
 	end
 	

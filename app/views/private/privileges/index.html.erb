@@ -1,0 +1,19 @@
+<h1>Member Privileges</h1>
+
+<p class="instructions">
+	By default, members cannot change anything but their own biography. Privileged members, however, can post news, add concert listings or change the roster. If you need to allow/disallow access to a member, use this page.
+</p>
+
+<h2>Privileges for Active Members
+<table>
+	<thead>
+		<tr>
+			<th>Status</th>
+			<th>Member</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<%= render :partial => 'member', :collection => Member.all %>
+	</tbody>
+</table>

@@ -22,6 +22,19 @@ describe Private::RostersController do
 		end
 	end
 	
+	context 'when logged in as a regular member' do
+		before :each do
+			login({}, {:privileged => false})
+		end
+		
+		describe 'the show action' do
+			it 'should load successfully' do
+				get :show
+				response.should be_success
+			end
+		end
+	end
+	
 	context 'when not logged in' do
 		describe 'the show action' do
 			before :each do get :show end

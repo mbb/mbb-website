@@ -11,6 +11,9 @@ describe MembersController do
 	it { should route(:delete, '/members/1'     ).to(:controller => :members, :action => :destroy, :id => 1) }
 	it { should route(:get,    '/members/1'     ).to(:controller => :members, :action => :show,    :id => 1) }
 	
+	#
+	# Privileged members should be able to do just about everything.
+	#
 	context 'when a privileged member is logged in' do
 		fixtures :sections
 		before :each do
@@ -72,6 +75,9 @@ describe MembersController do
 			end
 	end
 	
+	#
+	# Unprivileged members shouldn't be able to do anything but edit themselves.
+	#
 	context 'when a normal member is logged in' do
 		before :each do
 			login({}, {:privileged? => false})
@@ -96,6 +102,11 @@ describe MembersController do
 		end
 	end
 	
+	#
+	# The URLs used to be written differently (e.g. /members/Andres_J._Tack instead
+	# of /members/andres-j-tack); we try to convert forwards, and for made up URLs
+	# handle the error appropriately.
+	#
 	context 'when a bad id is given' do
 		old_slug_styles = {
 			'with a period' => 'Some O. Slug',    # Relevant because of extension parsing.

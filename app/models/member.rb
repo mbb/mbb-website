@@ -90,12 +90,6 @@ class Member < ActiveRecord::Base
 		                 :photo_file_name, :photo_file_size, :photo_content_type])
 	end
 	
-	def has_role?(role_in_question)
-		@_list ||= self.roles.collect(&:name)
-		return true if @_list.include?("admin")
-		(@_list.include?(role_in_question.to_s) )
-	end
-	
 	def self.default_password
 		'brass4life'
 	end
