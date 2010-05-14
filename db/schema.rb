@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100227013022) do
+ActiveRecord::Schema.define(:version => 20100514124325) do
 
   create_table "attached_files", :force => true do |t|
     t.string   "data_file_name"
@@ -57,27 +57,16 @@ ActiveRecord::Schema.define(:version => 20100227013022) do
     t.string   "perishable_token"
     t.integer  "failed_login_count",                       :default => 0,     :null => false
     t.datetime "last_login_at"
+    t.boolean  "privileged",                               :default => false
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true
-
-  create_table "members_roles", :id => false, :force => true do |t|
-    t.integer "role_id"
-    t.integer "member_id"
-  end
-
-  add_index "members_roles", ["member_id"], :name => "index_members_roles_on_member_id"
-  add_index "members_roles", ["role_id"], :name => "index_members_roles_on_role_id"
 
   create_table "news_items", :force => true do |t|
     t.string   "title"
     t.text     "body"
     t.boolean  "is_private", :default => true, :null => false
     t.datetime "created_at"
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string "name"
   end
 
   create_table "sections", :force => true do |t|

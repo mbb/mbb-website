@@ -8,6 +8,7 @@ describe Member do
 	it { should have_db_column(:name) }
 	it { should have_db_column(:email) }
 	it { should have_db_column(:biography) }
+	it { should respond_to(:privileged?) }
 	it { should validate_presence_of(:section) }
 	it { should validate_presence_of(:name) }
 	it { should validate_presence_of(:email) }
@@ -15,6 +16,14 @@ describe Member do
 	it { should_not validate_presence_of(:password) }
 	it { should_not validate_presence_of(:password_confirmation) }
 	it { should_not validate_presence_of(:biography) }
+	
+	#
+	# Default values assumed by the application.
+	#
+	it 'should assume that members are unprivileged, by default' do
+		member = Factory.create(:privileged => nil)
+		member.should_not be_privileged
+	end
 	
 	#
 	# Verify format of phone number
