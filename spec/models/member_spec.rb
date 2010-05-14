@@ -21,7 +21,7 @@ describe Member do
 	# Default values assumed by the application.
 	#
 	it 'should assume that members are unprivileged, by default' do
-		member = Factory.create(:privileged => nil)
+		member = Factory.create(:member, :privileged => nil)
 		member.should_not be_privileged
 	end
 	

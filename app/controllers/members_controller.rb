@@ -1,8 +1,7 @@
 class MembersController < ApplicationController	
 	before_filter :require_user, :except => [:index, :show]
-	before_filter :check_credentials, :only => [:edit, :update]
+	before_filter :check_credentials, :only => [:edit, :update, :new, :create, :destroy, :move_up, :move_down]
 	before_filter :update_identifier, :only => [:show, :edit]
-	require_role 'Roster Adjustment', :only => [:new, :create, :destroy, :move_up, :move_down]
 	
 	# GET /members
 	# GET /members.xml
@@ -134,8 +133,8 @@ class MembersController < ApplicationController
 	
 	private
 		def check_credentials
-			unless current_user.has_role?('Roster Adjustment') or params[:id] == current_user.to_param
-				flash[:error] = "You do not have permission to #{action_name} another member."
+			unless current_user.privileged? or params[:id] == current_user.to_param
+				flash[:error] = "You do not have permission to #{action_name.humanize} another member."
 				render private_roster_path, :status => :forbidden
 				false
 			else

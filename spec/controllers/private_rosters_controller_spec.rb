@@ -5,9 +5,9 @@ describe Private::RostersController do
   
 	it { should route(:get, '/private/roster').to(:controller => 'private/rosters', :action => :show) }
 
-	context 'when logged in as a roster adjuster' do
-		fixtures :members, :sections, :roles
-		before :each do login({}, {:roles => [roles(:roster_adjustment)]}) end
+	context 'when logged in as a privileged member' do
+		fixtures :members, :sections
+		before :each do login({}, {:privileged => true}) end
 			
 		describe 'the show action' do
 			before :each do get :show end

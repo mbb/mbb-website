@@ -4,7 +4,6 @@
 class ApplicationController < ActionController::Base
 	protect_from_forgery # See ActionController::RequestForgeryProtection for details
 	activate_css_auto_include
-	include RoleRequirementSystem
 
 	filter_parameter_logging :password, :password_confirmation
 	helper_method :current_user_session, :current_user, :logged_in?

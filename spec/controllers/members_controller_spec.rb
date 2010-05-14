@@ -11,10 +11,10 @@ describe MembersController do
 	it { should route(:delete, '/members/1'     ).to(:controller => :members, :action => :destroy, :id => 1) }
 	it { should route(:get,    '/members/1'     ).to(:controller => :members, :action => :show,    :id => 1) }
 	
-	context 'when a Roster Adjustment member is logged in' do
-		fixtures :sections, :roles
+	context 'when a privileged member is logged in' do
+		fixtures :sections
 		before :each do
-			login({}, {:roles => [roles(:roster_adjustment)]})
+			login({}, {:privileged => true})
 		end
 		
 		it 'allows registration' do
@@ -74,7 +74,7 @@ describe MembersController do
 	
 	context 'when a normal member is logged in' do
 		before :each do
-			login({}, {:has_role? => false})
+			login({}, {:privileged? => false})
 		end
 		
 		it 'allows him to edit his profile' do
