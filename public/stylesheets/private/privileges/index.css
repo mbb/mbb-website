@@ -1,0 +1,37 @@
+table#Privileges {
+	margin: auto;
+	width: 400px;
+	border-collapse: collapse;
+}
+
+table#Privileges thead {
+	color: #333;
+	font-size: 16pt;
+}
+
+table#Privileges thead tr th:nth-child(2) {
+	text-align: left;
+}
+
+table#Privileges tbody {
+	color: black;
+	font-size: 12pt;
+}
+
+table#Privileges tbody tr:first-child td {
+	border-top: none;
+}
+
+table#Privileges tbody tr td:first-child {
+	text-align: center;
+}
+
+table#Privileges tbody tr td:nth-child(2) {
+	text-align: left;
+}
+
+table#Privileges tbody tr td {
+	border-top: 1px solid #999;
+}
+
+
