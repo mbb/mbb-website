@@ -1,5 +1,6 @@
 table#Privileges {
 	margin: auto;
+	margin-top: 1em;
 	width: 400px;
 	border-collapse: collapse;
 }

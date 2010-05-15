@@ -92,6 +92,7 @@ h3	{
 	color: #444;  /* Light grey, gets out of the user's way. */
 	width: 80%;
 	font-style: oblique;
+	margin: auto;
 }
 
 /**
