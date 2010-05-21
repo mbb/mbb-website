@@ -1,10 +1,11 @@
-<h3 id="MemberBarGreeting">Logged in as <%= current_user.name %>.</h3>
-<ul id="MemberBar">
-	<% if current_user.privileged? -%>
-		<li class="member-bar-action"><%= link_to 'Add a New Member', new_member_path %></li>
+<div id="MemberBar">
+	<% if logged_in? -%>
+		<h3>Logged in as <%= link_to current_user.name, current_user -%>.</h3>
+		<ul id="MemberActions">
+			<li><%= link_to 'What can I do?', member_privileges_path(current_user), { :title => "List my privileges." } -%></li>
+			<li><%= link_to 'Log Out', logout_path, { :title => "Log out" } -%></li>
+		</ul>
+	<% else -%>
+		<%= link_to 'Member Login', login_path, {:title => 'Member Login', :id => 'LoginLink'} %>
 	<% end -%>
-	<li class="member-bar-action"><%= link_to 'News Items', private_news_items_path -%></li>
-	<li class="member-bar-action"><%= link_to 'Roster', private_roster_path -%></li>
-	<li class="member-bar-action"><%= link_to 'My Profile', member_path(current_user) -%></li>
-	<li class="member-bar-action"><%= link_to "Log out", logout_path, { :title => "Log out" } -%></li>
-</ul>
+</div>

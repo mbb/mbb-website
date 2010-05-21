@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.join 'join', :controller => 'join'
 	map.resources :concerts, :only => [:index], :collection => {:next => :get, :past => :get, :upcoming => :get}
 	map.resources :members, :member => {:move_up => :put, :move_down => :put} do |member|
+		member.resource :privileges, :only => [:show], :controller => 'private/privileges'
 		member.resource :section, :only => [:update]
 	end
 	map.resources :fans, :only => [:new, :create, :destroy]
@@ -28,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.namespace :private do |private|
 		private.with_options(:layout => 'private') do |private|
 			private.resource :roster, :only => [:show]
-			private.resources :privileges, :only => [:index]
+			private.resource :privileges, :only => [:edit]
 			private.resources :news_items do |news_item|
 				news_item.resources :attached_files, :only => [:new, :create, :destroy]
 			end

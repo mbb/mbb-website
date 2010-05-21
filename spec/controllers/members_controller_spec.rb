@@ -2,10 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe MembersController do
 	setup :activate_authlogic
-  
-	it { should route(:get,    '/members'       ).to(:controller => :members, :action => :index) }
-	it { should route(:get,    '/members/new'   ).to(:controller => :members, :action => :new) }
-	it { should route(:post,   '/members'       ).to(:controller => :members, :action => :create) }
+	
+	it { should route(:get,    '/members'       ).to(:controller => :members, :action => :index            ) }
+	it { should route(:get,    '/members/new'   ).to(:controller => :members, :action => :new              ) }
+	it { should route(:post,   '/members'       ).to(:controller => :members, :action => :create           ) }
 	it { should route(:get,    '/members/1/edit').to(:controller => :members, :action => :edit,    :id => 1) }
 	it { should route(:put,    '/members/1'     ).to(:controller => :members, :action => :update,  :id => 1) }
 	it { should route(:delete, '/members/1'     ).to(:controller => :members, :action => :destroy, :id => 1) }
@@ -98,7 +98,7 @@ describe MembersController do
 			get :edit, :id => someone_else.to_param
 			response.should_not be_success
 			response.code.should == '403'
-			response.should render_template('/private/roster')
+			response.should render_template('private/rosters/show')
 		end
 	end
 	

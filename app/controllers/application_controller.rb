@@ -39,6 +39,17 @@ class ApplicationController < ActionController::Base
 			end
 		end
 		
+		def require_member_edit_credentials
+			member_id = params[:member_id] || params[:id] 
+			unless current_user.privileged? or member_id == current_user.to_param
+				flash[:error] = "You do not have permission to #{action_name.humanize} another member."
+				render 'private/rosters/show', :status => :forbidden
+				false
+			else
+				true
+			end
+		end
+		
 		def require_no_user
 			if current_user
 				store_location
