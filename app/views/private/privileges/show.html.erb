@@ -14,5 +14,6 @@
 			<%= select :member, :id, Member.all.collect {|s| [s.name, s.to_param] }, {:include_blank => true, :selected => nil}, {:id => 'EditMemberSelect'} %>
 		</li>
 		<li><%= link_to 'Post Public and Private Announcements', new_private_news_item_path -%></li>
+		<li><%= link_to 'Add a Concert to the Schedule', new_concert_path -%></li>
 	</ul>
 <% end -%>
