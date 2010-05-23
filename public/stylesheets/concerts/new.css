@@ -1,0 +1,10 @@
+#ConcertForm {
+	width: 70%;
+	margin: auto;
+	text-align: center;
+}
+
+input#concert_title {
+	font-size: 18pt;
+	text-align: center;
+}

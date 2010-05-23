@@ -7,6 +7,11 @@ describe Concert do
 	it { should validate_presence_of(:title) }
 	it { should_not validate_presence_of(:description) }
 	
+	it '#to_s should include the title of the concert' do
+		concert = Factory(:concert)
+		concert.to_s.should =~ /#{concert.title}/
+	end
+	
 	describe '#upcoming' do
 		it 'should expose future concerts' do
 			upcoming_concerts = [

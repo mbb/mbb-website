@@ -1,0 +1,19 @@
+<h1>Create a Concert</h1>
+
+<div id="ConcertForm">
+	<% form_for @concert do |f| -%>
+		<p><%= f.text_field :title -%></p>
+		
+		<p>
+			<%= f.label :location -%>:<br />
+			<%= f.text_area :location, :rows => 3 %>
+		</p>
+		
+		<p>
+			<%= f.label :date -%>: <%= f.date_select :date -%><br />
+			<%= f.label :time -%>: <%= f.time_select :time, :minute_step => 15 %>
+		</p>
+		
+		<p><%= f.submit 'Post this Concert!' -%></p>
+	<% end -%>
+</div>

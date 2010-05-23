@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100514124325) do
+ActiveRecord::Schema.define(:version => 20100523064036) do
 
   create_table "attached_files", :force => true do |t|
     t.string   "data_file_name"
@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(:version => 20100514124325) do
   end
 
   create_table "concerts", :force => true do |t|
-    t.string   "title"
-    t.datetime "date"
-    t.string   "location"
-    t.text     "description"
-    t.time     "time"
-    t.string   "google_map_embed_url"
-    t.string   "google_map_link_url"
+    t.string "title"
+    t.date   "date"
+    t.string "location"
+    t.text   "description"
+    t.time   "time"
+    t.string "google_map_embed_url"
+    t.string "google_map_link_url"
   end
 
   create_table "fans", :force => true do |t|
