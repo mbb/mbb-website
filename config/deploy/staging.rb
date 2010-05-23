@@ -1,5 +1,6 @@
 set :branch, 'master'
 set :environment, 'staging'
+set :rails_env, 'staging'
 set :domain, 'stage.madisonbrass.com'
 set :keep_releases, 1
 use_madisonbrass
