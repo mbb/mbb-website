@@ -5,18 +5,12 @@ set :domain, 'stage.madisonbrass.com'
 set :keep_releases, 1
 use_madisonbrass
 
-before :deploy, :create_stage_directory
-task :create_stage_directory do
-	existing_production_site = "/home/#{user}/sites/madisonbrass.com"
-	run "[ -d #{existing_production_site} ] " +
-			"&& (echo 'Cloning existing production site.' && rm -Rf #{deploy_to} && cp -R #{existing_production_site} #{deploy_to}) " +
-			"||	echo 'No existing production site; staging from scratch!'"
-end
+before :deploy, 'stage:files'
+before 'deploy:migrate', 'stage:database'
 
-before 'deploy:migrate', 'db:stage'
-namespace :db do
+namespace :stage do
 	desc "Overwrite the whole stage database with a copy of the production database."
-	task :stage do
+	task :database do
 		get("#{shared_path}/config/database.yml", "tmp/database.remote.yml")
 		config = YAML.load(IO.read("tmp/database.remote.yml"))
 		File.delete('tmp/database.remote.yml')
@@ -42,4 +36,19 @@ namespace :db do
 		run "#{dump_production} | #{to_stage}"
 		puts "done."
 	end
+	
+	desc 'Copy all the files for the production site to the stage site.'
+	task :files do
+		existing_production_site = "/home/#{user}/sites/madisonbrass.com"
+		run "[ -d #{existing_production_site} ] " +
+		    "&& (echo 'Cloning existing production site.' && rm -Rf #{deploy_to} && cp -R #{existing_production_site} #{deploy_to}) " +
+		    "|| echo 'No existing production site; staging from scratch!'"
+	end
+end
+
+desc 'Tear down all staged files.'
+task :teardown do
+	run "[ -d #{deploy_to} ] " +
+	    "&& (echo 'Tearing down staged files.' && rm -Rf #{deploy_to}) " +
+	    "|| (echo 'Nothing to tear down!')"
 end
