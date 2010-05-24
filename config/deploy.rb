@@ -12,8 +12,8 @@ task :use_madisonbrass do
 	role :app, server_hostname
 	role :web, server_hostname
 	role :db,	server_hostname, :primary => true
-
-  # This is necessary, else RVM doesn't initialize as expected.
+	
+	# This is necessary, else RVM doesn't initialize as expected.
 	default_run_options[:shell] = false
 end
 
@@ -88,7 +88,7 @@ namespace :deploy do
 	task :restart do
 		find_and_execute_task('passenger:restart')
 	end
-
+	
 	[:start, :stop].each do |t|
 		desc "#{t} task is a no-op with Passenger."
 		task t, :roles => :app do ; end
@@ -105,7 +105,7 @@ namespace :deploy do
 end
 
 namespace :host do
-  desc 'Copies the uploads directory from the previous deployment'
+	desc 'Copies the uploads directory from the previous deployment'
 	task :copy_assets do
 		previous_assets = "#{previous_release}/public/assets"
 		run "[ -d #{previous_assets} ] " +
@@ -119,10 +119,9 @@ namespace :host do
 	end
 	
 	namespace :rvm do
-  	desc 'Links necessary RVM configuration files to the target deployment.'
-	  task :configure, :roles => :app do
-      run "ln -nfs #{deploy_to}/shared/.rvmrc #{release_path}/.rvmrc"
-      run "cd #{current_path}; rvm info"
-    end
+		desc 'Links necessary RVM configuration files to the target deployment.'
+		task :configure, :roles => :app do
+			run "ln -nfs #{deploy_to}/shared/.rvmrc #{release_path}/.rvmrc"
+		end
 	end
 end
