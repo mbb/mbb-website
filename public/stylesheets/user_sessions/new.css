@@ -1,0 +1,11 @@
+#LoginForm {
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+#LoginForm label, #LoginForm input[type ~= "text"], #LoginForm input[type ~= "password"] {
+	font-size: 14pt;
+	text-align: center;
+	width: 100%;
+}
