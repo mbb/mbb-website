@@ -102,6 +102,95 @@ describe MembersController do
 		end
 	end
 	
+	describe '#update' do
+		context 'when logged out' do
+			before { logout }
+			
+			it 'should redirect to the login page' do
+				put :update, :id => :something
+				response.should redirect_to(login_url)
+			end
+		end
+		
+		context 'when logged in as an unprivileged member' do
+			before { login({}, {:privileged? => false}) }
+			
+			context 'and addressing some other member' do
+				it 'should deny access' do
+					put :update, :id => :something
+					response.code.should == '403' # Forbidden
+				end
+				
+				it 'should not update any attributes of any model' do
+					member = mock_model(Member)
+					Member.stub!(:find).and_return(member)
+					member.should_not_receive(:update_attributes)
+					put :update, :id => :something
+				end
+			end
+			
+			context 'and addressing his own information (other than his section)' do
+				before do
+					@the_member = current_user
+					Member.should_receive(:find).with(current_user.id.to_s).and_return(@the_member)
+				end
+				
+				it 'should redirect back to the member profile' do
+					@the_member.should_receive(:update_attributes).and_return(true)
+					put :update, :id => current_user.id, :member => {}
+					response.should redirect_to(member_url(:id => current_user.id))
+				end
+				
+				it 'should update the given features of the member' do
+					@the_member.should_receive(:update_attributes).with('these' => 'params').and_return(true)
+					put :update, :id => current_user.id, :member => {'these' => 'params'}
+				end
+				
+				it 'should not allow the member to change his section' do
+					put :update, :id => current_user.id, :member => {'section_id' => :something}
+					response.code.should == '403' # Forbidden
+				end
+			end
+		end
+		
+		context 'when logged in as a privileged member' do
+			before { login({}, {:privileged? => true}) }
+			
+			context 'and submitting valid changes to a profile' do
+				before do
+					@the_member = mock_model(Member, :save => true, :id => :something)
+					Member.should_receive(:find).with(:something).and_return(@the_member)
+					@the_member.should_receive(:update_attributes).with('these' => 'params').and_return(true)
+				end
+				
+				it 'should redirect back to the member profile' do
+					put :update, :id => :something, :member => {'these' => 'params'}
+					response.should redirect_to(member_url(:id => :something))
+				end
+				
+				it 'should update the given features of the member' do
+					put :update, :id => :something, :member => {'these' => 'params'}
+				end
+			end
+			
+			it 'should allow section changes' do
+				@the_member = mock_model(Member, :save => true, :id => :something)
+				Member.should_receive(:find).with(:something).and_return(@the_member)
+
+				old_section = stub_model(Section, :position => 1)
+				new_section = stub_model(Section, :position => 2)
+				
+				@the_member.should_receive(:section).any_number_of_times.and_return(old_section)
+				@the_member.should_receive(:section_id).and_return(old_section.id)
+				@the_member.should_receive(:update_attributes).with('section' => new_section).and_return(true)
+				@the_member.should_receive(:section=).and_return(true)
+				Section.should_receive(:find).with(new_section.id).and_return(new_section)
+				put :update, :id => :something, :member => {'section_id' => new_section.id}
+				response.should redirect_to(member_path(@the_member))
+			end
+		end
+	end
+	
 	#
 	# The URLs used to be written differently (e.g. /members/Andres_J._Tack instead
 	# of /members/andres-j-tack); we try to convert forwards, and for made up URLs

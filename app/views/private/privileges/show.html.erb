@@ -2,7 +2,7 @@
 
 <ul>
 	<li><%= link_to 'Edit your Profile', edit_member_path(current_user) -%></li>
-	<li><%= link_to 'Review the Roster of Players', private_roster_path(current_user) -%></li>
+	<li><%= link_to 'Review the Roster of Players', private_roster_path -%></li>
 </ul>
 
 <% if @member.privileged? -%>

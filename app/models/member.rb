@@ -55,7 +55,7 @@ class Member < ActiveRecord::Base
 		old_section = self.section
 		
 		unless self.new_record? || old_section.nil?
-			new_section = if new_section_object.new_record? then new_section_object else Section.find(new_section_object) end
+			new_section = new_section_object
 			self.remove_from_list unless old_section.nil?
 			self.raw_section = new_section
 			

@@ -6,6 +6,7 @@
 # membership.
 class SectionsController < ApplicationController
 	before_filter :require_user
+	before_filter :require_privileges
 	
 	# PUT /member/:member_id/section
 	# PUT /member/:member_id/section.js (RJS)
