@@ -2,7 +2,7 @@
 
 <% form_for @member, :html => {:multipart => true} do |f| %>
 	<h2>
-		<% if @member.privileged? -%>
+		<% if current_user.privileged? -%>
 			<%= f.select :section_id, Section.all.collect {|s| [s.name, s.id] } %>
 		<% else -%>
 			<%= @member.section %>
