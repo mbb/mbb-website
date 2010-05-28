@@ -1,31 +1,12 @@
 <ul class="operations">
 	<li>
-		<div class="operation">
-			<% if can_edit_member(member) -%>
-				<%= link_to (image_tag 'knobs/pencil.png', :alt => "Edit #{member.name}."), edit_member_path(member) %>
-			<% end -%>
-		</div>
+		<% link_to edit_member_path(member) do -%>
+			<div class="operation fg-button ui-state-default ui-corner-all">Edit</div>
+		<% end %>
 	</li>
-	
 	<li>
-		<div class="operation">
-			<% if current_user.privileged? -%>
-				<% unless member.lower_item.nil? -%>
-					<%= link_to_remote (image_tag 'knobs/down.png', :alt => "Move #{member.name} down in this section."),
-					                    :url => move_down_member_url(member), :method => :put %>
-				<% end -%>
-			<% end -%>
-		</div>
-	</li>
-	
-	<li>
-		<div class="operation">
-			<% if current_user.privileged? -%>
-				<% unless member.higher_item.nil? -%>
-					<%= link_to_remote (image_tag 'knobs/up.png', :alt => "Move #{member.name} up in this section."),
-					                    :url => move_up_member_url(member), :method => :put %>
-				<% end -%>
-			<% end %>
-		</div>
+		<% link_to member_path(member), :method => :delete do -%>
+			<div class="operation fg-button ui-state-default ui-corner-all">Delete</div>
+		<% end %>
 	</li>
 </ul>

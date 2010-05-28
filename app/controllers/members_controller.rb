@@ -33,7 +33,7 @@ class MembersController < ApplicationController
 	# GET /private/members/new
 	# GET /private/members/new.xml
 	def new
-		@member = Member.new
+		@member = Member.new(params[:member])
 		
 		respond_to do |format|
 			format.html # new.html.erb
@@ -110,7 +110,11 @@ class MembersController < ApplicationController
 		old_position = @member.position
 		@member.move_higher
 		@position_changed = (old_position != @member.reload.position)
-		render 'private/rosters/move_up'
+		
+		respond_to do |wants|
+			wants.html { redirect_to private_roster_url }
+			wants.js   { render 'private/rosters/move_up' }
+		end
 	end
 	
 	# PUT /private/members/Quentin_Daniels/move_down (rjs)
@@ -119,7 +123,11 @@ class MembersController < ApplicationController
 		old_position = @member.position
 		@member.move_lower
 		@position_changed = (old_position != @member.reload.position)
-		render 'private/rosters/move_down'
+		
+		respond_to do |wants|
+			wants.html { redirect_to private_roster_url }
+			wants.js   { render 'private/rosters/move_down' }
+		end
 	end
 	
 	private
