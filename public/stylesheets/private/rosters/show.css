@@ -18,8 +18,8 @@ ul#Sections li h2	{
 }
 
 ul.section	{
+	min-height: 1em;
 	margin-top: 1em;
-	width: 100%;
 }
 
 ul.section li.member {
@@ -30,20 +30,22 @@ ul.section li.member:hover {
 	background-color: #eee;
 }
 
-
 ul.section li.member div {
 	float: left;
 }
 
+/* Layout of each member's row. */
 ul.section div.operations   {  width: 15%;   } /* 3 knobs @ 16px + whatever the browser wants. */
 ul.section div.photo        {  width: 10%;   } /* Member "tiny" photo class width. */
 ul.section div.name         {  width: 40%;   }
 ul.section div.contact      {  width: 35%;   } /* 1px extra to round out td.operations in Chrome. */
 
-ul.section div.operations   {  padding: 0; text-align: center; }
-ul.section div.operations ul { float: left; }
-ul.section div.operations ul li { display: list-item; }
-ul.section div.operations ul li div { float: none; }
+/* Layout of individual cells in a member row. */
+ul.section li.member .operations   {  padding: 0; text-align: center; }
+ul.section li.member .operations ul { float: left; }
+ul.section li.member .operations ul li { display: list-item; }
+ul.section li.member .operations ul li div { float: none; }
+
 .operation { margin: 3px; }
 
 div.operations ul {
@@ -57,17 +59,13 @@ div.operations ul {
 	padding-left: 5px;
 }
 
-.section-handle {
+.updown-buttons {
 	font-size: 6pt;
 	width: 25px;
 	float: left;
 	height: 53px;
 	position: relative;
 	top: 4px;
-}
-
-ul.move-member-operations {
-	float: left;
 }
 
 .under_section_button {

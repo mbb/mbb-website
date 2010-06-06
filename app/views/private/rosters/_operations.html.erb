@@ -1,6 +1,11 @@
-<div class="section-handle">
-	<span class="operation ui-icon ui-icon-grip-dotted-horizontal"></span>
-	Move
+<div class="updown-buttons">
+	<button class="member-up-button">
+		<%= link_to "Move Up (within #{member.section} section)", move_up_member_path(member) %>
+	</button>
+	
+	<button class="member-down-button">
+		<%= link_to "Move Down (within #{member.section} section)", move_down_member_path(member) %>
+	</button>
 </div>
 
 <ul>

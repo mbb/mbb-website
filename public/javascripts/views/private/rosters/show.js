@@ -1,31 +1,31 @@
-//
-// For every row in the roster, set the <select> menu (for the user's section) to
-// automatically submit a form which moves the user visually to the new section.
-// The result from the server is expected to return an eval()'able code which
-// will move the items.
-//
-function activate_form_submit_on_section_change(affected_forms)	{
-	// Generate an AJAX call when the section-changing form is submitted
-	affected_forms.submit(function()	{
+$(function() {
+	roster_effects_setup();
+});
+
+function roster_effects_setup() {
+	prepare_updown_buttons();
+};
+
+/*
+ * If users prefer to click, allow up/down buttons to work with AJAX.
+ */
+function prepare_updown_buttons() {
+	// Stylize the up/down buttons.
+	$('.member-up-button'  ).button({ icons: {primary: 'ui-icon-arrowthickstop-1-n'}, text: false });
+	$('.member-down-button').button({ icons: {primary: 'ui-icon-arrowthickstop-1-s'}, text: false });
+	$('li.member:first-child .member-up-button'  ).button("disable");
+	$('li.member:last-child  .member-down-button').button("disable");
+	
+	// Link the up/down buttons with an AJAX recall.
+	run_button_action = function() {
 		$.ajax({
 			data: $(this).serialize(),
-			type: 'post',
-			url: $(this).attr('action') + '.js',
-			dataType: 'script'    // Evaluate the rjs result.
+			type: 'put',
+			url: $(this).find('a').attr('href') + '.js',
+			dataType: 'script',    // Evaluate the rjs result.
+			success: roster_effects_setup
 		});
-
-		// Do not send the actual form; that will cause a page refresh.
-		return false;
-	});
+	};
 	
-	// Trigger the ajax callback whenever the <select>s are changed.
-	affected_forms.find(' > select').change(function() {
-		$(this).parent().submit();
-	});
+	$('.member-up-button, .member-down-button').click(run_button_action);
 }
-
-$(document).ready(function() {
-	// Set up all of the section-changing forms per the above.
-	var section_selecting_forms = $('form.member_section_selector');
-	activate_form_submit_on_section_change(section_selecting_forms);
-});

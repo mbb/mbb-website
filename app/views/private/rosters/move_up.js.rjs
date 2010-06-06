@@ -2,7 +2,4 @@ unless not @position_changed
 	page.remove "member_#{@member.id}"
 	page.insert_html :before, "member_#{@member.lower_item.id}", :partial => 'private/rosters/member', :locals => {:member => @member}
 	page.replace "member_#{@member.lower_item.id}", :partial => 'private/rosters/member', :locals => {:member => @member.lower_item}
-	
-	page << "activate_form_submit_on_section_change($(\"#member_#{@member.id} form.member_section_selector\"));"
-	page << "activate_form_submit_on_section_change($(\"#member_#{@member.lower_item.id} form.member_section_selector\"));"
 end
