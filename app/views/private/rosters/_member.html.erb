@@ -1,39 +1,16 @@
-<tr id="member_<%= member.id -%>">
-	<td class="operations">
-		<%= render :partial => 'private/rosters/operations', :locals => {:member => member} %>
-	</td>
+<li style="display: inline-block; width: 100%" class="member" id="member_<%= member.id -%>">
+	<div class="operations">
+		<% if current_user.privileged? -%>
+			<%= render :partial => 'private/rosters/operations', :locals => {:member => member} %>
+		<% else -%>
+			&nbsp;
+		<% end %>
+	</div>
 	
-	<td class="photo"><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></td>
-	<td class="name"><%= member.name -%></td>
-	<td class="contact">
+	<div class="photo"><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></div>
+	<div class="name"><%= member.name -%></div>
+	<div class="contact">
 		<%= member.email -%><br />
 		<%= member.pretty_phone_number %>
-	</td>
-	<% if current_user.privileged? -%>
-		<td class="section">
-			<% form_for member.section, :url => member_section_url(member), :html => {:class => 'member_section_selector'} do |f| -%>
-				<%= f.select :id, Section.all.collect {|s| [s.name, s.id] } %>
-			<% end -%>
-			<ul class="move-member-operations">
-				<li class="operation wordless-operation">
-					<% unless member.higher_item.nil? -%>
-						<% link_to move_up_member_url(member), :method => :put do -%>
-							<div class="fg-button fg-button-icon-left ui-state-default ui-corner-all">
-								<span class="ui-icon ui-icon-circle-arrow-n"></span>U
-							</div>
-						<% end %>
-					<% end -%>
-				</li>
-				<li class="operation wordless-operation">
-					<% unless member.lower_item.nil? -%>
-						<% link_to move_down_member_url(member), :method => :put do -%>
-							<div class="fg-button fg-button-icon-left ui-state-default ui-corner-all">
-								<span class="ui-icon ui-icon-circle-arrow-s"></span>D
-							</div>
-						<% end %>
-					<% end -%>
-				</li>
-			</ul>
-		</td>
-	<% end -%>
-</tr>
+	</div>
+</li>
