@@ -46,6 +46,8 @@ ul.section li.member .operations ul { float: left; }
 ul.section li.member .operations ul li { display: list-item; }
 ul.section li.member .operations ul li div { float: none; }
 
+ul.section li.member .name .hint { visibility: hidden; }  /* If the client supports Javascript, that code will reveal the hints. */
+
 .operation { margin: 3px; }
 
 div.operations ul {
@@ -74,3 +76,9 @@ div.operations ul {
 	margin-left: 51px;
 	clear: both;
 }
+
+/*
+ * Sorting Sections
+ */
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }

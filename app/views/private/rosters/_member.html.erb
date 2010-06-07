@@ -8,7 +8,10 @@
 	</div>
 	
 	<div class="photo"><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></div>
-	<div class="name"><%= member.name -%></div>
+	<div class="name">
+		<%= member.name -%><br />
+		<span class="hint">Drag to re-seat.</span>
+	</div>
 	<div class="contact">
 		<%= member.email -%><br />
 		<%= member.pretty_phone_number %>
