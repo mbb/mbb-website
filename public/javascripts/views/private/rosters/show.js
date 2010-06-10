@@ -23,7 +23,7 @@ function prepare_draggable_members() {
 		if (next_member.length == 0)
 			var new_position = null;
 		else
-			var new_position = next_member.attr('id').match(/member_(\d)$/)[1];
+			var new_position = next_member.attr('id').match(/member_(\d+)$/)[1];
 		
 		$.ajax({
 			type: 'put',
