@@ -37,7 +37,7 @@ ul.section li.member div {
 /* Layout of each member's row. */
 ul.section div.operations   {  width: 15%;   } /* 3 knobs @ 16px + whatever the browser wants. */
 ul.section div.photo        {  width: 10%;   } /* Member "tiny" photo class width. */
-ul.section div.name         {  width: 40%;   }
+ul.section div.name_column  {  width: 40%;   }
 ul.section div.contact      {  width: 35%;   } /* 1px extra to round out td.operations in Chrome. */
 
 /* Layout of individual cells in a member row. */
@@ -46,7 +46,7 @@ ul.section li.member .operations ul { float: left; }
 ul.section li.member .operations ul li { display: list-item; }
 ul.section li.member .operations ul li div { float: none; }
 
-ul.section li.member .name .hint { visibility: hidden; }  /* If the client supports Javascript, that code will reveal the hints. */
+ul.section li.member .hint { visibility: hidden; }  /* If the client supports Javascript, that code will reveal the hints. */
 
 .operation { margin: 3px; }
 

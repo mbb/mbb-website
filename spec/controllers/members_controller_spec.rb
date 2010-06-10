@@ -208,12 +208,12 @@ describe MembersController do
 					
 					context 'and a position setting' do
 						before do
-							@replaced_member = mock_model(Member, :id => :replaced_member_id, :position => :replaced_member_position)
-							Member.should_receive(:find).with(:replaced_member_id).and_return(@replaced_member)
+							@replaced_member = mock_model(Member, :id => :replaced_member_id, :position => 500)
+							Member.should_receive(:find).with(@replaced_member.position.to_s).and_return(@replaced_member)
 							@the_member.stub!(:insert_at).and_return(true)
 							
 							def make_request(format = :html)
-								put :update, :format => format.to_s, :id => :something, :member => {:section_id => :something_new, :position => {:before => :replaced_member_id}}
+								put :update, :format => format.to_s, :id => :something, :member => {:section_id => :something_new, :position => @replaced_member.position.to_s}
 							end
 						end
 						
@@ -269,8 +269,8 @@ describe MembersController do
 				
 				context 'with a section change' do
 					before do
-						@old_section = stub_model(Section, :position => 1)
-						@new_section = stub_model(Section, :position => 2)
+						@old_section = mock_model(Section, :position => 1)
+						@new_section = mock_model(Section, :position => 2)
 						@the_member.stub!(:section).and_return(@old_section)
 						@the_member.stub!(:section_id).and_return(@old_section.id)
 						Section.stub!(:find).and_return(@new_section)
@@ -289,14 +289,14 @@ describe MembersController do
 						end
 					end
 					
-					context 'with a position setting' do
+					context 'with a non-nil position setting' do
 						before do
-							@replaced_member = mock_model(Member, :id => :replaced_member_id, :position => :replaced_member_position)
-							Member.should_receive(:find).with(:replaced_member_id).and_return(@replaced_member)
+							@replaced_member = mock_model(Member, :id => :replaced_member_id, :position => 500)
+							Member.should_receive(:find).with(@replaced_member.position.to_s).and_return(@replaced_member)
 							@the_member.stub!(:insert_at).and_return(true)
 							
 							def make_request(format = :html)
-								put :update, :format => format.to_s, :id => :something, :member => {'section_id' => :something_else, :position => {:before => :replaced_member_id}}
+								put :update, :format => format.to_s, :id => :something, :member => {'section_id' => :something_else, :position => @replaced_member.position.to_s}
 							end
 						end
 						
@@ -305,9 +305,37 @@ describe MembersController do
 							make_request
 						end
 						
-						it 'should set the new position appropriately' do							
-							@the_member.should_receive(:insert_at).with(:replaced_member_position).and_return(true)
+						it 'should set the new position appropriately' do
+							@the_member.should_receive(:insert_at).with(@replaced_member.position).and_return(true)
 							make_request
+						end
+					end
+					
+					context 'with a nil position setting' do
+						before do
+							@the_member.stub!(:insert_at).and_return(true)
+							
+							def make_request(format = :html)
+								put :update, :format => format.to_s, :id => :something, :member => {'section_id' => :something_else, :position => false}
+							end
+						end
+						
+						context 'where the new section is empty' do
+							before { @new_section.stub!(:members).and_return([]) }
+							
+							it 'should set the new position appropriately' do
+								@the_member.should_receive(:insert_at).with(1)
+								make_request
+							end
+						end
+						
+						context 'where the new section is nonempty' do
+							before { @new_section.stub!(:members).and_return([mock_model(Member, :position => 500)]) }
+							
+							it 'should set the new position appropriately' do
+								@the_member.should_receive(:insert_at).with(501)
+								make_request
+							end
 						end
 					end
 				end

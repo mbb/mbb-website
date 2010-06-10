@@ -7,9 +7,10 @@
 		<% end %>
 	</div>
 	
+	<% link_to member_path(member) do -%><% end %>
 	<div class="photo"><%= image_tag member.photo.url(:tiny), :alt => "Picture of #{member}." %></div>
-	<div class="name">
-		<%= member.name -%><br />
+	<div class="name_column">
+		<span class="name"><%= member.name -%></span><br />
 		<span class="hint">Drag to re-seat.</span>
 	</div>
 	<div class="contact">

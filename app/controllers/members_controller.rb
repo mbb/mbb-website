@@ -92,18 +92,31 @@ class MembersController < ApplicationController
 			params[:member][:section] = new_section
 		end
 		
-		# Update the position within the section, if sent
-		if (params[:member].has_key?(:position) and params[:member][:position].is_a?(Hash))
-			replaced_member = Member.find(params[:member][:position][:before])
-			@new_position = replaced_member.position
-			params[:member].delete(:position)
+		# Update the position within the section, if sent.
+		if params[:member].has_key?(:position)
+			if params[:member][:position] =~ /^\d+$/
+				replaced_member = Member.find(params[:member][:position])
+				@new_position = replaced_member.position
+				params[:member].delete(:position)
+			else
+				@new_section = params[:member][:section] || @member.section
+				if @new_section.members.empty?
+					@new_position = 1
+				else
+					@new_position = @new_section.members.last.position + 1
+				end
+				
+				params[:member].delete(:position)
+			end
 		end
 		
 		respond_to do |wants|
 			if @member.update_attributes(params[:member])
 				@member.insert_at(@new_position) unless @new_position.nil?
-				flash[:notice] = 'Member was successfully updated.'
-				wants.html { redirect_back_or_default(member_path(@member)) }
+				wants.html do
+					flash[:notice] = 'Member was successfully updated.'
+					redirect_back_or_default(member_path(@member))
+				end
 				wants.json { head :ok }
 			else
 				wants.html { render :action => "edit", :status => :bad_request }
