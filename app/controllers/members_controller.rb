@@ -75,7 +75,7 @@ class MembersController < ApplicationController
 	end
 
 	# PUT /private/members/john-smith
-	# PUT /private/members/john-smith.xml
+	# PUT /private/members/john-smith.json
 	def update
 		@member = Member.find(params[:id])
 		
@@ -88,18 +88,26 @@ class MembersController < ApplicationController
 			
 			# Change the member's section.
 			new_section = Section.find(params[:member][:section_id])
-			@member.section = new_section
 			params[:member].delete(:section_id)
 			params[:member][:section] = new_section
 		end
 		
+		# Update the position within the section, if sent
+		if (params[:member].has_key?(:position) and params[:member][:position].is_a?(Hash))
+			replaced_member = Member.find(params[:member][:position][:before])
+			@new_position = replaced_member.position
+			params[:member].delete(:position)
+		end
+		
 		respond_to do |wants|
 			if @member.update_attributes(params[:member])
-			
+				@member.insert_at(@new_position) unless @new_position.nil?
 				flash[:notice] = 'Member was successfully updated.'
 				wants.html { redirect_back_or_default(member_path(@member)) }
+				wants.json { head :ok }
 			else
-				wants.html { render :action => "edit" }
+				wants.html { render :action => "edit", :status => :bad_request }
+				wants.json { head :bad_request }
 			end
 		end
 	end

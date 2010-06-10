@@ -154,39 +154,163 @@ describe MembersController do
 		end
 		
 		context 'when logged in as a privileged member' do
-			before { login({}, {:privileged? => true}) }
+			before do
+				login({}, {:privileged? => true})
+				@the_member = mock_model(Member, :save => true, :id => :something)
+				Member.stub!(:find).and_return(@the_member)
+				
+				def make_request(format = :html)
+					put :update, :format => format.to_s, :id => :something, :member => {}
+				end
+			end
+			
+			context 'and submitting invalid changes to a profile' do
+				before do
+					@the_member.stub!(:update_attributes).and_return(false)
+				end
+				
+				context 'independently of a section change' do
+					[:html, :json].each do |format|
+						context "(requesting #{format})" do
+							it 'should return a 400 error' do
+								make_request(format)
+								response.code.should == '400'
+							end
+						end
+					end
+				end
+				
+				context 'with a section change' do
+					before do
+						@old_section = stub_model(Section, :position => 1)
+						@new_section = stub_model(Section, :position => 2)
+						@the_member.stub!(:section).and_return(@old_section)
+						@the_member.stub!(:section_id).and_return(@old_section.id)
+						Section.stub!(:find).and_return(@new_section)
+					end
+					
+					context 'but no position setting' do
+						before do
+							def make_request(format)
+								put :update, :format => format.to_s, :id => :something, :member => {:section_id => :something_new}
+							end
+						end
+						
+						[:html, :json].each do |format|
+							context "(requesting #{format})" do
+								it 'should return a 400 error' do
+									make_request(format)
+									response.code.should == '400'
+								end
+							end
+						end
+					end
+					
+					context 'and a position setting' do
+						before do
+							@replaced_member = mock_model(Member, :id => :replaced_member_id, :position => :replaced_member_position)
+							Member.should_receive(:find).with(:replaced_member_id).and_return(@replaced_member)
+							@the_member.stub!(:insert_at).and_return(true)
+							
+							def make_request(format = :html)
+								put :update, :format => format.to_s, :id => :something, :member => {:section_id => :something_new, :position => {:before => :replaced_member_id}}
+							end
+						end
+						
+						it 'should not set the member\'s position' do
+							@the_member.should_not_receive(:insert_at)
+							make_request
+						end
+						
+						[:html, :json].each do |format|
+							context "(requesting #{format})" do
+								it 'should return a 400 error' do
+									make_request(format)
+									response.code.should == '400'
+								end
+							end
+						end
+					end
+				end
+			end
 			
 			context 'and submitting valid changes to a profile' do
 				before do
 					@the_member = mock_model(Member, :save => true, :id => :something)
-					Member.should_receive(:find).with(:something).and_return(@the_member)
-					@the_member.should_receive(:update_attributes).with('these' => 'params').and_return(true)
+					@the_member.stub!(:update_attributes).and_return(true)
+					Member.should_receive(:find).and_return(@the_member)
 				end
 				
-				it 'should redirect back to the member profile' do
-					put :update, :id => :something, :member => {'these' => 'params'}
-					response.should redirect_to(member_url(:id => :something))
+				context 'independently of a section change' do
+					it 'should redirect back to the member profile' do
+						put :update, :id => :something, :member => {}
+						response.should redirect_to(member_url(:id => :something))
+					end
+				
+					it 'should update the given features of the member' do
+						@the_member.should_receive(:update_attributes).with('these' => 'params').and_return(true)
+						put :update, :id => :something, :member => {'these' => 'params'}
+					end
+					
+					context '(requesting html)' do
+						it 'should redirect back to the profile' do
+							make_request(:html)
+							response.should redirect_to(member_path(@the_member))
+						end
+					end
+					
+					context '(requesting json)' do
+						it 'should return success' do
+							make_request(:json)
+							response.should be_success
+						end
+					end
 				end
 				
-				it 'should update the given features of the member' do
-					put :update, :id => :something, :member => {'these' => 'params'}
+				context 'with a section change' do
+					before do
+						@old_section = stub_model(Section, :position => 1)
+						@new_section = stub_model(Section, :position => 2)
+						@the_member.stub!(:section).and_return(@old_section)
+						@the_member.stub!(:section_id).and_return(@old_section.id)
+						Section.stub!(:find).and_return(@new_section)
+					end
+					
+					context 'without a position setting' do
+						before do
+							def make_request(format = :html)
+								put :update, :format => format.to_s, :id => :something, :member => {'section_id' => :something_else}
+							end
+						end
+						
+						it 'should commit the section change' do
+							@the_member.should_receive(:update_attributes).with('section' => @new_section)
+							make_request
+						end
+					end
+					
+					context 'with a position setting' do
+						before do
+							@replaced_member = mock_model(Member, :id => :replaced_member_id, :position => :replaced_member_position)
+							Member.should_receive(:find).with(:replaced_member_id).and_return(@replaced_member)
+							@the_member.stub!(:insert_at).and_return(true)
+							
+							def make_request(format = :html)
+								put :update, :format => format.to_s, :id => :something, :member => {'section_id' => :something_else, :position => {:before => :replaced_member_id}}
+							end
+						end
+						
+						it 'should commit the section change' do
+							@the_member.should_receive(:update_attributes).with('section' => @new_section)
+							make_request
+						end
+						
+						it 'should set the new position appropriately' do							
+							@the_member.should_receive(:insert_at).with(:replaced_member_position).and_return(true)
+							make_request
+						end
+					end
 				end
-			end
-			
-			it 'should allow section changes' do
-				@the_member = mock_model(Member, :save => true, :id => :something)
-				Member.should_receive(:find).with(:something).and_return(@the_member)
-
-				old_section = stub_model(Section, :position => 1)
-				new_section = stub_model(Section, :position => 2)
-				
-				@the_member.should_receive(:section).any_number_of_times.and_return(old_section)
-				@the_member.should_receive(:section_id).and_return(old_section.id)
-				@the_member.should_receive(:update_attributes).with('section' => new_section).and_return(true)
-				@the_member.should_receive(:section=).and_return(true)
-				Section.should_receive(:find).with(new_section.id).and_return(new_section)
-				put :update, :id => :something, :member => {'section_id' => new_section.id}
-				response.should redirect_to(member_path(@the_member))
 			end
 		end
 	end
