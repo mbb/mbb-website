@@ -113,7 +113,11 @@ describe MembersController do
 		end
 		
 		context 'when logged in as an unprivileged member' do
-			before { login({}, {:privileged? => false}) }
+			before do
+				login({}, {:privileged? => false})
+				@the_member = current_user
+				Member.stub!(:find).and_return(@the_member)
+			end
 			
 			context 'and addressing some other member' do
 				it 'should deny access' do
@@ -129,12 +133,7 @@ describe MembersController do
 				end
 			end
 			
-			context 'and addressing his own information (other than his section)' do
-				before do
-					@the_member = current_user
-					Member.should_receive(:find).with(current_user.id.to_s).and_return(@the_member)
-				end
-				
+			context 'and addressing his own information (other than his section or privileged status)' do
 				it 'should redirect back to the member profile' do
 					@the_member.should_receive(:update_attributes).and_return(true)
 					put :update, :id => current_user.id, :member => {}
@@ -145,10 +144,45 @@ describe MembersController do
 					@the_member.should_receive(:update_attributes).with('these' => 'params').and_return(true)
 					put :update, :id => current_user.id, :member => {'these' => 'params'}
 				end
+			end
+			
+			context 'and changing his own section' do
+				before(:each) do
+					def make_request(format = :html)
+						put :update, :format => format.to_s, :id => current_user.id, :member => {:section_id => current_user.id}
+					end
+				end
 				
-				it 'should not allow the member to change his section' do
-					put :update, :id => current_user.id, :member => {'section_id' => :something}
+				it 'should not update the member' do
+					@the_member.should_not_receive(:update_attributes)
+					make_request
+				end
+				
+				it 'should return a forbidden error' do
+					make_request
 					response.code.should == '403' # Forbidden
+				end
+			end
+			
+			context 'and setting his own privileged status' do
+				before(:each) do
+					def make_request(format = :html)
+						put :update, :format => format.to_s, :id => current_user.id, :member => {:privileged => true}
+					end
+				end
+				
+				it 'should not update the member' do
+					@the_member.should_not_receive(:update_attributes)
+					make_request
+				end
+				
+				[:html, :json].each do |format|
+					context "(requesting #{format})" do
+						it 'should return a forbidden error' do
+							make_request
+							response.code.should == '403' # Forbidden
+						end
+					end
 				end
 			end
 		end
@@ -336,6 +370,28 @@ describe MembersController do
 								@the_member.should_receive(:insert_at).with(501)
 								make_request
 							end
+						end
+					end
+				end
+				
+				context 'and setting his privileged status' do
+					before(:each) do
+						def make_request(format = :html)
+							put :update, :format => format.to_s, :id => :something, :member => {:privileged => true}
+						end
+					end
+					
+					context "(requesting html)" do
+						it 'should return successfully' do
+							make_request(:html)
+							response.code.should == '303'
+						end
+					end
+					
+					context "(requesting json)" do
+						it 'should return successfully (via 303)' do
+							make_request(:json)
+							response.should be_success
 						end
 					end
 				end

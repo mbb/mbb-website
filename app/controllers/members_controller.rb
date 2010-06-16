@@ -79,6 +79,7 @@ class MembersController < ApplicationController
 	def update
 		@member = Member.find(params[:id])
 		
+		# Update the member's section, if sent.
 		if params[:member].has_key?(:section_id) and @member.section_id != params[:member][:section_id]
 			# Don't allow unprivileged members to do this!
 			unless current_user.privileged?
@@ -108,6 +109,12 @@ class MembersController < ApplicationController
 				
 				params[:member].delete(:position)
 			end
+		end
+		
+		# Do not allow permissions changes by unprivileged members.
+		if params[:member].has_key?(:privileged) and not current_user.privileged?
+			render 'members/show', :status => :forbidden
+			return
 		end
 		
 		respond_to do |wants|
