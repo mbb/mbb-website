@@ -1,13 +1,14 @@
 <h1>Website Privileges for <%= @member %></h1>
 
-<ul>
+<ul class="privilege_list">
 	<li><%= link_to 'Edit your Profile', edit_member_path(current_user) -%></li>
 	<li><%= link_to 'Review the Roster of Players', private_roster_path -%></li>
 </ul>
 
 <% if @member.privileged? -%>
 	<h3 class="instructions">As a <em><%= link_to 'privileged', edit_private_privileges_path -%></em> member, you can also...</h3>
-	<ul>
+	<ul class="privilege_list">
+		<li><%= link_to 'Give Privileges to Other Members (or take them away)', edit_private_privileges_path -%></li>
 		<li><%= link_to 'Change/Reorder the Roster of Players', private_roster_path -%></li>
 		<li>
 			Edit Any Member's Profile:
