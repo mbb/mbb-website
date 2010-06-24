@@ -1,4 +1,4 @@
-set :branch, 'new_role_structure'
+set :branch, 'master'
 set :environment, 'staging'
 set :rails_env, 'staging'
 set :domain, 'stage.madisonbrass.com'
