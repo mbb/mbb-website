@@ -1,7 +1,7 @@
 <tr>
 	<td>
 		<% form_for member, :url => member_url(member) do |f| -%>
-			<%= f.check_box :privileged %>
+			<%= f.check_box :privileged, :class => 'member_privileged_checkbox', :disabled => member == current_user %>
 		<% end -%>
 	</td>
 	<td><%= member.name -%></td>
