@@ -1,6 +1,6 @@
 <div id="FlashyMenu">
+	<hr />
 	<ul class="menu">
-		<hr />
 		<li>
 		<% unless Concert.next.nil? -%>
 			<a href="<%= next_concerts_path -%>">
@@ -46,7 +46,6 @@
 				</div>
 			</a>
 		</li>
-		<div class="spacer"></div>
-		<hr />
 	</ul>
+	<hr />
 </div>

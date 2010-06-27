@@ -33,6 +33,12 @@ div.inner_container	{
 	background-color: white;
 }
 
+#FlashyMenu hr {
+	clear: both;
+	margin: auto;
+	width: 100%;
+}
+
 #FlashyMenu a:hover	{
 	color: #a33;
 }
