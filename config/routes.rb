@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :news_items, :as => 'news', :only => [:index]
 	map.book 'book', :controller => 'book'
 	map.join 'join', :controller => 'join'
-	map.resources :concerts, :only => [:index, :new, :create], :collection => {:next => :get, :past => :get, :upcoming => :get}
+	map.resources :concerts, :collection => {:next => :get, :past => :get, :upcoming => :get}
 	map.resources :members, :member => {:move_up => :put, :move_down => :put} do |member|
 		member.resource :privileges, :only => [:show], :controller => 'private/privileges'
 		member.resource :section, :only => [:update]

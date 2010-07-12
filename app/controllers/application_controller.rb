@@ -34,7 +34,10 @@ class ApplicationController < ActionController::Base
 		
 		def require_privileges
 			unless current_user and current_user.privileged?
-				render :nothing => true, :status => :forbidden
+				unless natural_unprivileged_render
+					render :nothing => true, :status => :forbidden
+				end
+				
 				return false
 			end
 		end
@@ -67,6 +70,16 @@ class ApplicationController < ActionController::Base
 			redirect_to(session[:return_to] || default, :status => 303)
 			session[:return_to] = nil
 		end
-
+		
+		# Overloaded by controllers who are interested in defining a default redirect path on
+		# a per-action or per-request basis. For instance, POST /members might naturally
+		# redirect to the roster , while POST /concerts might naturally redirect to a
+		# concert listing.
+		#
+		# Return is a renderable_path, if one is appropriate, else it is nil.
+		def natural_unprivileged_render
+			nil
+		end
+		
 	helper :application
 end
