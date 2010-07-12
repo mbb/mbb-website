@@ -138,6 +138,11 @@ describe ConcertsController do
 				Concert.should_receive(:find).with('something')
 				get :edit, :id => 'something'
 			end
+			
+			it 'should set a variable with the chosen concert' do
+				get :edit, :id => 'something'
+				assigns[:concert].should_not be_nil
+			end
 		end
 	end
 	
