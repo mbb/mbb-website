@@ -237,10 +237,12 @@ describe ConcertsController do
 			context 'submitting valid changes' do
 				before { Concert.stub!(:find).and_return(mock_model(Concert, :update_attributes => true, :title => 'something')) }
 				
-				it 'should return by redirecting to the upcoming concert schedule' do
+				it 'should return by redirecting to the updated concert page' do
+					@the_concert = mock_model(Concert, :update_attributes => true, :title => 'something')
+					Concert.stub!(:find).and_return(@the_concert)
 					put :update, :id => :something
-					response.should redirect_to(upcoming_concerts_url)
-					response.code.should == '303'
+					response.should redirect_to(concert_url(@the_concert))
+					response.status.should == '303 See Other'
 				end
 				
 				it 'should retrieve the target concert' do

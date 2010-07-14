@@ -65,7 +65,7 @@ class ConcertsController < ApplicationController
 		
 		if @concert.update_attributes(params[:concert])
 			flash[:notice] = "Saved your changes to \"#{@concert.title}\"!"
-			redirect_to upcoming_concerts_url, :status => 303
+			redirect_to concert_url(@concert), :status => 303
 		else
 			render :edit, :status => 400
 		end
