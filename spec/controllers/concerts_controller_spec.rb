@@ -120,18 +120,23 @@ describe ConcertsController do
 			before { login({}, {:privileged? => true}) }
 			
 			context 'and submitting valid data' do
-				before do
-					@the_concert = mock_model(Concert, :save => true)
-					Concert.should_receive(:new).with('these' => :attributes).and_return(@the_concert)
+				before { Concert.stub!(:new).and_return(mock_model(Concert, :save => true)) }
+				
+				it 'should apply the given attributes' do
+					Concert.should_receive(:new).with('these' => :attributes)
+					post :create, :concert => {:these => :attributes}
 				end
 				
-				it 'should redirect to the concerts list' do
-					post :create, :concert => {:these => :attributes}
-					response.should redirect_to(concerts_path)
+				it 'should redirect to the concert page' do
+					@the_concert = mock_model(Concert, :save => true)
+					Concert.stub!(:new).and_return(@the_concert)
+					post :create
+					response.should redirect_to(concert_url(@the_concert))
+					response.status.should == '303 See Other'
 				end
 				
 				it 'should note the posted concert in a notice' do
-					post :create, :concert => {:these => :attributes}
+					post :create
 					flash[:notice].should_not be_nil
 				end
 			end

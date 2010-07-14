@@ -48,7 +48,7 @@ class ConcertsController < ApplicationController
 		
 		if @concert.save
 			flash[:notice] = "Added #{@concert} to the schedule!"
-			redirect_to concerts_url
+			redirect_to concert_url(@concert), :status => 303
 		else
 			render :new, :status => 400
 		end
