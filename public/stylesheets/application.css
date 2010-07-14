@@ -276,13 +276,13 @@ h3	{
 /*
  * This stolen from http://www.filamentgroup.com/examples/buttonFrameworkCSS/
  */
-.fg-button { font-size: 6pt; outline: 0; margin:0 4px 0 0; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; }
-.fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+.mbb-button { font-size: 6pt; outline: 0; margin:0 4px 0 0; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; }
+.mbb-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
 
 /* remove extra button width in IE */
-button.fg-button { width:auto; overflow:visible; }
+button.mbb-button { width:auto; overflow:visible; }
 
-.fg-button-icon-left { padding-left: 2.4em; }
-.fg-button-icon-right { padding-right: 2.4em; }
-.fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
-.fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
+.mbb-button-icon-left { padding-left: 2.4em; }
+.mbb-button-icon-right { padding-right: 2.4em; }
+.mbb-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
+.mbb-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
