@@ -1,0 +1,26 @@
+<div id="ConcertForm">
+	<% form_for concert do |f| -%>
+		<h2><%= f.text_field :title, :default => 'Concert Title' -%></h2>
+		
+		<h4>
+			<%= f.label :date -%>: <%= f.date_select :date -%><br />
+			<%= f.label :time -%>: <%= f.time_select :time, :minute_step => 15 %><br />
+		</h4>
+		<h4>
+			<%= f.label :location -%><br />
+			<%= f.text_area :location, :rows => 3 %>
+		</h4>
+		
+		<h3>
+			<%= f.label :description, 'Program Notes' %>
+			<small>(optional)</small>
+		</h3>
+		<p><%= f.text_area :description -%></p>
+		
+		<% if concert.new_record? -%>
+			<%= f.submit 'Post this Concert!' %>
+		<% else -%>
+			<%= f.submit 'Save Changes' %>
+		<% end -%>
+	<% end -%>
+</div>

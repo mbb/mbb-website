@@ -1,5 +1,44 @@
 <%= render :partial => 'menu' %>
-<h1>Our Next Concert</h1>
-
-<%= render @concert %>
-<%= render :partial => 'map', :locals => {:concert => @concert} unless @concert.google_map_embed_url.nil? %>
+<div class="concert">
+	<h2>
+		<%= @concert.title %><br />
+		<% if privileged? -%>
+			<% link_to edit_concert_url(@concert), :class => 'show-only-on-hover' do -%>
+				<small><span class="ui-state-default ui-corners-all mbb-button">Edit this Concert</span></small>
+			<% end %>
+		<% end -%>
+	</h2>
+	<h4>
+		<%= @concert.date.strftime('%A %B %d, %Y') -%> at
+		<%= @concert.time.strftime('%I:%M%p') unless @concert.time.blank? -%><br />
+		<%= @concert.location %>
+	</h4>
+	
+	<% unless @concert.description.blank? and (@concert.date < Date.today and not privileged?) -%>
+		<hr />
+		<h3 id="concert_description_heading">
+			Program Notes
+			<% if @concert.description.blank? and privileged? -%>
+				<% link_to edit_concert_url(@concert, :anchor => 'concert_description') do -%>
+					<span class="ui-state-default ui-corners-all mbb-button">Add Something!</span>
+				<% end -%>
+			<% end -%>
+		</h3>
+		
+		<p id="concert_description">
+			<% unless @concert.description.blank? -%>
+				<%= @concert.description -%>
+			<% else -%>
+				<% if @concert.date < Date.today -%>
+					<% if privileged? -%>
+						[No Content]
+					<% end -%>
+				<% else -%>
+					<span class="instructions">Please check back soon for more details and a program listing.</span>
+				<% end -%>
+			<% end -%>
+		</p>
+	<% end -%>
+	
+	<%= render :partial => 'map', :locals => {:concert => @concert} unless @concert.google_map_embed_url.nil? %>
+</div>

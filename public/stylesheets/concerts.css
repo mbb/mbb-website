@@ -41,3 +41,6 @@ input#concert_title {
 	font-size: 18pt;
 	text-align: center;
 }
+
+h3#concert_description_heading { text-align: left; }
+p#concert_description          { text-align: left; }
