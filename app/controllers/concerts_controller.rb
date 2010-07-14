@@ -7,6 +7,15 @@ class ConcertsController < ApplicationController
 		redirect_to upcoming_concerts_url
 	end
 	
+	# GET /concerts/:id
+	def show
+		begin
+			@concert = Concert.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			redirect_to upcoming_concerts_url
+		end
+	end
+	
 	# GET /concerts/past
 	def past
 		@concerts = Concert.past
@@ -21,7 +30,11 @@ class ConcertsController < ApplicationController
 	
 	# GET /concerts/next
 	def next
-		@concert = Concert.next
+		unless Concert.next.nil?
+			redirect_to concert_url(Concert.next)
+		else
+			redirect_to past_concerts_url, :status => 307
+		end
 	end
 	
 	# GET /concerts/new

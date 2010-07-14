@@ -6,8 +6,64 @@ describe ConcertsController do
 	it { should route(:get,  '/concerts/past'    ).to(:controller => :concerts, :action => :past             ) }
 	it { should route(:get,  '/concerts/next'    ).to(:controller => :concerts, :action => :next             ) }
 	it { should route(:get,  '/concerts/upcoming').to(:controller => :concerts, :action => :upcoming         ) }
+	it { should route(:get,  '/concerts/1'       ).to(:controller => :concerts, :action => :show,   :id => 1 ) }
 	it { should route(:get,  '/concerts/1/edit'  ).to(:controller => :concerts, :action => :edit,   :id => 1 ) }
 	it { should route(:put,  '/concerts/1'       ).to(:controller => :concerts, :action => :update, :id => 1 ) }
+	
+	describe '#show' do
+		context 'with a valid id' do
+			before { Concert.stub!(:find).and_return(mock_model(Concert)) }
+			
+			it 'should assign a variable \'concerts\'' do
+				get :show, :id => :something
+				assigns[:concert].should_not be_nil
+			end
+			
+			it 'should return success' do
+				get :show, :id => :something
+				response.should be_success
+			end
+			
+			it 'should render the show template' do
+				get :show, :id => :something
+				response.should render_template('concerts/show')
+			end
+		end
+		
+		context 'with an invalid id' do
+			before { Concert.stub!(:find).and_raise(ActiveRecord::RecordNotFound) }
+			
+			it 'should redirect to the upcoming concerts page' do
+				get :show, :id => :something
+				response.should redirect_to(upcoming_concerts_url)
+			end
+		end
+	end
+	
+	describe '#next' do
+		context 'when there is at least one upcoming concert' do
+			before { Concert.stub!(:next).and_return(mock_model(Concert, :id => 1)) }
+			
+			it 'should redirect to the next concert\'s page' do
+				get :next
+				response.should redirect_to(concert_url(1))
+			end
+		end
+		
+		context 'when there are no upcoming concerts' do
+			before { Concert.stub!(:next).and_return(nil) }
+			
+			it 'should redirect with a 307' do
+				get :next
+				response.code.should == '307'
+			end
+			
+			it 'should redirect to the past concerts list' do
+				get :next
+				response.should redirect_to(past_concerts_url)
+			end
+		end
+	end
 	
 	describe '#new' do
 		context 'when NOT logged in' do
