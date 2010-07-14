@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 	activate_css_auto_include
 
 	filter_parameter_logging :password, :password_confirmation
-	helper_method :current_user_session, :current_user, :logged_in?
+	helper_method :current_user_session, :current_user, :logged_in?, :privileged?
 
 	private
 		def current_user_session
@@ -21,6 +21,12 @@ class ApplicationController < ActionController::Base
 		
 		def logged_in?
 			current_user != nil
+		end
+		
+		# Reports whether the currently logged-in user is privileged, or false if nobody is
+		# logged in at all.
+		def privileged?
+			logged_in? and current_user.privileged?
 		end
 		
 		def require_user
