@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100523064036) do
+ActiveRecord::Schema.define(:version => 20101129211801) do
 
   create_table "attached_files", :force => true do |t|
     t.string   "data_file_name"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20100523064036) do
     t.integer  "failed_login_count",                       :default => 0,     :null => false
     t.datetime "last_login_at"
     t.boolean  "privileged",                               :default => false
+    t.boolean  "departed",                                 :default => false
   end
 
   add_index "members", ["email"], :name => "index_members_on_email", :unique => true

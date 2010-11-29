@@ -9,6 +9,7 @@ describe Member do
 	it { should have_db_column(:email) }
 	it { should have_db_column(:biography) }
 	it { should respond_to(:privileged?) }
+	it { should respond_to(:departed?) }
 	it { should validate_presence_of(:section) }
 	it { should validate_presence_of(:name) }
 	it { should validate_presence_of(:email) }
@@ -166,6 +167,28 @@ describe Member do
 		
 		it 'should list two neighbors in order when he is inbetween them in the section' do
 			@this_member.neighbors.should == [@top_member, @bottom_member]
+		end
+	end
+	
+	#
+	# Departed vs. Non-Departed Members
+	#
+	it { should have_db_column(:departed) }
+	it { should respond_to(:departed?) }
+	
+	it 'should assume that members have NOT departed, by default' do
+		member = Factory.create(:member, :departed => nil)
+		member.should_not be_departed
+	end
+	
+	#
+	# Active scope
+	#
+	describe('#active') do
+		it 'should collect only non-departed members' do
+			member_departed = Factory.create(:member, :departed => true)
+			member_present = Factory.create(:member, :departed => false)
+			Member.active.should == [member_present]
 		end
 	end
 end

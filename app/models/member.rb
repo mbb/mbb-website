@@ -12,6 +12,7 @@ class Member < ActiveRecord::Base
 	acts_as_list :scope => :section_id
 	before_validation :set_default_position
 	default_scope :order => 'position ASC'
+	named_scope :active, :conditions => {:departed => false}
 	named_scope :visible, :conditions => {:visible => true}
 	named_scope :invisible, :conditions => {:visible => false}
 	

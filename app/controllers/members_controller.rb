@@ -1,13 +1,13 @@
 class MembersController < ApplicationController	
 	before_filter :require_user, :except => [:index, :show]
 	before_filter :require_member_edit_credentials, :only => [:edit, :update, :new, :create, :destroy, :move_up, :move_down]
-	before_filter :update_identifier, :only => [:show, :edit]
+	before_filter :update_identifier, :only => [:show, :edit, :destroy]
 	
 	# GET /members
 	# GET /members.xml
 	def index
-		@members = Member.find(:all)
-
+		@members = Member.active
+		
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml	{ render :xml => @members }
@@ -129,6 +129,21 @@ class MembersController < ApplicationController
 				wants.html { render :action => "edit", :status => :bad_request }
 				wants.json { head :bad_request }
 			end
+		end
+	end
+	
+	def destroy
+		@member = Member.find(params[:id])
+		@member.departed = true
+		@member.visible = false
+		@member.save!
+		flash[:notice] = "Removed #{@member} from the active roster!"
+		
+		unless @member == current_user
+			redirect_to private_roster_url
+		else
+			current_user_session.destroy
+			redirect_to home_url
 		end
 	end
 	

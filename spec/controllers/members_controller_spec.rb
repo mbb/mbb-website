@@ -461,4 +461,150 @@ describe MembersController do
 			end
 		end
 	end
+	
+	describe '#destroy' do
+		def delete_someone(parameters = {})
+			unless parameters.has_key?(:id)
+				parameters.merge!(:id => :someone)
+			end
+			
+			delete :destroy, parameters
+		end
+		
+		context 'when logged out' do
+			before { logout }
+			
+			it 'should not delete anyone' do
+				Member.stub!(:find).and_return(mock_member)
+				mock_member.should_not_receive(:destroy)
+				mock_member.should_not_receive(:delete)
+				delete_someone
+			end
+			
+			it 'should redirect to the login page' do
+				delete_someone
+				response.should redirect_to(login_url)
+			end
+		end
+		
+		context 'when logged in as an unprivileged member' do
+			before do
+				login({}, {:privileged? => false})
+				Member.stub!(:find).and_return(mock_member)
+			end
+			
+			it 'should not delete anyone' do
+				mock_member.should_not_receive(:destroy)
+				mock_member.should_not_receive(:delete)
+				delete_someone
+			end
+			
+			it 'should respond as forbidden' do
+				delete_someone
+				response.code.should == '403'   # Forbidden
+			end
+						
+			it 'should render the roster' do
+				delete_someone
+				response.should render_template('private/rosters/show')
+			end
+		end
+		
+		context 'when logged in as a privileged member' do
+			context 'and trying to delete their own profile' do
+				before	do
+					login({}, {:privileged? => true, :departed => false, :valid? => true, :save! => true})
+					Member.stub!(:find).and_return(current_user)
+					user_session.stub!(:destroy)
+				end
+				
+				it 'should not delete anyone' do
+					mock_member.should_not_receive(:destroy)
+					mock_member.should_not_receive(:delete)
+					delete_someone(:id => :me)
+				end
+				
+				it 'should log the user out' do
+					user_session.should_receive(:destroy)
+					delete_someone(:id => :me)
+				end
+				
+				it 'should mark the user as permanently departed' do
+					current_user.should_receive(:departed=).with(true)
+					current_user.should_receive(:save!)
+					delete_someone(:id => :me)
+				end
+				
+				it 'should mark the user as invisible' do
+					current_user.should_receive(:visible=).with(false)
+					current_user.should_receive(:save!)
+					delete_someone(:id => :me)
+				end
+				
+				it 'should redirect to the home page' do
+					delete_someone(:id => :me)
+					response.should redirect_to(home_url)
+				end
+			end
+			
+			context 'and trying to delete another member\'s profile' do
+				before	do
+					login({}, {:privileged? => true})
+					Member.stub!(:find).and_return(mock_member(:departed= => true, :visible= => true, :departed? => false, :save! => true))
+				end
+				
+				it 'should not delete anyone' do
+					mock_member.should_not_receive(:destroy)
+					mock_member.should_not_receive(:delete)
+					delete_someone
+				end
+				
+				it 'should mark the user as permanently departed' do
+					mock_member.should_receive(:departed=).with(true)
+					mock_member.should_receive(:save!)
+					delete_someone
+				end
+				
+				it 'should mark the user as invisible' do
+					mock_member.should_receive(:visible=).with(false)
+					mock_member.should_receive(:save!)
+					delete_someone(:id => :me)
+				end
+				
+				it 'should redirect to the roster' do
+					delete_someone
+					response.should redirect_to(private_roster_url)
+				end
+			end
+			
+			context 'and trying to delete a departed member\'s profile' do
+				before	do
+					login({}, {:privileged? => true})
+					Member.stub!(:find).and_return(mock_member(:departed= => true, :visible= => true, :departed? => true, :save! => true))
+				end
+				
+				it 'should not delete anyone' do
+					mock_member.should_not_receive(:destroy)
+					mock_member.should_not_receive(:delete)
+					delete_someone
+				end
+				
+				it 'should still be successful, so people don\'t feel stupid' do
+					delete_someone
+					response.flash[:notice].should =~ /Removed/
+					response.code.should == '302'
+				end
+				
+				it 'should redirect to the roster' do
+					delete_someone
+					response.should redirect_to(private_roster_url)
+				end
+			end
+		end
+	end
+	
+	private
+		def mock_member(stubs = {})
+			@mock_member ||= mock_model(Member, stubs)
+		end
 end

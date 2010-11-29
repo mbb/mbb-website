@@ -1,7 +1,7 @@
 <li>
 	<h2><%= section.name -%></h2>
 	<ul class="section" id="section_<%= section.id -%>">
-		<%= render :partial => 'member', :collection => section.members %>
+		<%= render :partial => 'member', :collection => section.members.active %>
 	</ul>
 	<% if current_user.privileged? -%>
 		<div class="under_section_button">
