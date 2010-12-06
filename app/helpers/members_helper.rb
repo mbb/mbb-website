@@ -1,6 +1,11 @@
 module MembersHelper
 	def self.bad_identifier?(identifier)
-		Member.find(:first, :conditions => {:slugs => {:name => identifier}}, :joins => 'JOIN slugs').nil?
+		conversion = FriendlyId::SlugString.new(identifier)
+		conversion.clean!
+		conversion.word_chars!
+		conversion.downcase!
+		
+		return identifier.to_s != conversion.to_s
 	end
 	
 	# Constructs a good identifier from a bad one, given the either a string parameter
@@ -17,17 +22,21 @@ module MembersHelper
 	# The returned string may not be a different identifier. One should be sure to
 	# test for this case to avoid an infinite loop of redirects.
 	def self.update_identifier(source)
+		def self.normalize(string)
+			FriendlyId::SlugString.new(string).normalize!.to_s
+		end
+		
 		new_identifier = case source
 			when String
 				sans_underscores = spacerize(source)
-				new_slug = Slug.normalize(sans_underscores)
+				new_slug = normalize(sans_underscores)
 			when Hash
 				slug_string = spacerize(source[:id])
 				
 				if source.has_key?(:format) and not mime_type_exists?(source[:format])
 					split_format = source[:format].split('.', 2)
 					extra_id = spacerize(split_format.first)
-					normalized = Slug.normalize("#{slug_string} #{extra_id}")
+					normalized = normalize("#{slug_string} #{extra_id}")
 					
 					if split_format.length > 1
 						source.merge(:id => normalized, :format => split_format.last)
@@ -37,7 +46,7 @@ module MembersHelper
 						hash
 					end
 				else
-					normalized = Slug.normalize(slug_string)
+					normalized = normalize(slug_string)
 					source.merge(:id => normalized)
 				end
 			end
